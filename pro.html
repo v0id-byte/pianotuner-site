@@ -217,14 +217,14 @@
                 <div class="industry-first-tag"><span class="zh">核心黑科技</span><span class="en">CORE TECH</span></div>
                 <h2 class="section-title" style="text-align: left; margin-bottom: 30px;"><span class="zh">调音曲线 动态拟合引擎</span><span class="en">Dynamic 调音曲线 Fitting Engine</span></h2>
                 <p style="color: var(--text-muted); font-size: 19px; margin-bottom: 40px; line-height: 1.8;">
-                    <span class="zh">不同于标准版的静态曲线，专业版搭载了<b>自适应动态拟合引擎</b>。它不仅能根据钢琴初始 B 值生成曲线，更能在调律过程中实时学习张力反馈与物理形变，实现类似“灵敏度优化器”的持续进化。</span>
-                    <span class="en">Beyond static curves, the Pro tier features an <b>Adaptive Fitting Engine</b>. It generates initial curves and continuously learns from real-time tension feedback and physical deformation during the process.</span>
+                    <span class="zh">不同于标准版的通用曲线，专业版搭载了<b>端侧拉伸优化引擎</b>。它根据钢琴实测不谐性（B 值），用对数频率域加权最小二乘在本机毫秒级拟合出专属的全音域拉伸曲线，确定、可复现、全程无需联网。</span>
+                    <span class="en">Beyond generic curves, the Pro tier features an <b>on-device stretch optimizer</b>. From your piano's measured inharmonicity (B), a log-frequency weighted least-squares solver fits a bespoke full-range stretch curve on-device in milliseconds — deterministic, reproducible, no internet required.</span>
                 </p>
                 <ul class="tech-list">
                     <li class="reveal">
                         <div>
                             <h4><span class="zh">全音域物理模型补偿</span><span class="en">Global Physical Model Compensation</span></h4>
-                            <p><span class="zh">每调准一个音符，云端引擎都会重新计算全音域的物理模型补偿，使整台钢琴的力学平衡逼近机械性能上限。</span><span class="en">Every tuned note triggers a cloud re-calculation of global physical model compensation, bringing mechanical balance near the mechanical limit.</span></p>
+                            <p><span class="zh">根据钢琴实测不谐性，一次性在本机生成专属全音域拉伸曲线，使整台钢琴的力学平衡逼近机械性能上限。</span><span class="en">Computes a bespoke full-range stretch curve on-device from your piano's measured inharmonicity, bringing mechanical balance near the mechanical limit.</span></p>
                         </div>
                     </li>
                     <li class="reveal">
@@ -248,8 +248,8 @@
         <div class="grid-3">
             <div class="card card-pro reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="2.4"/><circle cx="6.5" cy="7" r="1.7"/><circle cx="21.5" cy="7" r="1.7"/><circle cx="6.5" cy="21" r="1.7"/><circle cx="21.5" cy="21" r="1.7"/><path d="M8 8.2l4 4M20 8.2l-4 4M8 19.8l4-4M20 19.8l-4-4"/></svg></span>
-                <h3 style="color:var(--primary-color)"><span class="zh">调音曲线 动态拟合</span><span class="en">Dynamic 调音曲线 Fitting</span></h3>
-                <p><span class="zh">像灵敏度优化器一样持续进化，实时学习钢琴张力反馈并重构音律曲线，实现真正的物理一致性。</span><span class="en">Continuously evolving like a sensitivity optimizer, learning tension feedback to rebuild curves in real-time.</span></p>
+                <h3 style="color:var(--primary-color)"><span class="zh">端侧拉伸优化引擎</span><span class="en">On-Device Stretch Optimizer</span></h3>
+                <p><span class="zh">根据钢琴实测不谐性（B 值），在本机用加权最小二乘拟合专属拉伸曲线，确定、可复现，实现真正的物理一致性。</span><span class="en">From your piano's measured inharmonicity (B), a weighted least-squares solver fits a bespoke stretch curve on-device — deterministic and reproducible, for true physical consistency.</span></p>
             </div>
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11.5" cy="11.5" r="6.5"/><path d="M16.4 16.4 22 22"/></svg></span>
@@ -273,8 +273,8 @@
             </div>
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5" width="19" height="18" rx="2.5"/><path d="M9.3 5v18M14 5v18M18.7 5v18"/><path d="M11.6 5v7.6M16.4 5v7.6" stroke-width="3.4"/></svg></span>
-                <h3 style="color:var(--primary-color)"><span class="zh">全自定义律制支持</span><span class="en">Custom Temperaments</span></h3>
-                <p><span class="zh">内置 12+ 种历史律制，并支持完全自定义音律偏好，适配各种古典演奏风格。</span><span class="en">12+ historical temperaments included. Fully customizable to match any classical performance style.</span></p>
+                <h3 style="color:var(--primary-color)"><span class="zh">历史律制支持</span><span class="en">Historical Temperaments</span></h3>
+                <p><span class="zh">内置 5 种历史律制（平均律、Werckmeister III、Kirnberger III、Young II、Valotti），适配各种古典演奏风格。</span><span class="en">5 historical temperaments built in (Equal, Werckmeister III, Kirnberger III, Young II, Valotti) to match classical performance styles.</span></p>
             </div>
         </div>
     </section>
@@ -298,7 +298,7 @@
                     <tr><td><span class="zh">电机性能</span><span class="en">Performance</span></td><td><span class="zh">静音稳定模式</span><span class="en">Silent/Stable</span></td><td class="highlight-cell"><span class="zh">Turbo 涡轮性能加速</span><span class="en">Turbo Performance</span></td></tr>
                     <tr><td><span class="zh">云端 CRM</span><span class="en">Cloud CRM</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">数字化客户档案库</span><span class="en">Digital Customer Archive</span></td></tr>
                     <tr><td><span class="zh">健康报告</span><span class="en">Health Reports</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">PDF 深度分析报告</span><span class="en">PDF Deep Analysis</span></td></tr>
-                    <tr><td><span class="zh">律制支持</span><span class="en">Temperaments</span></td><td style="color: #9a9a9a;"><span class="zh">平均律 (Equal)</span><span class="en">Equal Temperament</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">自定义 / 历史音律</span><span class="en">Custom / Historical</span></td></tr>
+                    <tr><td><span class="zh">律制支持</span><span class="en">Temperaments</span></td><td style="color: #9a9a9a;"><span class="zh">平均律 (Equal)</span><span class="en">Equal Temperament</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">5 种历史律制</span><span class="en">5 Historical Temperaments</span></td></tr>
                     <tr><td><span class="zh">授权方式</span><span class="en">Licensing</span></td><td><span class="zh">硬件内置</span><span class="en">Hardware Embedded</span></td><td class="highlight-cell"><span class="zh">永久 CDK (终身授权)</span><span class="en">Lifetime CDK</span></td></tr>
                 </tbody>
             </table>
