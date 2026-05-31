@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 | Piano Tuner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e6a15c;
+            --primary-color: #e6a15c; /* 与其它页面统一的 token 命名 */
+            --primary-dim: rgba(230, 161, 92, 0.40);
+            --primary-glow: rgba(230, 161, 92, 0.4);
+            --bg: #050505;
+            --surface: #0d0d0d;
+            --surface-2: #141414;
+            --text: #ffffff;
+            --text-muted: #9a9a9a;
+            --text-dim: #9a9a9a;
+            --border: rgba(255,255,255,0.06);
+            --glass-bg: rgba(255,255,255,0.03);
+            --glass-border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        body.lang-zh .en { display: none !important; }
+        body.lang-en .zh { display: none !important; }
+
+        /* ── Header ── */
+        header {
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 5%; z-index: 1000;
+            background: rgba(5,5,5,0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 38px; width: auto; border-radius: 6px; display: block; }
+        .logo-text { font-size: 18px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
+        .logo-text span { color: var(--primary); }
+        .nav-right { display: flex; align-items: center; gap: 18px; }
+        .lang-switch {
+            background: transparent; border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text); padding: 6px 16px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 1px;
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .lang-switch:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-primary {
+            background: var(--primary); color: #000;
+            padding: 8px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px var(--primary-glow); }
+
+        /* ── Main Content ── */
+        main { position: relative; z-index: 1; }
+
+        /* ── Hero Section ── */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 140px 5% 100px;
+            position: relative;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px); border-radius: 50px;
+            padding: 8px 20px; margin-bottom: 36px;
+            font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--primary);
+            animation: heroFadeUp 0.8s ease-out both;
+        }
+        .hero-badge::before {
+            content: ''; width: 8px; height: 8px;
+            background: var(--primary); border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 100px);
+            font-weight: 900; line-height: 1.0;
+            letter-spacing: -3px; margin-bottom: 12px;
+            animation: heroFadeUp 0.8s 0.15s ease-out both;
+        }
+        .hero h1 .gold { color: var(--primary); }
+        .hero h1 .outline-text {
+            -webkit-text-stroke: 2px var(--primary);
+            color: transparent;
+        }
+        .hero-sub {
+            font-size: clamp(16px, 2.5vw, 22px);
+            font-weight: 400; color: var(--text-dim);
+            max-width: 680px; margin: 0 auto 48px; line-height: 1.7;
+            animation: heroFadeUp 0.8s 0.3s ease-out both;
+        }
+        .hero-cta-group {
+            display: flex; gap: 16px; align-items: center;
+            animation: heroFadeUp 0.8s 0.45s ease-out both;
+        }
+        .btn-gold {
+            background: var(--primary); color: #000;
+            padding: 14px 36px; border-radius: 50px;
+            font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+            transition: all 0.3s ease; display: inline-block;
+        }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 40px var(--primary-glow); }
+        .btn-outline {
+            border: 1px solid var(--glass-border); color: var(--text-dim);
+            padding: 14px 36px; border-radius: 50px;
+            font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+            transition: all 0.3s ease; display: inline-block;
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: var(--text-muted); font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+            animation: heroFadeUp 1s 0.6s ease-out both;
+        }
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+        @keyframes scrollBounce { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.5); opacity: 0.3; } }
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Section Base ── */
+        section { padding: 120px 5%; position: relative; }
+        .section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+            color: var(--primary); margin-bottom: 16px; display: block;
+        }
+        .section-title {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 24px;
+        }
+        .section-desc {
+            font-size: 16px; color: var(--text-dim); max-width: 600px; line-height: 1.8;
+        }
+
+        /* ── Animate on scroll ── */
+        .reveal {
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ── Product Section ── */
+        .product-section { background: linear-gradient(180deg, transparent, var(--surface), transparent); }
+        .product-header { text-align: center; margin-bottom: 80px; }
+        .product-trinity {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 24px; max-width: 1100px; margin: 0 auto;
+        }
+        .tinity-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 48px 36px;
+            text-align: center; position: relative; overflow: hidden;
+            transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        .tinity-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .tinity-card:hover { border-color: rgba(230,161,92,0.3); transform: translateY(-8px); box-shadow: 0 20px 60px rgba(230,161,92,0.1); }
+        .tinity-card:hover::before { opacity: 1; }
+        .tinity-icon {
+            width: 80px; height: 80px; margin: 0 auto 28px;
+            background: var(--primary-dim); border-radius: 24px;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.4s;
+        }
+        .tinity-card:hover .tinity-icon { transform: scale(1.1) rotate(-5deg); }
+        .tinity-icon svg { width: 36px; height: 36px; stroke: var(--primary); fill: none; stroke-width: 1.5; }
+        .tinity-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .tinity-card .tag {
+            font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--primary); margin-bottom: 20px; display: block;
+        }
+        .tinity-card p { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+
+        /* ── Tech Stats ── */
+        .tech-stats-section { background: var(--surface); }
+        .stats-header { text-align: center; margin-bottom: 80px; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 2px; max-width: 1100px; margin: 0 auto;
+            background: var(--border); border-radius: 20px; overflow: hidden;
+        }
+        .stat-item {
+            background: var(--surface-2); padding: 48px 32px; text-align: center;
+            transition: background 0.3s;
+        }
+        .stat-item:hover { background: rgba(230,161,92,0.05); }
+        .stat-number {
+            font-size: clamp(40px, 5vw, 64px); font-weight: 900;
+            color: var(--primary); line-height: 1; margin-bottom: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-unit {
+            font-size: clamp(16px, 2vw, 22px); font-weight: 300; color: var(--primary);
+            opacity: 0.6;
+        }
+        .stat-label {
+            font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text-muted); margin-top: 8px;
+        }
+        .stat-sublabel { font-size: 12px; color: var(--text-muted); opacity: 0.5; margin-top: 4px; }
+
+        /* ── Vision Section ── */
+        .vision-section { text-align: center; }
+        .vision-box {
+            max-width: 900px; margin: 0 auto;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 32px; padding: 80px 60px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            position: relative; overflow: hidden;
+        }
+        .vision-box::before, .vision-box::after {
+            content: ''; position: absolute; width: 300px; height: 300px;
+            border-radius: 50%; border: 1px solid rgba(230,161,92,0.08);
+        }
+        .vision-box::before { top: -150px; left: -150px; }
+        .vision-box::after { bottom: -150px; right: -150px; }
+        .vision-quote {
+            font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.4;
+            color: var(--text); position: relative; z-index: 1;
+        }
+        .vision-quote .gold { color: var(--primary); }
+        .vision-desc {
+            font-size: 16px; color: var(--text-dim); max-width: 600px; margin: 32px auto 0; line-height: 1.8;
+        }
+
+        /* ── Team Section ── */
+        .team-section { background: linear-gradient(180deg, transparent, var(--surface), transparent); }
+        .team-header { text-align: center; margin-bottom: 80px; }
+        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+        .team-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 32px 24px; text-align: center;
+            transition: border-color 0.4s, transform 0.4s;
+        }
+        .team-card:hover { border-color: rgba(230,161,92,0.3); transform: translateY(-4px); }
+        .team-avatar {
+            width: 72px; height: 72px; margin: 0 auto 20px;
+            border-radius: 50%; background: var(--primary-dim);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: 900; color: var(--primary);
+            border: 2px solid rgba(230,161,92,0.2);
+        }
+        .team-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+        .team-card .role {
+            font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--primary); margin-bottom: 12px; display: block;
+        }
+        .team-card p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+        /* ── Contact Section ── */
+        .contact-section { text-align: center; }
+        .contact-box {
+            max-width: 700px; margin: 0 auto;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 28px; padding: 72px 60px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        .contact-email {
+            font-size: clamp(20px, 3vw, 32px); font-weight: 800;
+            color: var(--primary); display: block; margin: 24px 0 40px;
+            transition: opacity 0.3s;
+        }
+        .contact-email:hover { opacity: 0.7; }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center; padding: 48px 5%;
+            border-top: 1px solid var(--border); color: #333; font-size: 13px; font-weight: 600;
+        }
+        footer a { color: var(--text-muted); transition: color 0.3s; }
+        footer a:hover { color: var(--primary); }
+        .footer-links { display: flex; justify-content: center; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
+
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            .product-trinity { grid-template-columns: 1fr; max-width: 420px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: 1fr; max-width: 360px; }
+            .vision-box { padding: 48px 28px; }
+            .contact-box { padding: 48px 28px; }
+            .hero-cta-group { flex-direction: column; }
+            .nav-links { display: none; }
+            .btn-gold, .btn-outline { width: 220px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+            .stat-item { padding: 32px 16px; }
+        }
+
+        /* ── Gold divider ── */
+        .divider {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin: 0 auto 24px;
+        }
+        /* ── Ambient Aurora (single subtle background) ── */
+        .aurora-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .aurora {
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(230, 161, 92, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(243, 182, 119, 0.10) 0%, transparent 45%),
+                radial-gradient(ellipse at 40% 80%, rgba(230, 161, 92, 0.10) 0%, transparent 50%);
+            animation: auroraMove 28s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        @keyframes auroraMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-3%, 4%) rotate(-1deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .aurora { animation: none; }
+        }
+    </style>
+</head>
+<body class="lang-zh">
+    <div class="aurora-container"><div class="aurora"></div></div>
+
+<!-- Header -->
+<header>
+    <div class="logo-container">
+        <a href="index.html" aria-label="Piano Tuner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 38px; width: auto; display: block;">
+                <defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient><filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="blur" /><feComposite in="SourceGraphic" in2="blur" operator="over" /></filter></defs>
+                <g filter="url(#neonGlow)">
+                    <path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" />
+                    <path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)" />
+                    <rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)" />
+                    <rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)" />
+                </g>
+            </svg>
+        </a>
+        <div class="logo-text">PIANO<span>TUNER</span></div>
+    </div>
+    <div class="nav-right">
+        <button class="lang-switch" onclick="toggleLanguage()">
+            <span class="zh">EN</span><span class="en">中文</span>
+        </button>
+        <a href="buy.html" class="btn-primary">
+            <span class="zh">即将开放预售</span><span class="en">Coming Soon</span>
+        </a>
+    </div>
+</header>
+
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="zh">融谱智能科技（深圳）有限公司</span>
+            <span class="en">MelSpectrum Technology</span>
+        </div>
+        <h1>
+            <span class="zh">让每台钢琴</span>
+            <span class="en">Every Piano</span><br>
+            <span class="outline-text zh">听见完美</span>
+            <span class="outline-text en">Perfectly Tuned</span>
+        </h1>
+        <p class="hero-sub">
+            <span class="zh">Piano Tuner V2.0 自动化钢琴调律机器人<br>硬件 · 软件 · 云端 AI 三位一体</span>
+            <span class="en">Automated Piano Tuning Robot<br>Hardware · Software · Cloud AI — All in One</span>
+        </p>
+        <div class="hero-cta-group">
+            <a href="buy.html" class="btn-gold">
+                <span class="zh">即将开放预售</span><span class="en">Coming Soon</span>
+            </a>
+            <a href="#product" class="btn-outline">
+                <span class="zh">了解更多</span><span class="en">LEARN MORE</span>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span class="zh">向下滚动</span><span class="en">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Product -->
+    <section class="product-section" id="product">
+        <div class="product-header reveal">
+            <span class="section-label"><span class="zh">产品架构</span><span class="en">Product Architecture</span></span>
+            <h2 class="section-title">
+                <span class="zh">硬件</span><span class="en">Hardware</span> +
+                <span class="zh">软件</span><span class="en">Software</span> +
+                <span class="zh">云端</span><span class="en">Cloud</span>
+            </h2>
+            <div class="divider"></div>
+            <p class="section-desc" style="margin:0 auto;">
+                <span class="zh">三位一体构建专业级自动调律系统</span>
+                <span class="en">A professional-grade auto-tuning system in one</span>
+            </p>
+        </div>
+        <div class="product-trinity">
+            <div class="tinity-card reveal reveal-delay-1">
+                <div class="tinity-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12h2c0 4.4 3.6 8 8 8s8-3.6 8-8-3.6-8-8-8v4l-4-4 4-4v4z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <span class="tag"><span class="zh">精密硬件</span><span class="en">Precision Hardware</span></span>
+                <h3><span class="zh">智能硬件核心</span><span class="en">Smart Hardware Core</span></h3>
+                <p>
+                    <span class="zh">高性能微控制器 + 精密电机，精准扭矩控制、蓝牙无线连接与智能闭环调速。</span>
+                    <span class="en">High-performance microcontroller and precision motor, with accurate torque control, Bluetooth wireless connectivity, and a smart closed-loop drive.</span>
+                </p>
+            </div>
+            <div class="tinity-card reveal reveal-delay-2">
+                <div class="tinity-icon">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                </div>
+                <span class="tag"><span class="zh">原生 App</span><span class="en">Native App</span></span>
+                <h3><span class="zh">iOS 智能操控</span><span class="en">iOS Smart Control</span></h3>
+                <p>
+                    <span class="zh">SwiftUI 原生开发，Apple 专业音频处理框架实现硬件级音频分析，CoreBluetooth 直连设备，实时波形显示。</span>
+                    <span class="en">SwiftUI native development, hardware-grade audio analysis via Apple's pro audio framework, CoreBluetooth direct device connection, and real-time waveform display.</span>
+                </p>
+            </div>
+            <div class="tinity-card reveal reveal-delay-3">
+                <div class="tinity-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                </div>
+                <span class="tag"><span class="zh">云端 AI</span><span class="en">Cloud AI</span></span>
+                <h3><span class="zh">调音曲线优化算法</span><span class="en">Tuning Curve Optimization</span></h3>
+                <p>
+                    <span class="zh">AI 全局优化算法，生成个性化调音曲线，针对每台钢琴独立建模调参。</span>
+                    <span class="en">AI global optimization algorithm generates a personalized tuning curve, modeling and tuning each piano individually.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stats -->
+    <section class="tech-stats-section">
+        <div class="stats-header reveal">
+            <span class="section-label"><span class="zh">核心技术参数</span><span class="en">Core Specifications</span></span>
+            <h2 class="section-title"><span class="zh">数字</span><span class="en">Numbers</span> <span style="color:var(--primary)"><span class="zh">说明一切</span><span class="en">Tell the Story</span></span></h2>
+        </div>
+        <div class="stats-grid reveal reveal-delay-1">
+            <div class="stat-item">
+                <div class="stat-number" data-target="16">0</div>
+                <div class="stat-unit">N·m</div>
+                <div class="stat-label"><span class="zh">峰值扭矩</span><span class="en">Peak Torque</span></div>
+                <div class="stat-sublabel"><span class="zh">额定 10 N·m / 峰值 16 N·m</span><span class="en">10 N·m rated / 16 N·m peak</span></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="88" data-suffix="-keys">0</div>
+                <div class="stat-unit">keys</div>
+                <div class="stat-label"><span class="zh">全键覆盖</span><span class="en">Full Key Coverage</span></div>
+                <div class="stat-sublabel"><span class="zh">88 键标准钢琴</span><span class="en">88-key Standard</span></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="50" data-prefix="&lt;">0</div>
+                <div class="stat-unit">ms</div>
+                <div class="stat-label"><span class="zh">PID 响应</span><span class="en">PID Response</span></div>
+                <div class="stat-sublabel"><span class="zh">实时闭环</span><span class="en">Real-time Loop</span></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="2026">0</div>
+                <div class="stat-unit"></div>
+                <div class="stat-label"><span class="zh">创立年份</span><span class="en">Founded</span></div>
+                <div class="stat-sublabel"><span class="zh">融谱智能</span><span class="en">MelSpectrum</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section class="vision-section">
+        <div class="vision-box reveal">
+            <div class="divider"></div>
+            <p class="vision-quote">
+                <span class="zh">「让每一台钢琴都能获得</span>
+                <span class="en">"Every piano deserves</span><br>
+                <span class="gold"><span class="zh">专业级的调律维护</span><span class="en">professional-grade tuning</span></span><br>
+                <span class="zh">」</span><span class="en">"</span>
+            </p>
+            <p class="vision-desc">
+                <span class="zh">我们相信，先进的技术不应只服务于少数人。Piano Tuner V2.0 让专业级调律走进千家万户，每一位钢琴拥有者都值得拥有一台调律精准的乐器。</span>
+                <span class="en">We believe advanced technology should serve everyone. Piano Tuner V2.0 brings professional-grade tuning to every home — every piano owner deserves a precisely tuned instrument.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team-section">
+        <div class="team-header reveal">
+            <span class="section-label"><span class="zh">核心团队</span><span class="en">Our Team</span></span>
+            <h2 class="section-title"><span class="zh">九位</span><span class="en">Nine</span> <span style="color:var(--primary)"><span class="zh">核心成员</span><span class="en">Core Members</span></span></h2>
+            <div class="divider"></div>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>M</span></div>
+                <h4>Melt</h4>
+                <span class="role"><span class="zh">联合创始人</span><span class="en">Co-Founder</span></span>
+                <p><span class="zh">指挥官 · 决策调度与汇报</span><span class="en">Commander · decisions &amp; coordination</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>谋</span></div>
+                <h4><span class="zh">谋哥</span><span class="en">Mouge</span></h4>
+                <span class="role"><span class="zh">商务拓展</span><span class="en">Business</span></span>
+                <p><span class="zh">市场调研 · 竞品分析 · BP</span><span class="en">Market research · competitive analysis · BP</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>黄</span></div>
+                <h4><span class="zh">老黄</span><span class="en">Lao Huang</span></h4>
+                <span class="role"><span class="zh">硬件与固件</span><span class="en">Hardware</span></span>
+                <p><span class="zh">智能硬件 · BLE · 精密电机控制 · OTA</span><span class="en">Smart hardware · BLE · precision motor control · OTA updates</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>苹</span></div>
+                <h4><span class="zh">小苹果</span><span class="en">Xiao Pingguo</span></h4>
+                <span class="role"><span class="zh">iOS 开发</span><span class="en">iOS Dev</span></span>
+                <p><span class="zh">SwiftUI · 专业音频处理 · CoreBluetooth</span><span class="en">SwiftUI · pro audio processing · CoreBluetooth</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>安</span></div>
+                <h4><span class="zh">小安</span><span class="en">Xiao An</span></h4>
+                <span class="role"><span class="zh">Android 开发</span><span class="en">Android Dev</span></span>
+                <p><span class="zh">Kotlin · Jetpack Compose</span><span class="en">Kotlin · Jetpack Compose</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>云</span></div>
+                <h4><span class="zh">云姐</span><span class="en">Yun Jie</span></h4>
+                <span class="role"><span class="zh">云服务与运维</span><span class="en">Cloud</span></span>
+                <p><span class="zh">Flask · API · PostgreSQL</span><span class="en">Flask · API · PostgreSQL</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>艺</span></div>
+                <h4><span class="zh">小艺</span><span class="en">Xiao Yi</span></h4>
+                <span class="role"><span class="zh">产品设计</span><span class="en">Product Design</span></span>
+                <p><span class="zh">界面设计 · Figma · 动效</span><span class="en">UI design · Figma · animations</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>智</span></div>
+                <h4><span class="zh">智专</span><span class="en">Zhi Zhuan</span></h4>
+                <span class="role"><span class="zh">知识产权</span><span class="en">IP</span></span>
+                <p><span class="zh">专利检索 · 挖掘 · 撰写</span><span class="en">Patent search · mining · drafting</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>钱</span></div>
+                <h4><span class="zh">小钱</span><span class="en">Xiao Qian</span></h4>
+                <span class="role"><span class="zh">财务</span><span class="en">Finance</span></span>
+                <p><span class="zh">财务记账 · 提醒 · 报表</span><span class="en">Financial tracking · reminders · reports</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section">
+        <div class="contact-box reveal">
+            <span class="section-label"><span class="zh">联系我们</span><span class="en">Contact Us</span></span>
+            <h2 class="section-title">
+                <span class="zh">开启您的</span><span class="en">Start Your</span>
+                <span style="color:var(--primary)"><span class="zh">智能调律</span><span class="en">Smart Tuning</span></span>
+                <span class="zh">之旅</span><span class="en">Journey</span>
+            </h2>
+            <div class="divider"></div>
+            <a href="mailto:report@pianotuner.top" class="contact-email">report@pianotuner.top</a>
+            <a href="buy.html" class="btn-gold" style="display:inline-block;">
+                <span class="zh">即将开放预售</span><span class="en">Coming Soon</span>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>
+        <div class="footer-links">
+            <a href="index.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">首页</span><span class="en">Home</span></a>
+            <span style="color: #555;">|</span>
+            <a href="pro.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">Pro 版</span><span class="en">Pro</span></a>
+            <span style="color: #555;">|</span>
+            <a href="support.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">帮助</span><span class="en">Support</span></a>
+            <span style="color: #555;">|</span>
+            <a href="contact.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">联系我们</span><span class="en">Contact</span></a>
+            <span style="color: #555;">|</span>
+            <a href="privacy.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">隐私政策</span><span class="en">Privacy Policy</span></a>
+            <span style="color: #555;">|</span>
+            <a href="terms.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
+        </div>
+        <p style="color: #9a9a9a; font-size: 12px; margin: 8px 0 0 0;">
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+        </p>
+    </footer>
+
+<script>
+    // Language Toggle
+    function toggleLanguage() {
+        const body = document.body;
+        if (body.classList.contains('lang-zh')) {
+            body.classList.remove('lang-zh');
+            body.classList.add('lang-en');
+            document.title = "About Us | Piano Tuner";
+        } else {
+            body.classList.remove('lang-en');
+            body.classList.add('lang-zh');
+            document.title = "关于我们 | Piano Tuner";
+        }
+    }
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Count-up animation for stat numbers
+                const numEl = entry.target.querySelector('.stat-number');
+                if (numEl && !numEl.dataset.animated) {
+                    numEl.dataset.animated = 'true';
+                    const target = parseInt(numEl.dataset.target);
+                    const prefix = numEl.dataset.prefix || '';
+                    const suffix = numEl.dataset.suffix || '';
+                    let start = 0;
+                    const duration = 1500;
+                    const step = timestamp => {
+                        if (!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        numEl.textContent = prefix + Math.floor(eased * target) + suffix;
+                        if (progress < 1) requestAnimationFrame(step);
+                    };
+                    requestAnimationFrame(step);
+                }
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Also observe stat items for count-up
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

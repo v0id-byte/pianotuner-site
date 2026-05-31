@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务条款 | Piano Tuner</title>
+    <meta name="description" content="Piano Tuner 服务条款 — 应用使用许可、硬件使用与安全须知、一年质保、软件「按现状」提供、知识产权、责任限制及适用法律。Terms of Service for the Piano Tuner app and tuning robot.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.pianotuner.top/terms.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid #e6a15c;
+            outline-offset: 2px;
+        }
+
+        :root {
+            --primary-color: #e6a15c;
+            --bg-color: #050505;
+            --surface-color: #121212;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --border-glow: rgba(230, 161, 92, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        body.lang-zh .en { display: none !important; }
+        body.lang-en .zh { display: none !important; }
+
+        /* --- 导航栏 --- */
+        header {
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
+        .logo-text span { color: var(--primary-color); }
+        .nav-center { display: flex; align-items: center; gap: 35px; }
+        .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s ease; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .lang-switch {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-stack);
+        }
+        .lang-switch:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); }
+        .btn-primary {
+            background: var(--primary-color); color: #000; padding: 10px 24px; border-radius: 30px; font-weight: 800;
+            font-size: 13px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-block; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(230, 161, 92, 0.2);
+        }
+        .btn-primary:hover { transform: translateY(-2px) scale(1.02); background: #f3b677; box-shadow: 0 8px 25px rgba(230, 161, 92, 0.4); }
+
+        /* --- 法律文档主体 --- */
+        .legal-hero {
+            padding: 160px 5% 60px 5%;
+            background: radial-gradient(circle at center 0%, #1a1510 0%, var(--bg-color) 60%);
+            text-align: center;
+        }
+        .legal-hero .tag {
+            color: var(--primary-color); font-size: 13px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+            margin-bottom: 20px; display: inline-block; padding: 6px 16px; border: 1px solid rgba(230, 161, 92, 0.3); border-radius: 30px;
+        }
+        .legal-hero h1 {
+            font-size: 46px; font-weight: 900; margin: 0 0 18px 0; line-height: 1.2; letter-spacing: -1px;
+            background: linear-gradient(180deg, #fff 0%, #aaaaaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .legal-hero .updated { color: var(--text-muted); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+
+        .legal-body { max-width: 820px; margin: 0 auto; padding: 30px 5% 100px 5%; }
+        .legal-body .intro { color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 50px; }
+        .legal-section { margin-bottom: 48px; }
+        .legal-section h2 {
+            font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 18px; color: var(--text-main);
+            padding-bottom: 12px; border-bottom: 1px solid rgba(230, 161, 92, 0.15);
+        }
+        .legal-section h2 .num { color: var(--primary-color); margin-right: 10px; }
+        .legal-section h3 { font-size: 17px; font-weight: 700; margin: 24px 0 8px 0; color: var(--text-main); }
+        .legal-section p { color: var(--text-muted); font-size: 15px; line-height: 1.85; margin-bottom: 14px; }
+        .legal-section ul { list-style: none; margin: 0 0 14px 0; }
+        .legal-section ul li {
+            color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 12px; padding-left: 26px; position: relative;
+        }
+        .legal-section ul li::before { content: "✦"; color: var(--primary-color); position: absolute; left: 0; top: 0; font-size: 14px; }
+        .legal-section strong { color: var(--text-main); font-weight: 700; }
+        .legal-section a { color: var(--primary-color); font-weight: 700; }
+        .legal-section a:hover { text-decoration: underline; }
+
+        .callout {
+            background: rgba(230, 161, 92, 0.05); border-left: 4px solid var(--primary-color);
+            padding: 22px 26px; border-radius: 8px; margin: 20px 0;
+        }
+        .callout p { margin-bottom: 0; color: var(--text-main); }
+
+        /* --- 页脚 --- */
+        footer { text-align: center; padding: 50px 5% 40px 5%; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer .foot-links { margin-bottom: 18px; }
+        footer .foot-links a { color: var(--text-muted); margin: 0 12px; font-size: 13px; font-weight: 600; transition: color 0.3s ease; }
+        footer .foot-links a:hover { color: var(--primary-color); }
+        footer .foot-links .sep { color: #333; }
+        footer .copy { color: #444; font-size: 13px; font-weight: 600; }
+        footer .company { color: #555; font-size: 12px; font-weight: 500; margin-top: 8px; }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .logo-text { font-size: 18px; }
+            .legal-hero h1 { font-size: 32px; }
+            .nav-right .btn-primary { display: none; }
+            footer .foot-links a { display: inline-block; margin: 4px 8px; }
+        }
+    </style>
+</head>
+
+<body class="lang-zh">
+    <header>
+        <a href="index.html" class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;">
+                <defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient><filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="blur" /><feComposite in="SourceGraphic" in2="blur" operator="over" /></filter></defs>
+                <g filter="url(#neonGlow)">
+                    <path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" />
+                    <path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)" />
+                    <rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)" />
+                    <rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)" />
+                </g>
+            </svg>
+            <div class="logo-text">PIANO<span>TUNER</span></div>
+        </a>
+
+        <div class="nav-center nav-links">
+            <a href="index.html#how-it-works"><span class="zh">工作原理</span><span class="en">HOW IT WORKS</span></a>
+            <a href="index.html#software"><span class="zh">软件控制</span><span class="en">SOFTWARE</span></a>
+            <a href="index.html#features"><span class="zh">核心优势</span><span class="en">FEATURES</span></a>
+            <a href="index.html#technology"><span class="zh">底层架构</span><span class="en">ARCHITECTURE</span></a>
+            <a href="index.html#roadmap"><span class="zh">硬核迭代</span><span class="en">ROADMAP</span></a>
+            <a href="support.html"><span class="zh">帮助与支持</span><span class="en">SUPPORT</span></a>
+            <a href="contact.html"><span class="zh">联系我们</span><span class="en">CONTACT</span></a>
+        </div>
+        <div class="nav-right">
+            <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
+            <a href="pro.html" class="btn-primary" style="background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);"><span class="zh">获取专业版</span><span class="en">GET PRO</span></a>
+            <a href="buy.html" class="btn-primary"><span class="zh">预定首发</span><span class="en">PRE-ORDER</span></a>
+        </div>
+    </header>
+
+    <section class="legal-hero">
+        <span class="tag"><span class="zh">法律条款</span><span class="en">LEGAL</span></span>
+        <h1><span class="zh">服务条款</span><span class="en">Terms of Service</span></h1>
+        <p class="updated"><span class="zh">最后更新：2026 年 5 月 31 日</span><span class="en">Last updated: May 31, 2026</span></p>
+    </section>
+
+    <main class="legal-body">
+        <p class="intro">
+            <span class="zh">欢迎使用 Piano Tuner。本服务条款（以下简称「本条款」）是您与深圳市美谱声学科技有限公司（品牌「液态声学」/ Piano Tuner，以下简称「我们」）之间就 Piano Tuner 调音机器人硬件及配套 iOS 应用（以下统称「本产品」）使用所达成的协议。请在使用前仔细阅读，尤其是关于安全使用与责任限制的条款。</span>
+            <span class="en">Welcome to Piano Tuner. These Terms of Service ("Terms") form an agreement between you and MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner, "we", "us") regarding your use of the Piano Tuner tuning robot hardware and its companion iOS app (together, the "Product"). Please read them carefully before use, especially the safety and limitation-of-liability sections.</span>
+        </p>
+
+        <section class="legal-section">
+            <h2><span class="num">1</span><span class="zh">接受条款</span><span class="en">Acceptance of Terms</span></h2>
+            <p>
+                <span class="zh">当您下载、安装或使用本产品时，即表示您已阅读、理解并同意接受本条款。如果您不同意本条款的任何内容，请勿使用本产品。</span>
+                <span class="en">By downloading, installing, or using the Product, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree to any part of them, please do not use the Product.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">2</span><span class="zh">应用使用许可</span><span class="en">License to Use the App</span></h2>
+            <p>
+                <span class="zh">在您遵守本条款的前提下，我们授予您一项有限的、非独占、不可转让、可撤销的许可，仅供您为个人或内部业务目的，配合本产品硬件使用配套应用。您不得对应用进行出租、转售、反向工程、反编译或试图提取其源代码，除非相关法律明确允许。</span>
+                <span class="en">Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, revocable license to use the companion app together with the Product hardware, for your personal or internal business purposes only. You may not rent, resell, reverse-engineer, decompile, or attempt to extract the source code of the app, except where such restriction is prohibited by applicable law.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">3</span><span class="zh">硬件使用与安全须知</span><span class="en">Hardware Use & Safety</span></h2>
+            <div class="callout">
+                <p>
+                    <span class="zh"><strong>重要：本设备会对钢琴弦轴施加高扭矩。</strong>使用前请务必完整阅读并严格遵守随附的安全说明与应用内指引。</span>
+                    <span class="en"><strong>Important: this device applies high torque to tuning pins.</strong> Always read and strictly follow the safety instructions provided with the device and the in-app guidance before use.</span>
+                </p>
+            </div>
+            <ul>
+                <li><span class="zh">请仅将本设备用于其设计用途——即调节标准钢琴弦轴；不得用于任何其他用途。</span><span class="en">Use the device only for its intended purpose — adjusting standard piano tuning pins — and for nothing else.</span></li>
+                <li><span class="zh">使用过程中请保持对设备的关注与控制，避免在无人看管的情况下运行。</span><span class="en">Stay attentive and in control during use; do not leave the device running unattended.</span></li>
+                <li><span class="zh">请将设备放置在儿童及未受过相关使用培训人员无法触及之处。</span><span class="en">Keep the device out of reach of children and anyone untrained in its use.</span></li>
+                <li><span class="zh">如发现弦轴异常、生锈、松动或琴弦存在损伤迹象，请停止使用并咨询专业人士。</span><span class="en">Stop and consult a professional if you notice abnormal, rusted, or loose pins, or any sign of string damage.</span></li>
+            </ul>
+            <p>
+                <span class="zh"><strong>误用、违反安全说明的使用，或在无人看管情况下的使用，所产生的风险与后果由您自行承担。</strong></span>
+                <span class="en"><strong>Misuse, use contrary to the safety instructions, or unsupervised use is at your own risk.</strong></span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">4</span><span class="zh">硬件质保</span><span class="en">Hardware Warranty</span></h2>
+            <p>
+                <span class="zh">我们为本产品硬件提供自购买之日起<strong>一年</strong>的有限质保，保证其在正常使用下无材料及工艺缺陷。质保<strong>不涵盖</strong>因误用、意外、未经授权的拆解或改装、违反安全说明的操作，或正常磨损所导致的损坏。质保期内的有效索赔，我们将自行选择对产品进行维修或更换。</span>
+                <span class="en">We provide a limited <strong>one-year</strong> warranty for the Product hardware from the date of purchase, against defects in materials and workmanship under normal use. The warranty <strong>does not cover</strong> damage caused by misuse, accident, unauthorized disassembly or modification, operation contrary to the safety instructions, or normal wear and tear. For a valid claim within the warranty period, we will, at our option, repair or replace the Product.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">5</span><span class="zh">软件「按现状」提供与 OTA 更新</span><span class="en">Software "As Is" & OTA Updates</span></h2>
+            <p>
+                <span class="zh">本产品的软件与固件按<strong>「现状」及「现有」</strong>提供，不附带任何明示或暗示的担保。我们可能不时通过 BLE OTA 等方式推送固件与应用更新，以修复问题、提升性能或增加功能。部分更新可能是正常使用本产品所必需的；继续使用即表示您同意接收此类更新。</span>
+                <span class="en">The Product's software and firmware are provided <strong>"as is" and "as available"</strong>, without warranties of any kind, whether express or implied. We may from time to time push firmware and app updates (including via BLE OTA) to fix issues, improve performance, or add features. Some updates may be necessary for normal operation; by continuing to use the Product, you agree to receive such updates.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">6</span><span class="zh">知识产权</span><span class="en">Intellectual Property</span></h2>
+            <p>
+                <span class="zh">本产品及其所有组成部分——包括但不限于核心算法、硬件结构、全闭环控制逻辑、软件、界面、商标与标识——的全部知识产权均归我们所有，并受相关法律及在审专利保护。本条款未明确授予您的权利，我们均予以保留。未经授权，严禁任何形式的商业拆解、逆向工程或仿造。</span>
+                <span class="en">All intellectual property in the Product and its components — including but not limited to the core algorithms, hardware architecture, closed-loop control logic, software, interface, trademarks, and logos — belongs to us and is protected by applicable law and pending patents. We reserve all rights not expressly granted to you in these Terms. Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">7</span><span class="zh">免责声明与责任限制</span><span class="en">Disclaimers & Limitation of Liability</span></h2>
+            <p>
+                <span class="zh">本产品是一种机械设备。在适用法律允许的最大范围内，我们不对适销性、特定用途适用性或不侵权作出任何暗示担保。您理解并接受，对钢琴进行调音存在固有的机械风险（例如琴弦或弦轴在张力下的固有特性）。</span>
+                <span class="en">The Product is a mechanical device. To the maximum extent permitted by applicable law, we disclaim all implied warranties, including merchantability, fitness for a particular purpose, and non-infringement. You understand and accept that tuning a piano carries inherent mechanical risks (such as the behavior of strings and pins under tension).</span>
+            </p>
+            <p>
+                <span class="zh">在适用法律允许的最大范围内，对于因使用或无法使用本产品而产生的任何间接、附带、特殊或后果性损失，我们概不负责；我们就本产品向您承担的累计责任总额，不超过您为该产品实际支付的金额。部分司法辖区不允许排除某些担保或限制某些责任，在这些地区，上述限制将在法律允许的范围内适用。本条款不影响您依法享有的不可放弃的法定权利。</span>
+                <span class="en">To the maximum extent permitted by applicable law, we are not liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the Product; and our total aggregate liability to you for the Product will not exceed the amount you actually paid for it. Some jurisdictions do not allow the exclusion of certain warranties or limitation of certain liabilities; in those regions the above limits apply to the extent permitted by law. These Terms do not affect your non-waivable statutory rights.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">8</span><span class="zh">账户与激活码（CDK）</span><span class="en">Accounts & CDK</span></h2>
+            <p>
+                <span class="zh">部分功能或服务可能需要账户或激活码（CDK）。您应对账户与激活码的保管负责，并对在其下发生的活动承担责任。激活码不得转售或用于未经授权的用途。</span>
+                <span class="en">Some features or services may require an account or an activation code (CDK). You are responsible for safeguarding your account and activation codes, and for activity that occurs under them. Activation codes may not be resold or used for unauthorized purposes.</span>
+            </p>
+            <div class="callout">
+                <p>
+                    <span class="zh"><strong>请注意：当前销售已暂停。</strong>相关账户、激活码及购买条款将在销售恢复时进一步明确。</span>
+                    <span class="en"><strong>Please note: sales are currently paused.</strong> Account, activation-code, and purchase terms will be further specified when sales resume.</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">9</span><span class="zh">条款变更</span><span class="en">Changes to These Terms</span></h2>
+            <p>
+                <span class="zh">我们可能会不时更新本条款。重大变更将通过应用内或本页面公示，并更新顶部的「最后更新」日期。变更生效后继续使用本产品，即表示您接受更新后的条款。</span>
+                <span class="en">We may update these Terms from time to time. Material changes will be posted in the app or on this page, with the "Last updated" date above revised accordingly. Continued use of the Product after changes take effect means you accept the updated Terms.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">10</span><span class="zh">适用法律与争议解决</span><span class="en">Governing Law & Disputes</span></h2>
+            <p>
+                <span class="zh">本条款受中华人民共和国法律管辖并依其解释。因本条款或本产品引起的任何争议，应提交至深圳市有管辖权的人民法院解决。</span>
+                <span class="en">These Terms are governed by and construed in accordance with the laws of the People's Republic of China. Any dispute arising out of these Terms or the Product shall be submitted to the competent People's Court in Shenzhen.</span>
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2><span class="num">11</span><span class="zh">联系我们</span><span class="en">Contact Us</span></h2>
+            <p>
+                <span class="zh">如对本服务条款有任何疑问，请联系：<a href="mailto:support@pianotuner.top">support@pianotuner.top</a><!-- TODO: real support email --></span>
+                <span class="en">For any questions about these Terms, contact us at: <a href="mailto:support@pianotuner.top">support@pianotuner.top</a><!-- TODO: real support email --></span>
+            </p>
+            <p>
+                <span class="zh">深圳市美谱声学科技有限公司（品牌「液态声学」/ Piano Tuner）</span>
+                <span class="en">MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner)</span>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="foot-links">
+            <a href="index.html"><span class="zh">首页</span><span class="en">Home</span></a>
+            <span class="sep">|</span>
+            <a href="pro.html"><span class="zh">专业版</span><span class="en">Pro</span></a>
+            <span class="sep">|</span>
+            <a href="support.html"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+            <span class="sep">|</span>
+            <a href="contact.html"><span class="zh">联系我们</span><span class="en">Contact</span></a>
+            <span class="sep">|</span>
+            <a href="privacy.html"><span class="zh">隐私政策</span><span class="en">Privacy Policy</span></a>
+            <span class="sep">|</span>
+            <a href="terms.html"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
+        </div>
+        <p class="copy"><span class="zh">&copy; 2026 Piano Tuner. 用创新造就美好. 保留所有权利.</span><span class="en">&copy; 2026 Piano Tuner. Innovating for a better melody. All rights reserved.</span></p>
+        <p class="company"><span class="zh">深圳市美谱声学科技有限公司</span><span class="en">MelSpectrum Technology (Shenzhen) Co., Ltd.</span></p>
+    </footer>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            if (body.classList.contains('lang-zh')) {
+                body.classList.remove('lang-zh'); body.classList.add('lang-en');
+                document.title = "Terms of Service | Piano Tuner";
+            } else {
+                body.classList.remove('lang-en'); body.classList.add('lang-zh');
+                document.title = "服务条款 | Piano Tuner";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Tuner | 帮助与支持中心</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        body.lang-zh .en { display: none !important; }
+        body.lang-en .zh { display: none !important; }
+        header { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        .logo-text span { color: var(--primary-color); }
+        .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s ease; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .lang-switch { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .btn-primary { background: var(--primary-color); color: #000; padding: 10px 24px; border-radius: 30px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .section-padding { padding: 120px 5%; padding-top: 180px; } /* Increased top padding for fixed header */
+        .section-title { text-align: center; font-size: 42px; margin-bottom: 20px; font-weight: 800; letter-spacing: -1px; }
+        .section-subtitle { text-align: center; font-size: 18px; color: var(--text-muted); max-width: 700px; margin: 0 auto 70px auto; }
+        .card { background: var(--surface-color); padding: 40px; border-radius: 24px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.03); margin-bottom:20px; }
+        .card h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--primary-color); }
+        .card p, .card li { color: var(--text-muted); font-size: 15px; line-height: 1.8; }
+        .card ul { padding-left: 20px; }
+        footer { text-align: center; padding: 40px; color: #444; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); font-weight: 600;}
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .video-placeholder { background: var(--surface-color); border: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 20px; border-radius: 16px; text-align: center; color: var(--text-muted); }
+        .faq-section { background: #000; border-top: 1px solid #1a1a1a; border-radius: 0; margin-top: 0; }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { 
+            background: var(--surface-color); border-radius: 16px; margin-bottom: 16px; overflow: hidden; 
+            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; 
+        }
+        .faq-item:hover { border-color: rgba(230, 161, 92, 0.1); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .faq-question {
+            width: 100%; text-align: left; background: none; border: none; font-family: var(--font-stack);
+            padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            font-size: 18px; font-weight: 700; color: var(--text-main);
+        }
+        .faq-question:focus-visible { outline: 2px solid var(--primary-color); outline-offset: -2px; }
+        .faq-question::after { 
+            content: "+"; font-size: 24px; color: var(--primary-color); transition: transform 0.3s ease; 
+        }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { 
+            max-height: 0; padding: 0 30px; opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: var(--text-muted); line-height: 1.8; font-size: 15px; 
+        }
+        .faq-item.active .faq-answer { max-height: 400px; padding: 0 30px 30px 30px; opacity: 1; }
+
+        /* Spotlight Card Effect */
+        .card-spotlight {
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .card-spotlight::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(
+                circle 180px at var(--mx, 50%) var(--my, 50%),
+                rgba(230, 161, 92, 0.38),
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: inherit;
+        }
+
+        .card-spotlight:hover::before {
+            opacity: 1;
+        }
+
+        .card-spotlight > * {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="lang-zh">
+    <header>
+        <div class="logo-container">
+            <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient></defs><g><path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" /><path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)" /><rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)" /><rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)" /></g></svg>
+                <div class="logo-text">PIANO<span>TUNER</span></div>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
+            <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </header>
+
+    <main class="section-padding">
+        <h1 class="section-title"><span class="zh">帮助与支持中心</span><span class="en">Support Center</span></h1>
+        <p class="section-subtitle"><span class="zh">Piano Tuner V2.0 使用指南、常见问题与技术支持。</span><span class="en">Guides, FAQs, and technical support for your Piano Tuner V2.0.</span></p>
+
+        <div class="card card-spotlight">
+            <h3><span class="zh">快速上手指南</span><span class="en">Quick Start Guide</span></h3>
+            <ul>
+                <li><strong><span class="zh">第一步：硬件组装:</span><span class="en">Step 1: Assembly:</span></strong> <span class="zh">将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。</span><span class="en">Attach the tuning socket and screw in the ergonomic side handle.</span></li>
+                <li><strong><span class="zh">第二步：下载并连接 App:</span><span class="en">Step 2: Connect App:</span></strong> <span class="zh">扫描产品包装内的二维码下载官方 App。开启手机蓝牙，并在 App 内选择您的设备进行配对。</span><span class="en">Scan the QR code to download the app. Enable Bluetooth and pair your device.</span></li>
+                <li><strong><span class="zh">第三步：开始首次调音:</span><span class="en">Step 3: Start Tuning:</span></strong> <span class="zh">将设备套在钢琴的调音钉上，确保卡合稳固。根据 App 提示开始自动调律。<strong>注意：请务必双手握持，以对抗强大的反向扭矩。</strong></span><span class="en">Place the device on a tuning pin. Follow app instructions. <strong>WARNING: Always use both hands to counteract the high torque.</strong></span></li>
+            </ul>
+        </div>
+
+        <div class="card card-spotlight">
+            <h3><span class="zh">常见问题解答 (FAQ)</span><span class="en">Frequently Asked Questions</span></h3>
+             <p><strong><span class="zh">高扭矩输出安全吗？我该如何正确握持？</span><span class="en">Is the high torque output safe? How should I hold it?</span></strong><br><span class="zh">本设备具备工业级高扭矩（额定 10 N·m / 峰值 16 N·m）。为了您的安全和调音精度，务必使用包装内附带的人体工程学侧手柄。请用主手握住带有防滑蒙皮的机身，另一只手紧握侧手柄，以双手形成的合力稳定对抗反向扭矩。</span><span class="en">The device delivers industrial-grade torque (10 N·m rated / 16 N·m peak). For your safety and tuning accuracy, always use the included ergonomic side handle. Hold the grip-coated body with your main hand and the side handle with the other, using both hands together to steadily counteract the reaction force.</span></p><br>
+             <p><strong><span class="zh">固件如何更新？</span><span class="en">How do I update the firmware?</span></strong><br><span class="zh">我们通过蓝牙（BLE）提供 OTA（Over-the-Air）固件升级。当有新固件发布时，您将在 App 内收到推送，根据提示即可一键完成升级，让您的设备不断进化。</span><span class="en">We provide OTA (Over-the-Air) firmware updates via Bluetooth (BLE). When a new firmware is released, you'll be notified in the app and can update with one tap.</span></p>
+        </div>
+
+        <div class="faq-section" style="margin-top: 80px;">
+            <h2 class="section-title"><span class="zh">常见问题解答</span><span class="en">FAQ</span></h2>
+            <div class="faq-container">
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">安全性：它会把我的琴弦弄断吗？</span><span class="en">Safety: Will it break my strings?</span></button>
+                    <div class="faq-answer"><span class="zh">Piano Tuner 内置 StringGuard 张力保护系统，弦张力异常时自动触发熔断保护，多重张力保护，最大限度降低断弦风险。</span><span class="en">Piano Tuner includes the StringGuard tension protection system, which automatically triggers a cut-off when string tension is abnormal — multiple tension safeguards to minimize string-break risk.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">调音一次需要多长时间？</span><span class="en">How long does one tuning take?</span></button>
+                    <div class="faq-answer"><span class="zh">首次完整调音约需 30~45 分钟（88 键全部覆盖）。后续微调模式下仅需 10~15 分钟。系统会智能跳过已达标的键位，只对偏差超标区域执行微调。</span><span class="en">A first full tuning takes about 30–45 minutes (all 88 keys). Subsequent touch-up mode takes only 10–15 minutes. The system intelligently skips keys already in spec and fine-tunes only the out-of-tolerance ranges.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">支持哪些钢琴型号？</span><span class="en">Which pianos are supported?</span></button>
+                    <div class="faq-answer"><span class="zh">支持绝大多数标准 88 键立式钢琴和三角钢琴。系统会根据云端算法自动适配。</span><span class="en">Compatible with most standard 88-key upright and grand pianos. The system auto-adapts via cloud algorithms.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">供电方式是什么？</span><span class="en">How is it powered?</span></button>
+                    <div class="faq-answer"><span class="zh">Piano Tuner 使用标配的电源适配器连接交流电使用，无内置电池。这一设计确保了长时间调音过程中的稳定功率输出，电机驱动全程不掉速，适合专业调律师和连续使用场景。</span><span class="en">Piano Tuner runs on the included AC power adapter with no built-in battery. This ensures stable power output during long tuning sessions with no motor slowdown — ideal for professional tuners and continuous use.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">Pro 版和标准版有什么区别？</span><span class="en">What's the difference between Pro and Standard?</span></button>
+                    <div class="faq-answer"><span class="zh">标准版覆盖基础调音需求。Pro 版解锁 ±0.1 音分 (±0.1 Cents) 极致精度、Turbo 高速模式、高阶 FFT 泛音分析、历史记录追踪，以及钢琴健康报告生成功能。</span><span class="en">Standard covers basic tuning needs. Pro unlocks ±0.1 音分 (±0.1 Cents) precision, Turbo high-speed mode, advanced FFT overtone analysis, history tracking, and piano health report generation.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">可以用在正式演出前的快速检查吗？</span><span class="en">Can I use it for a quick check before a performance?</span></button>
+                    <div class="faq-answer"><span class="zh">完全可以。Quick Check 模式（Pro 专属）可在 5 分钟内扫描全键盘偏差，生成热力图并标注问题键位，无需执行完整调音流程。</span><span class="en">Absolutely. Quick Check mode (Pro only) scans the whole keyboard for deviation in about 5 minutes, generating a heatmap that flags problem keys without running a full tuning.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">什么是无线升级（OTA）？</span><span class="en">What are wireless (OTA) updates?</span></button>
+                    <div class="faq-answer"><span class="zh">无线升级是 Piano Tuner 的无线固件升级功能。通过低功耗蓝牙（BLE），用户可以在 iOS App 内一键接收最新的电机驱动参数、声学采样算法和云端优化模型，无需返厂，硬件持续进化。</span><span class="en">Wireless updates are Piano Tuner's over-the-air firmware upgrades. Via Bluetooth Low Energy (BLE), you can receive the latest motor-drive parameters, acoustic sampling algorithms, and cloud optimization models with one tap in the iOS app — no return to factory, and the hardware keeps evolving.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">如何保证在嘈杂环境下也能准确拾音？</span><span class="en">How does it pick up sound accurately in noisy environments?</span></button>
+                    <div class="faq-answer"><span class="zh">系统采用智能环境降噪双重处理。Pro 版本额外支持 iOS 端实时音频处理，可有效过滤环境噪声，嘈杂环境下依然保持高精度。</span><span class="en">The system uses dual-stage smart noise reduction. Pro additionally supports real-time audio processing on iOS to filter out ambient noise, maintaining high accuracy even in noisy environments.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">对钢琴年份有限制吗？</span><span class="en">Are there limits on the piano's age?</span></button>
+                    <div class="faq-answer"><span class="zh">建议钢琴出厂 5 年以上。对于新琴（&lt; 1 年），弦轴张力尚在稳定期，调律师通常建议等待张力稳定后再进行精细调音。Piano Tuner 的微调策略也会自动适配新琴特性。</span><span class="en">We recommend pianos at least 5 years old. For new pianos (&lt; 1 year), pin tension is still settling, and tuners usually suggest waiting before fine tuning. Piano Tuner's touch-up strategy also auto-adapts to new-piano characteristics.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">在信号差的地方能正常使用吗？</span><span class="en">Can I use it where signal is poor?</span></button>
+                    <div class="faq-answer"><span class="zh">调音核心算法分本地（iOS 端：标准版）和云端（Pro 专属：全局优化，±0.1 音分）两层。基础调音功能完全不依赖网络；Pro 的云端优化在信号恢复后可自动同步结果。</span><span class="en">The core algorithm has two layers: local (iOS, Standard) and cloud (Pro-only global optimization, ±0.1 Cents). Basic tuning works fully offline; Pro's cloud optimization syncs automatically once signal returns.</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title" style="margin-top:70px;"><span class="zh">视频教程库</span><span class="en">Video Tutorials</span></h2>
+        <p class="section-subtitle"><span class="zh">视频教程正在制作中，敬请期待。</span><span class="en">Video tutorials are in production — stay tuned.</span></p>
+        <div class="video-grid">
+            <div class="video-placeholder"><h3><span class="zh">开箱与首次组装</span><span class="en">Unboxing & Assembly</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
+            <div class="video-placeholder"><h3><span class="zh">App 全功能详解</span><span class="en">Full App Walkthrough</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
+            <div class="video-placeholder"><h3><span class="zh">人体工程学手柄的正确用法</span><span class="en">Using the Ergonomic Handle</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
+        </div>
+    </main>
+
+    <footer>
+        <p style="margin-bottom:8px;">
+            <a href="index.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">首页</span><span class="en">Home</span></a>
+            <span style="color: #555;">|</span>
+            <a href="pro.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">Pro 版</span><span class="en">Pro</span></a>
+            <span style="color: #555;">|</span>
+            <a href="support.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">帮助</span><span class="en">Support</span></a>
+            <span style="color: #555;">|</span>
+            <a href="contact.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">联系我们</span><span class="en">Contact</span></a>
+            <span style="color: #555;">|</span>
+            <a href="privacy.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">隐私政策</span><span class="en">Privacy Policy</span></a>
+            <span style="color: #555;">|</span>
+            <a href="terms.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
+        </p>
+        <p style="color: #9a9a9a;">
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+        </p>
+    </footer>
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            if (body.classList.contains('lang-zh')) {
+                body.classList.remove('lang-zh'); body.classList.add('lang-en');
+                document.title = "Piano Tuner | Support Center";
+            } else {
+                body.classList.remove('lang-en'); body.classList.add('lang-zh');
+                document.title = "Piano Tuner | 帮助与支持中心";
+            }
+        }
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                    const btn = i.querySelector('.faq-question');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    q.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Spotlight Card Effect
+        function initSpotlight() {
+            document.querySelectorAll('.card-spotlight').forEach(function(card) {
+                card.addEventListener('mousemove', function(e) {
+                    var rect = card.getBoundingClientRect();
+                    var x = ((e.clientX - rect.left) / rect.width) * 100;
+                    var y = ((e.clientY - rect.top) / rect.height) * 100;
+                    card.style.setProperty('--mx', x + '%');
+                    card.style.setProperty('--my', y + '%');
+                });
+            });
+        }
+        initSpotlight();
+    </script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- SEO 优化 v2 -->
+    <title>钢琴调音机器人 | 自动调音 ±0.1精度 - Piano Tuner</title>
+    <meta name="description" content="自动钢琴调音机器人，精度达±0.1音分，支持88键全音域。云端AI生成专属Railsback曲线，每年可节省¥500+调音费。立式/三角钢琴均适用，¥3499起。">
+    <meta name="keywords" content="钢琴调音,钢琴调音器,自动钢琴调音,智能调音机器人,钢琴调音机器人,钢琴调音费用,钢琴调音价格,钢琴多久调一次,钢琴跑调,立式钢琴调音,三角钢琴调音,钢琴调音APP,钢琴调音上门,Railsback曲线,钢琴音准">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.pianotuner.top/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="钢琴调音机器人 | 自动调音 ±0.1精度 - Piano Tuner">
+    <meta property="og:description" content="自动钢琴调音机器人，精度±0.1音分，每年节省¥500+调音费。立式/三角钢琴均适用，¥3499起。">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://www.pianotuner.top">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="钢琴调音机器人 | 自动调音 ±0.1精度 - Piano Tuner">
+    <meta name="twitter:description" content="自动钢琴调音机器人，精度±0.1音分，每年节省¥500+调音费。">
+
+    <!-- Schema.org Product -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Piano Tuner 智能钢琴调音机器人",
+      "description": "自动钢琴调音机器人，精度±0.1音分，支持88键全音域，适合立式和三角钢琴",
+      "brand": {
+        "@type": "Brand",
+        "name": "液态声学"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "3499",
+        "priceCurrency": "CNY",
+        "availability": "https://schema.org/PreOrder"
+      }
+    }
+    </script>
+
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid #e6a15c;
+            outline-offset: 2px;
+        }
+
+        :root {
+            --primary-color: #e6a15c; 
+            --bg-color: #050505; 
+            --surface-color: #121212;
+            --text-main: #ffffff;
+            --text-muted: #9a9a9a;
+            --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --primary-glow: rgba(230, 161, 92, 0.3);
+            --border-glow: rgba(230, 161, 92, 0.1);
+        }
+
+        .pro-ease { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .card-pro {
+            position: relative;
+            border: 2px solid var(--primary-color) !important;
+            background: linear-gradient(145deg, rgba(230, 161, 92, 0.08) 0%, rgba(5, 5, 5, 1) 100%) !important;
+            box-shadow: 0 0 40px rgba(230, 161, 92, 0.15);
+            overflow: hidden;
+        }
+
+        .card-pro > * { position: relative; z-index: 1; }
+
+        .pro-badge {
+            background: rgba(230, 161, 92, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(230, 161, 92, 0.4);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: inline-block;
+            font-family: var(--font-stack);
+            backdrop-filter: blur(5px);
+        }
+
+        .roi-number {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            background: linear-gradient(180deg, #ffffff 30%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; transition: background 0.3s; }
+        a { text-decoration: none; color: inherit; }
+
+        body.lang-zh .en { display: none !important; }
+        body.lang-en .zh { display: none !important; }
+
+        /* --- 动画定义 --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .reveal { opacity: 0; }
+        .reveal.active { animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+
+        /* --- 导航栏 --- */
+        header {
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
+        .logo-text span { color: var(--primary-color); }
+
+        .nav-center { display: flex; align-items: center; gap: 35px; }
+        .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s ease; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+
+        .lang-switch {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-stack);
+        }
+        .lang-switch:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); }
+
+        .btn-primary {
+            background: var(--primary-color); color: #000; padding: 10px 24px; border-radius: 30px; font-weight: 800;
+            font-size: 13px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-block; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(230, 161, 92, 0.2);
+        }
+        .btn-primary:hover { transform: translateY(-2px) scale(1.02); background: #f3b677; box-shadow: 0 8px 25px rgba(230, 161, 92, 0.4); }
+
+        /* --- 结构与通用样式 --- */
+        .section-padding { padding: 120px 5%; }
+        .section-title { text-align: center; font-size: 42px; margin-bottom: 40px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; }
+        .section-subtitle { text-align: center; font-size: 18px; color: var(--text-muted); max-width: 700px; margin: 0 auto 70px auto; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--surface-color); padding: 40px; border-radius: 24px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.03); transition: transform 0.4s ease, border-color 0.4s ease; }
+        .card:hover { transform: translateY(-8px); border-color: rgba(230, 161, 92, 0.3); }
+        .card-icon { font-size: 48px; margin-bottom: 25px; display: inline-block; }
+        .card h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); letter-spacing: -0.5px; }
+        .card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+
+        /* --- 首屏 Hero --- */
+        .hero { 
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 0 20px; background: radial-gradient(circle at center 30%, #1a1510 0%, var(--bg-color) 60%); 
+        }
+        
+        .hero-content-wrapper {
+            display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; width: 100%;
+        }
+
+        .industry-first-tag {
+            color: var(--primary-color); font-size: 14px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+            margin-bottom: 25px; display: inline-block; padding: 6px 16px; border: 1px solid rgba(230, 161, 92, 0.3); border-radius: 30px;
+        }
+
+        .hero h1 { 
+            font-size: 68px; font-weight: 900; margin: 0 0 25px 0; line-height: 1.15; letter-spacing: 0;
+            background: linear-gradient(180deg, #fff 0%, #aaaaaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            width: 100%; text-align: center;
+        }
+        .hero p { font-size: 20px; color: var(--text-muted); margin: 0 0 50px 0; font-weight: 400; line-height: 1.6; }
+
+        /* --- 工作原理流程 --- */
+        .workflow-section { background: var(--surface-color); border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
+        .step-container { display: flex; max-width: 1000px; margin: 0 auto; gap: 40px; position: relative; }
+        .step-box { flex: 1; text-align: center; position: relative; z-index: 1; }
+        .step-number { width: 60px; height: 60px; background: var(--bg-color); border: 2px solid var(--primary-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; margin: 0 auto 20px auto; box-shadow: 0 0 20px rgba(230, 161, 92, 0.2); }
+        .step-box h4 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+        .step-box p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .step-line { position: absolute; top: 30px; left: 16%; right: 16%; height: 2px; background: linear-gradient(90deg, rgba(230,161,92,0) 0%, rgba(230,161,92,0.3) 50%, rgba(230,161,92,0) 100%); z-index: 0; }
+
+        /* --- FAQ Section --- */
+        .faq-section { background: #000; border-top: 1px solid #1a1a1a; }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { 
+            background: var(--surface-color); border-radius: 16px; margin-bottom: 16px; overflow: hidden; 
+            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; 
+        }
+        .faq-item:hover { border-color: var(--border-glow); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .faq-question {
+            width: 100%; text-align: left; background: transparent; border: none; font-family: var(--font-stack);
+            padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            font-size: 18px; font-weight: 700; color: var(--text-main);
+        }
+        .faq-question::after { 
+            content: "+"; font-size: 24px; color: var(--primary-color); transition: transform 0.3s ease; 
+        }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { 
+            max-height: 0; padding: 0 30px; opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: var(--text-muted); line-height: 1.8; font-size: 15px; 
+        }
+        .faq-item.active .faq-answer { max-height: 400px; padding: 0 30px 30px 30px; opacity: 1; }
+
+        /* --- 硬核迭代时间轴 --- */
+        .timeline-section { background: #000; padding: 100px 5%; border-bottom: 1px solid #1a1a1a; }
+        .timeline { max-width: 800px; margin: 0 auto; position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: rgba(255,255,255,0.1); }
+        .timeline-item { position: relative; margin-bottom: 50px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; top: 5px; left: -36px; width: 14px; height: 14px; background: var(--bg-color); border: 3px solid var(--primary-color); border-radius: 50%; box-shadow: 0 0 10px rgba(230, 161, 92, 0.5); z-index: 2; }
+        .timeline-item.active::before { background: var(--primary-color); box-shadow: 0 0 15px var(--primary-color); }
+        .timeline-version { display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.05); border-radius: 4px; font-size: 12px; font-weight: 800; color: var(--primary-color); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .timeline-item h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        .timeline-item p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+        /* --- 硬核技术解析 --- */
+        .tech-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 80px; }
+        .tech-content { flex: 1; }
+        .tech-content h2 { font-size: 42px; font-weight: 800; margin-bottom: 40px; line-height: 1.1; letter-spacing: -1px;}
+        .tech-list { list-style: none; }
+        .tech-list li { margin-bottom: 35px; display: flex; align-items: flex-start; }
+        .tech-list li::before { content: "✦"; color: var(--primary-color); margin-right: 20px; font-size: 24px; line-height: 1; }
+        .tech-list h4 { font-size: 20px; font-weight: 800; margin-bottom: 10px; color: var(--text-main);}
+        .tech-list p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+        .tech-image { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .pcb-img { max-width: 100%; border-radius: 16px; mix-blend-mode: screen; filter: drop-shadow(0px 0px 30px rgba(230, 161, 92, 0.15)); transition: all 0.5s ease; }
+        .pcb-img:hover { transform: scale(1.05) translateY(-10px) rotateX(5deg); filter: drop-shadow(0px 15px 40px rgba(230, 161, 92, 0.3)); }
+
+        /* --- 硬核参数阵列 --- */
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); max-width: 1000px; margin: 0 auto; border-radius: 16px; overflow: hidden; }
+        .spec-item { background: var(--bg-color); padding: 40px 20px; text-align: center; }
+        .spec-value { font-size: 36px; font-weight: 900; color: var(--primary-color); margin-bottom: 5px; font-family: 'Montserrat', sans-serif; letter-spacing: -1px; }
+        .spec-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 对比表格 --- */
+        .comparison-section { background: #000; padding: 100px 5%; }
+        .comparison-table { width: 100%; max-width: 1000px; margin: 0 auto; border-collapse: collapse; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; background: var(--surface-color); }
+        .comparison-table th, .comparison-table td { padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .comparison-table th { background: rgba(255,255,255,0.02); color: var(--primary-color); font-weight: 800; text-transform: uppercase; font-size: 14px; letter-spacing: 1px; }
+        .comparison-table tr:hover { background: rgba(230, 161, 92, 0.03); }
+        .comparison-table td:first-child { text-align: left; font-weight: 700; color: #fff; width: 25%; }
+        .comparison-table .check { color: #52c41a; font-weight: bold; }
+        .comparison-table .cross { color: #ff4d4f; font-weight: bold; }
+        .comparison-table .highlight { color: var(--primary-color); font-weight: 800; }
+
+        /* --- 底部 CTA --- */
+        .cta-section { text-align: center; padding: 120px 20px; background: linear-gradient(180deg, var(--bg-color) 0%, #161009 100%); }
+        .cta-section h2 { font-size: 48px; font-weight: 900; margin-bottom: 25px; letter-spacing: -1px;}
+        .cta-section p { color: var(--text-muted); margin-bottom: 50px; font-size: 18px; max-width: 600px; margin-left: auto; margin-right: auto;}
+
+        footer { text-align: center; padding: 40px; color: #9a9a9a; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); font-weight: 600;}
+
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 42px; }
+            .tech-container { flex-direction: column-reverse; gap: 40px; }
+            .step-container { flex-direction: column; gap: 30px; }
+            .step-line { display: none; }
+            .nav-links { display: none; }
+            .logo-text { font-size: 18px; }
+            .section-title { font-size: 32px; }
+            .timeline { padding-left: 20px; }
+        }
+    .card-icon svg { width: 46px; height: 46px; display: block; }
+.hero-product { display: block; width: 100%; max-width: 860px; height: auto; margin: 30px auto 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect; pointer-events: none; }
+</style>
+
+<body class="lang-zh">
+    <header>
+        <div class="logo-container" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;">
+                <defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient><filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="blur" /><feComposite in="SourceGraphic" in2="blur" operator="over" /></filter></defs>
+                <g filter="url(#neonGlow)">
+                    <path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" />
+                    <path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)" />
+                    <rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)" />
+                    <rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)" />
+                </g>
+            </svg>
+            <div class="logo-text">PIANO<span>TUNER</span></div>
+        </div>
+
+        <div class="nav-center nav-links">
+            <a href="#how-it-works"><span class="zh">工作原理</span><span class="en">HOW IT WORKS</span></a>
+            <a href="#software"><span class="zh">软件控制</span><span class="en">SOFTWARE</span></a>
+            <a href="#features"><span class="zh">核心优势</span><span class="en">FEATURES</span></a>
+            <a href="#technology"><span class="zh">底层架构</span><span class="en">ARCHITECTURE</span></a>
+            <a href="#roadmap"><span class="zh">硬核迭代</span><span class="en">ROADMAP</span></a>
+            <a href="support.html"><span class="zh">帮助与支持</span><span class="en">SUPPORT</span></a>
+            <a href="index.html#faq"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        </div>
+        <div class="nav-right">
+            <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
+            <a href="pro.html" class="btn-primary" style="background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+            <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content-wrapper" style="animation: fadeInUp 1s ease-out forwards;">
+            <div class="industry-first-tag" style="animation: fadeIn 1.2s ease-out forwards;">
+                <span class="zh">软硬件一体化设计 · 软件算法 + 硬件执行</span>
+                <span class="en">Software-defined tuning hardware · ALGORITHM + HARDWARE</span>
+            </div>
+            
+            <h1 style="animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+                <span class="zh">让每次弹奏<br>都精准如初</span>
+                <span class="en">Keep Every Keystroke<br>Perfectly in Tune.</span>
+            </h1>
+            
+            <p style="animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0;">
+                <span class="zh">全新进化！iOS 原生架构 + 云端增强算法。搭载 FOC 闭环电机，实现全音域 88 键高精度自动化调音。支持 BLE OTA 无线升级，让调音器像手机一样不断进化。</span>
+                <span class="en">Fully Evolved! Native iOS meets Cloud Computing. Powered by FOC closed-loop motors for all 88 keys. Now supports BLE OTA for continuous evolution.</span>
+            </p>
+            
+            <div style="display: flex; gap: 24px; align-items: center; justify-content: center; animation: fadeInUp 1s ease-out 0.5s forwards; opacity: 0;">
+                <a href="buy.html" class="btn-primary" style="padding: 14px 32px; font-size: 15px;"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+                <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="color: var(--text-muted); font-size: 15px; font-weight: 600; text-decoration: none;"><span class="zh">下载 App ›</span><span class="en">Download App ›</span></a>
+            </div>
+            
+            <div class="social-proof" style="margin-top: 35px; animation: fadeInUp 1s ease-out 0.7s forwards; opacity: 0;">
+                <p style="font-size: 14px; color: var(--text-muted); letter-spacing: 0.5px;">
+                    <span class="zh">为专业调音师与钢琴爱好者打造</span>
+                    <span class="en">Built for pro tuners and piano lovers</span>
+                </p>
+            </div>
+        </div>
+        <img class="hero-product" src="hero-product.webp" alt="Piano Tuner 自动钢琴调音机器人" loading="eager" decoding="async">
+    </section>
+
+    <!-- 工作原理流程 -->
+    <section id="how-it-works" class="section-padding workflow-section reveal">
+        <h2 id="start-here" class="section-title"><span class="zh">将复杂的声学物理，化为极简的 3 步</span><span class="en">Complex Physics. 3 Simple Steps.</span></h2>
+        <p class="section-subtitle"><span class="zh">无需懂乐理，无需听“拍音”。把粗重的活儿交给电机，把复杂的数学交给云端。</span><span class="en">No music theory required. Leave the heavy lifting to the motor, and the math to the cloud.</span></p>
+        
+        <div class="step-container">
+            <div class="step-line"></div>
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <h4><span class="zh">安装与连接</span><span class="en">Install & Connect</span></h4>
+                <p><span class="zh">将设备套在钢琴调音弦轴上。通过低功耗蓝牙 (BLE) 建立稳定连接，支持 OTA 远程固件推送，随时更新最新算法。</span><span class="en">Attach the device. Establish a BLE connection. Supports OTA for remote firmware updates and latest algorithm pushes.</span></p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <h4><span class="zh">云端生成曲线</span><span class="en">Cloud Curve Generation</span></h4>
+                <p><span class="zh">云端算法全面升级：引入相邻音符平滑约束，生成更符合真实听感的 Railsback 曲线，带来 ±0.1 音分 (±0.1 Cents) 级的心理声学拉伸。</span><span class="en">Algorithm Upgraded: Now with adjacent note smoothing for a more natural Railsback curve and ±0.1 音分 (±0.1 Cents) psychoacoustic stretch.</span></p>
+            </div>
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <h4><span class="zh">自动闭环微调</span><span class="en">Auto Closed-Loop Tuning</span></h4>
+                <p><span class="zh">空心杯无刷 FOC 电机实时响应，执行端采用高减速比精密行星减速箱动力方案。闭环控制+编码器，静音 40dB，软启动保护机制防止扭矩突变，分毫毕现。</span><span class="en">Coreless brushless FOC motor real-time response with a high-torque precision planetary gearbox. Closed-loop control with encoder, 40dB quiet. Soft-start protection prevents sudden torque changes.</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个性化 Railsback 优化器专栏 -->
+    <section id="railsback" class="section-padding reveal" style="background: #000; border-top: 1px solid rgba(230,161,92,0.1); border-bottom: 1px solid #1a1a1a;">
+        <div class="tech-container">
+            <div class="tech-content">
+                <div class="pro-badge" style="margin-bottom: 20px;"><span class="zh">核心算法订阅</span><span class="en">ALGORITHM SUBSCRIPTION</span></div>
+                <h2 style="font-size: 42px; font-weight: 900; margin-bottom: 25px; line-height: 1.2;"><span class="zh">个性化 Railsback<br>优化器</span><span class="en">Personalized Railsback Optimizer</span></h2>
+                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                    <span class="zh">这不仅是调准，更是调出“灵魂”。通过云端 <b>Basinhopping 全局优化算法</b>，我们能根据您钢琴琴弦的独特物理不谐和性，动态拟合出专属的黄金拉伸曲线。</span>
+                    <span class="en">More than just in tune — it brings out the soul. Using cloud-based <b>Basinhopping global optimization</b>, we dynamically fit a bespoke golden stretch curve to your piano strings' unique inharmonicity.</span>
+                </p>
+                <div style="background: rgba(230, 161, 92, 0.05); border-left: 4px solid var(--primary-color); padding: 25px; border-radius: 8px; cursor: pointer; transition: all 0.3s;" onclick="location.href='buy_railsback.html'">
+                    <p style="font-weight: 700; color: #fff; margin-bottom: 12px;"><span class="zh">年度算法服务包</span><span class="en">Annual Algorithm Service</span></p>
+                    <ul style="list-style: none; font-size: 15px; color: var(--text-muted);">
+                        <li style="margin-bottom: 10px;">✦ <span class="zh">±0.1 音分实验室级采样精度</span><span class="en">±0.1 Cents lab-grade sampling precision</span></li>
+                        <li style="margin-bottom: 10px;">✦ <span class="zh">云端多核并行算力分发</span><span class="en">Cloud multi-core parallel computing</span></li>
+                        <li>✦ <span class="zh">适配 88 键全音域极致拉伸</span><span class="en">Full 88-key stretch optimization</span></li>
+                    </ul>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <span style="display: inline-block; background: var(--primary-color); color: #000; padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 800; text-transform: uppercase;">
+                            <span class="zh">即将开放</span><span class="en">Coming Soon</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="tech-image" style="position: relative;">
+                <img src="railsback_curve.png" alt="Railsback Curve" class="curve-img" style="max-width: 500px; border-radius: 20px; border: 1px solid rgba(230,161,92,0.2); box-shadow: 0 0 50px rgba(230,161,92,0.1);">
+            </div>
+        </div>
+    </section>
+
+    <!-- 软件与算法可视化 -->
+    <section id="software" class="section-padding reveal" style="background: #000; overflow: hidden; border-bottom: 1px solid #1a1a1a;">
+        <div class="tech-container">
+            <div class="tech-content">
+                <div class="industry-first-tag">
+                    <span class="zh">软件定义硬件</span>
+                    <span class="en">SOFTWARE DEFINED HARDWARE</span>
+                </div>
+                <h2><span class="zh">极客级调律终端，<br>掌控每一颗泛音。</span><span class="en">Geek-Level Console.<br>Master Every Partial.</span></h2>
+                <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 16px;">
+                    <span class="zh">Piano Tuner 不仅仅是一个电机。配套 App 集成了 vDSP 级实时频谱分析、动态力矩监测以及云端全局优化引擎。无论是在 iPad 还是 iPhone 上，你都能直观看到调音过程中的每一个物理细节。</span>
+                    <span class="en">Piano Tuner is more than just a motor. The App integrates vDSP real-time spectrum analysis, dynamic torque monitoring, and cloud-based global optimization. Visualize every physical detail on your iPad or iPhone.</span>
+                </p>
+                <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" class="btn-primary" style="display:inline-block; padding:14px 28px;"><span class="zh">在 TestFlight 下载 iOS App</span><span class="en">Download iOS App on TestFlight</span></a>
+                <ul class="tech-list">
+                    <li>
+                        <div>
+                            <h4><span class="zh">vDSP 实时声学捕捉</span><span class="en">vDSP Real-time Capture</span></h4>
+                            <p><span class="zh">利用 Apple Accelerate 框架实现超低延迟的 FFT 采样，精准剥离基频与高阶泛音，哪怕在嘈杂环境也能稳定锁定音准。</span><span class="en">Ultra-low latency FFT using Apple Accelerate framework, isolating fundamental and partials even in noisy rooms.</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h4><span class="zh">可视化 Railsback 拟合</span><span class="en">Visual Railsback Fitting</span></h4>
+                            <p><span class="zh">通过全局优化算法，实时渲染出属于你这台钢琴的专属拉伸曲线。每一个音符的离散点都清晰可见，调音从此告别“玄学”。</span><span class="en">Real-time rendering of your piano's unique stretch curve via global optimization. No more guesswork, just data.</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tech-image">
+                <img src="software_preview.png" alt="Piano Tuner 软件界面预览" class="pcb-img" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心优势 -->
+    <section id="features" class="section-padding reveal">
+        <h2 class="section-title"><span class="zh">让专业调音更易获得</span><span class="en">Making pro tuning more accessible</span></h2>
+        <div class="grid-3" style="margin-top: 50px;">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 21V10"/><path d="M10 14l4-4 4 4"/><path d="M8 7.5a8.5 8.5 0 0 1 12 0" opacity=".5"/><path d="M10.5 10.6a5 5 0 0 1 7 0" opacity=".8"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">BLE OTA 无线进化</span><span class="en">BLE OTA Wireless Evolution</span></h3>
+                <p><span class="zh">支持调音硬件 OTA 架构。通过手机 App 即可一键为调音器推送最新的 FOC 驱动参数和声学采样逻辑，让你的硬件持续进化。</span><span class="en">OTA for tuning hardware. Push the latest FOC drivers and acoustic logic via the App, keeping your gear forever young.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="2.4"/><circle cx="6.5" cy="7" r="1.7"/><circle cx="21.5" cy="7" r="1.7"/><circle cx="6.5" cy="21" r="1.7"/><circle cx="21.5" cy="21" r="1.7"/><path d="M8 8.2l4 4M20 8.2l-4 4M8 19.8l4-4M20 19.8l-4-4"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">增强型 Railsback 算法</span><span class="en">Enhanced Railsback Logic</span></h3>
+                <p><span class="zh">不再死板追求数学纯律。通过 Basinhopping 全局优化与平滑度正则化，完美重现顶级调音师的“黄金拉伸”手感。</span><span class="en">Beyond mathematical pure tuning. Uses Basinhopping and smoothness regularization to recreate the "Golden Stretch" of master tuners.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="3.4"/><path d="M14 4v3.2M14 20.8V24M4 14h3.2M20.8 14H24M6.9 6.9l2.3 2.3M18.8 18.8l2.3 2.3M21.1 6.9l-2.3 2.3M9.2 18.8l-2.3 2.3"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">工业级动力系统</span><span class="en">Industrial Drive System</span></h3>
+                <p><span class="zh">空心杯无刷 FOC 电机（额定 10 N·m / 峰值 16 N·m）+ 精密行星减速箱，闭环控制+编码器，40dB 静音运行，5 年免维护寿命，无惧任何陈年顽固弦轴。</span><span class="en">Coreless brushless FOC motor (10 N·m rated / 16 N·m peak) + precision planetary gearbox, closed-loop control with encoder, 40dB quiet operation, 5-year maintenance-free lifespan, to handle even the most stubborn vintage pins.</span></p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3l2.5-7 4 14 3-10 2 6 2.5-3H25"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">自适应采样率适配</span><span class="en">Adaptive Sample-Rate</span></h3>
+                <p><span class="zh">底层音频引擎自动适配硬件采样率，配合全新设计的平滑可视化仪表盘，让调音过程精准、直观且永不漂移。</span><span class="en">Audio engine auto-locks to hardware sample rates. Now with a smoothed visual dashboard for ultra-direct feedback.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5" width="19" height="18" rx="2.5"/><path d="M9.3 5v18M14 5v18M18.7 5v18"/><path d="M11.6 5v7.6M16.4 5v7.6" stroke-width="3.4"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">全音域 88 键剥离</span><span class="en">Full 88-Key Isolation</span></h3>
+                <p><span class="zh">系统支持低音区单弦、中音区双弦、高音区三弦独立剥离引导采样，保证原始声学数据的极端纯净。</span><span class="en">Guides you to isolate and sample monochord, bichord, and trichord zones independently, ensuring ultimate data purity.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7.5" y="7.5" width="13" height="13" rx="2.5"/><rect x="11.5" y="11.5" width="5" height="5" rx="1"/><path d="M11.2 7.5V4.5M16.8 7.5V4.5M11.2 23.5v-3M16.8 23.5v-3M7.5 11.2H4.5M7.5 16.8H4.5M23.5 11.2h-3M23.5 16.8h-3"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">极简执行节点设计</span><span class="en">Minimalist Node Design</span></h3>
+                <p><span class="zh">采用高性价比 ESP32 作为纯执行节点，将算力移至云端与手机。极限压缩硬件成本与体积，让专业调音触手可及。</span><span class="en">Uses ESP32 purely as an execution node, moving computation to the cloud. Drastically reducing hardware cost and size.</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心对比表格 -->
+    <section class="section-padding comparison-section reveal">
+        <h2 class="section-title"><span class="zh">为什么选择 Piano Tuner？</span><span class="en">Why Choose Piano Tuner?</span></h2>
+        <p class="section-subtitle"><span class="zh">对比传统调音方式，我们不仅是更便宜，更是更精准。</span><span class="en">Beyond affordability, we bring superior precision.</span></p>
+        
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th><span class="zh">核心维度</span><span class="en">DIMENSIONS</span></th>
+                        <th><span class="zh">传统人工调音</span><span class="en">MANUAL TUNING</span></th>
+                        <th class="highlight"><span class="zh">PIANO TUNER (V2.0)</span><span class="en">PIANO TUNER</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="zh">进化能力</span><span class="en">Upgradability</span></td>
+                        <td><span class="zh">无</span><span class="en">None</span></td>
+                        <td class="highlight"><span class="zh">支持 BLE OTA 无线升级</span><span class="en">Supports BLE OTA</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="zh">调音精度</span><span class="en">Precision</span></td>
+                        <td><span class="zh">依赖个人听觉</span><span class="en">Subjective</span></td>
+                        <td class="highlight"><span class="zh">±0.1 音分 (±0.1 Cents) + 平滑正则项</span><span class="en">±0.1 音分 (±0.1 Cents) + Smoothing</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="zh">扭矩输出</span><span class="en">Torque</span></td>
+                        <td><span class="zh">受人力限制</span><span class="en">Human Limited</span></td>
+                        <td class="highlight"><span class="zh">10 N·m额定/16 N·m峰值 (约 2.5 倍人力)</span><span class="en">10 N·m额定/16 N·m峰值 (2.5x Human)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="zh">Railsback 曲线</span><span class="en">Curve</span></td>
+                        <td><span class="zh">凭经验估算</span><span class="en">Estimated</span></td>
+                        <td class="highlight"><span class="zh">云端多核并行全局优化</span><span class="en">Cloud-Parallel Optimized</span></td>
+                    </tr>
+                    <tr style="background: rgba(230, 161, 92, 0.05);">
+                        <td><span class="zh">专业版扩展 (Pro)</span><span class="en">Pro Tier</span></td>
+                        <td><span class="zh">-</span><span class="en">-</span></td>
+                        <td class="highlight"><span class="zh">支持！解锁 Turbo 模式与高阶 FFT</span><span class="en">YES! Turbo & High-Res FFT</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 回本计算器 (ROI Calculator) -->
+    <section class="section-padding reveal" style="background: radial-gradient(circle at 50% 50%, #1a1510 0%, #000 100%);">
+        <h2 class="section-title"><span class="zh">一次投入，长期省心</span><span class="en">A long-term saving</span></h2>
+        <p class="section-subtitle"><span class="zh">根据您的身份，计算 Piano Tuner 能为您节省或创造多少价值。</span><span class="en">Calculate how much value Piano Tuner saves or creates for you.</span></p>
+
+        <div style="max-width: 1000px; margin: 0 auto; display: flex; gap: 30px; flex-wrap: wrap;">
+            <!-- 用户卡片：钢琴拥有者 -->
+            <div class="card" style="flex: 1; min-width: 320px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5L14 5l9.5 7.5"/><path d="M7 11v11h10V11"/><path d="M12 22v-5h4v5"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">我是钢琴拥有者</span><span class="en">I am a Piano Owner</span></h3>
+                <p style="margin-bottom: 30px;"><span class="zh">终结每年高昂的人工调音支出，让钢琴始终处于巅峰状态。</span><span class="en">End expensive annual tuning fees and keep your piano in peak condition.</span></p>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                        <span class="zh">单次人工费 (参考值)</span><span class="en">Manual Fee (Ref)</span>
+                        <span style="color: var(--primary-color); font-weight: 800;">¥500 / $200</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px;">
+                        <span class="zh">回本周期</span><span class="en">Breakeven</span>
+                        <span style="color: #52c41a; font-weight: 800;"><span class="zh">约 6 次调音</span><span class="en">~6 Tunings</span></span>
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 13px; color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">
+                    <span class="zh">十年预计节省：¥10,000+</span>
+                    <span class="en">10-Year Savings: $4,000+</span>
+                </div>
+            </div>
+
+            <!-- 用户卡片：专业调音师 -->
+            <div class="card card-pro pro-ease" style="flex: 1; min-width: 320px;">
+                <div style="margin-bottom: 15px;">
+                    <span class="pro-badge"><span class="zh">生产力倍增计划</span><span class="en">PRODUCTIVITY MULTIPLIER</span></span>
+                </div>
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h7M16 8h7M5 16h11M20 16h3"/><circle cx="14" cy="8" r="2.3"/><circle cx="18" cy="16" r="2.3"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">我是专业调音师</span><span class="en">I am a Pro Tuner</span></h3>
+                <p style="margin-bottom: 30px;"><span class="zh">解锁专业版功能，用极速调音和数字化报告实现业务溢价。</span><span class="en">Unlock Pro features for faster tuning and premium digital reports.</span></p>
+                
+                <div style="background: rgba(0,0,0,0.5); padding: 25px; border-radius: 16px; margin-bottom: 25px; border: 1px solid rgba(230,161,92,0.2); backdrop-filter: blur(10px);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px;">
+                        <span class="zh" style="color: var(--text-muted); font-weight: 700;">生产力倍增</span><span class="en" style="color: var(--text-muted); font-weight: 700;">Productivity</span>
+                        <span class="roi-number">300% <small style="font-size: 11px; font-weight: 700; opacity: 0.7;">(3x Speed)</small></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
+                        <span class="zh" style="color: var(--text-muted); font-weight: 700;">回本周期</span><span class="en" style="color: var(--text-muted); font-weight: 700;">Breakeven</span>
+                        <span style="color: #52c41a; font-weight: 900; font-family: var(--font-stack); font-size: 16px;"><span class="zh">仅需 3-5 个项目</span><span class="en">Only 3-5 Projects</span></span>
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 12px; color: var(--primary-color); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-stack);">
+                    <span class="zh">数字化赋能：单次服务溢价 20-50%</span>
+                    <span class="en">Digital reports: +20-50% service premium</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 硬核技术解析 -->
+    <section id="technology" class="tech-section reveal">
+        <div class="tech-container">
+            <div class="tech-image">
+                <img src="pcb.png" alt="Piano Tuner 智能钢琴调音机器人 PCBA 板" class="pcb-img">
+            </div>
+            <div class="tech-content">
+                <h2><span class="zh">底层架构重塑，<br>让硬件具备灵魂。</span><span class="en">Rebuilding the Core.<br>Hardware with a Soul.</span></h2>
+                <ul class="tech-list">
+                    <li>
+                        <div>
+                            <h4><span class="zh">OTA 差分更新架构</span><span class="en">OTA Differential Update</span></h4>
+                            <p><span class="zh">执行端预留双分区断电保护升级，支持在不拆机的情况下通过蓝牙更新 FOC 驱动逻辑，适应各种钢琴弦轴阻力特性。</span><span class="en">Dual-bank power-loss protected OTA allows updating FOC logic via BLE without disassembly, adapting to various pin resistance.</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h4><span class="zh">云端并行全局优化 (Numba 加速)</span><span class="en">Cloud-Parallel Numba Optimization</span></h4>
+                            <p><span class="zh">服务器利用 ProcessPoolExecutor 榨干多核性能，配合 Numba JIT 即时编译，将复杂的 Railsback 非线性优化耗时缩短至秒级。</span><span class="en">The server uses ProcessPoolExecutor and Numba JIT to cut non-linear optimization time to seconds.</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h4><span class="zh">FOC 闭环动力单元</span><span class="en">FOC Closed-Loop Drive</span></h4>
+                            <p><span class="zh">基于空心杯无刷 FOC 电机+精密行星减速箱，实现亚度级的转角分辨率，闭环控制+编码器，静音 40dB，5 年免维护寿命，PID 响应速度 &lt; 50ms，确保在调音临界点实现精准锁死。</span><span class="en">Based on coreless brushless FOC motor + precision planetary gearbox, achieving sub-degree angular resolution with closed-loop control + encoder, 40dB quiet, 5-year lifespan, PID response &lt; 50ms for precise locking.</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-padding faq-section reveal">
+        <h2 class="section-title"><span class="zh">常见问题解答</span><span class="en">Frequently Asked Questions</span></h2>
+        <p class="section-subtitle"><span class="zh">针对安全、精度及适配性的深度解答。</span><span class="en">In-depth answers about safety, precision and compatibility.</span></p>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false"><span class="zh">安全性：它会把我的琴弦弄断吗？</span><span class="en">Safety: Will it break my strings?</span></button>
+                <div class="faq-answer">
+                    <span class="zh">这是我们设计 2.0 时的首要任务。Piano Tuner 搭载了 <b>StringGuard 张力保护系统</b>。它通过高频率监测电机扭矩和实时音高，一旦发现张力上升异常（如由于弦轴生锈导致的瞬间阻力过大），系统会在 10 毫秒内自动断电并反向卸力。</span>
+                    <span class="en">This is our top priority. Powered by <b>StringGuard 张力保护系统</b>, the system monitors torque and pitch at high frequency. It auto-stops and reverses within 10ms if any tension anomaly is detected.</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false"><span class="zh">精度：调出来的音准真的比人工准吗？</span><span class="en">Precision: Is it more accurate than a human?</span></button>
+                <div class="faq-answer">
+                    <span class="zh">Piano Tuner 采用基于 Python 科学计算的 Railsback 曲线算法。相比于人耳，我们的传感器精度可达 <b>±0.1 音分 (Cents)</b>。它不仅能调准，还能根据每台钢琴的弦张力特性自动优化“音律拉伸”，确保从低音到高音的整体和谐度达到音乐厅级标准。</span>
+                    <span class="en">Using Python-based Railsback algorithms, our sensors achieve <b>±0.1 Cents</b> precision, automatically optimizing "stretch" for concert-hall grade harmony.</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false"><span class="zh">适配性：我的钢琴可以用吗？</span><span class="en">Compatibility: Will it work on my piano?</span></button>
+                <div class="faq-answer">
+                    <span class="zh">Piano Tuner 采用了<b>通用六角接头设计</b>，兼容绝大多数立式与三角钢琴。只要您的钢琴弦轴是标准的，我们的机器就能良好适配。</span>
+                    <span class="en">The universal hexagonal head is compatible with most uprights and grands. If your tuning pins are standard, it works.</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false"><span class="zh">操作难度：我完全不会调律也能上手吗？</span><span class="en">Ease of Use: Can I use it without experience?</span></button>
+                <div class="faq-answer">
+                    <span class="zh">完全可以。我们的 App 经过了简化设计。您只需要将机器套在弦轴上，拨动琴弦，App 就会自动识别当前音高并驱动电机旋转到目标位置。您不需要具备任何音乐理论或调律经验。</span>
+                    <span class="en">Absolutely. Just attach the device and pluck the string; the system handles the rest. No music theory required.</span>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false"><span class="zh">售后：如果遇到软件更新或硬件问题怎么办？</span><span class="en">Support: What about software or hardware issues?</span></button>
+                <div class="faq-answer">
+                    <span class="zh">我们提供 <b>OTA 在线固件升级</b>。随着我们算法的不断进化，您的机器会越来越智能。硬件方面，我们提供一年质保和长期的技术支持。</span>
+                    <span class="en">We provide <b>OTA updates</b> for continuous software evolution, plus a one-year warranty and long-term hardware support.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目迭代时间轴 -->
+    <section id="roadmap" class="timeline-section reveal">
+        <h2 class="section-title" style="color: #fff;"><span class="zh">硬核进化的足迹</span><span class="en">Evolution Roadmap</span></h2>
+        
+        <div class="timeline">
+             <!-- V1.0 -->
+            <div class="timeline-item">
+                <span class="timeline-version">V1.0 - The Genesis</span>
+                <h3><span class="zh">基础音准检测与原型验证</span><span class="en">Basic Detection & PoC</span></h3>
+                <p>
+                    <span class="zh">验证了“算法+电机”替代人工调音的可行性。在主控端实现了基础的频域分析，完成第一代 PCB 手工焊接与步进电机转动闭环测试，证实了物理调律的机械可行性。</span>
+                    <span class="en">Validated the feasibility of "Algorithm + Motor". Implemented basic frequency analysis and the first generation of handmade PCB, proving mechanical viability.</span>
+                </p>
+            </div>
+            
+            <!-- V2.0 (当前) -->
+            <div class="timeline-item active">
+                <span class="timeline-version" style="background: rgba(230, 161, 92, 0.2); border: 1px solid var(--primary-color);">V2.0 - Evolved Stage (Now)</span>
+                <h3><span class="zh">OTA 集成与算法平滑化</span><span class="en">OTA Integration & Smooth Logic</span></h3>
+                <p>
+                    <span class="zh">重大更新！2026年3月初，我们正式为 V2.0 引入了 BLE OTA 无线升级功能，并重构了云端 calculation 模块。新算法加入了心理声学拉伸 (±0.1 音分 / ±0.1 Cents) 与平滑度约束，实现了软硬件的“深度进化”。</span>
+                    <span class="en">Significant Update! In March 2026, we officially introduced BLE OTA and refactored the cloud calculation module with psychoacoustic stretch and smoothness constraints.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部转化 -->
+    <section id="join" class="cta-section reveal">
+        <h2><span class="zh">进化，永无止境</span><span class="en">Evolution Never Stops</span></h2>
+        <p><span class="zh">V2.0 原型机已集成最新 OTA 架构。现在加入内测，你的调音器将随我们的算法更新 engagement 而同步进化。</span><span class="en">The V2.0 prototype now features the OTA architecture. Join now and your tuner will evolve alongside our algorithms.</span></p>
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <a href="buy.html" class="btn-primary" style="padding: 16px 45px; font-size: 16px;"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+            <a href="pro.html" class="btn-primary" style="padding: 16px 45px; font-size: 16px; background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);"><span class="zh">了解专业版授权</span><span class="en">Pro License Info</span></a>
+        </div>
+    </section>
+
+        <footer>
+        <p style="margin-bottom: 15px;">
+            <a href="support.html" style="color: var(--text-muted); margin: 0 15px;"><span class="zh">帮助与支持中心</span><span class="en">Support Center</span></a>
+            <span style="color: #9a9a9a;">|</span>
+            <a href="index.html#faq" style="color: var(--text-muted); margin: 0 15px;"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+            <span style="color: #9a9a9a;">|</span>
+            <a href="contact.html" style="color: var(--text-muted); margin: 0 15px;"><span class="zh">联系我们</span><span class="en">Contact</span></a>
+            <span style="color: #9a9a9a;">|</span>
+            <a href="privacy.html" style="color: var(--text-muted); margin: 0 15px;"><span class="zh">隐私政策</span><span class="en">Privacy Policy</span></a>
+            <span style="color: #9a9a9a;">|</span>
+            <a href="terms.html" style="color: var(--text-muted); margin: 0 15px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
+        </p>
+        <p><span class="zh">&copy; 2026 Piano Tuner Team (v0id & Melt). 用创新造就美好. All rights reserved.</span><span class="en">&copy; 2026 Piano Tuner Team (v0id & Melt). Innovating for a better melody. All rights reserved.</span></p>
+    </footer>
+
+    <script>
+        window.onload = function() { setTimeout(function() { window.scrollTo(0, 0); }, 10); };
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                    const btn = i.querySelector('.faq-question');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    q.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+        function toggleLanguage() {
+            const body = document.body;
+            if (body.classList.contains('lang-zh')) {
+                body.classList.remove('lang-zh'); body.classList.add('lang-en');
+                document.title = "Piano Tuner | Smart Piano Tuning Robot";
+            } else {
+                body.classList.remove('lang-en'); body.classList.add('lang-zh');
+                document.title = "Piano Tuner | 智能钢琴调音机器人";
+            }
+        }
+    </script>
+    <div style="text-align: center; padding: 40px 20px; background: #000; border-top: 1px solid rgba(255,255,255,0.05);">
+        <p style="font-size: 12px; color: #9a9a9a; letter-spacing: 1px; line-height: 1.8;">
+            <span class="zh"><b>知识产权保护声明</b>：Piano Tuner 核心算法、硬件结构及全闭环控制逻辑已进入专利申请程序 (专利申请号: 202610321775.1)。未经授权，严禁任何形式的商业拆解、逆向工程或仿造，违者必究。</span>
+            <span class="en"><b>INTELLECTUAL PROPERTY NOTICE</b>: The core algorithms, hardware architecture, and closed-loop control logic of Piano Tuner are patent pending (Application No. 202610321775.1). Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
+        </p>
+    </div>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"303805ef181846858fe7072a9fd1739a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"303805ef181846858fe7072a9fd1739a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"303805ef181846858fe7072a9fd1739a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
