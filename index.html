@@ -653,8 +653,8 @@
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false"><span class="zh">精度：调出来的音准真的比人工准吗？</span><span class="en">Precision: Is it more accurate than a human?</span></button>
                 <div class="faq-answer">
-                    <span class="zh">Piano Tuner 采用基于 Python 科学计算的 Railsback 曲线算法。相比于人耳，我们的传感器精度可达 <b>±1 音分 (Cents)</b>。它不仅能调准，还能根据每台钢琴的弦张力特性自动优化“音律拉伸”，确保从低音到高音的整体和谐度达到音乐厅级标准。</span>
-                    <span class="en">Using Python-based Railsback algorithms, our sensors achieve <b>±1 Cents</b> precision, automatically optimizing "stretch" for concert-hall grade harmony.</span>
+                    <span class="zh">Piano Tuner 采用端侧 Swift + Accelerate (vDSP) 实时计算的 Railsback 曲线算法，可稳定调准至 <b>±1 音分 (Cents)</b>。它不仅能调准，还能根据每台钢琴的弦张力特性自动优化“音律拉伸”，确保从低音到高音的整体和谐度达到音乐厅级标准。</span>
+                    <span class="en">Piano Tuner uses an on-device Swift + Accelerate (vDSP) Railsback algorithm and reliably tunes to within <b>±1 Cent</b>, automatically optimizing "stretch" for concert-hall grade harmony.</span>
                 </div>
             </div>
 
