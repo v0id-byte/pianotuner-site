@@ -175,6 +175,7 @@
         .card-icon { font-size: 48px; margin-bottom: 25px; display: inline-block; }
         .card h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); letter-spacing: -0.5px; }
         .card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+        .hl { color: var(--primary-color); font-weight: 700; }
 
         /* --- 首屏 Hero --- */
         .hero { 
@@ -500,6 +501,57 @@
                 <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a9 9 0 0 1 14.5-2"/><path d="M23 6v5h-5"/><path d="M23 20a9 9 0 0 1-14.5 2"/><path d="M5 22v-5h5"/></svg></div>
                 <h3 style="color:var(--primary-color)"><span class="zh">过拉自校正</span><span class="en">Overtwist Self-Correction</span></h3>
                 <p><span class="zh">回扳时连续采集 5 次测量取中位数再校正，有效抵消弦轴摩擦带来的回弹误差，锁定目标音高。</span><span class="en">On overtwist, five measurements are taken and the median drives the correction, canceling the rebound from pin friction to lock onto the target pitch.</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🎼 声学引擎 (DSP) -->
+    <section class="section-padding reveal" style="background: #000; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;">
+        <h2 class="section-title"><span class="zh">听得比人耳更细，<br>连<span class="hl">最难的低音</span>也稳</span><span class="en">Finer than the human ear —<br>steady even in the <span class="hl">hardest bass</span></span></h2>
+        <p class="section-subtitle"><span class="zh">钢琴最难调的是低音区：泛音密集、易被杂音污染。一套真正的端侧信号处理引擎，把它驯服。</span><span class="en">The bass is where tuning gets hard — dense partials, easily masked by noise. A real on-device DSP engine tames it.</span></p>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="6.5"/><circle cx="6" cy="6" r="1.4"/><circle cx="22.5" cy="7" r="1.4"/><circle cx="5.5" cy="21" r="1.4"/><circle cx="23" cy="21" r="1.4"/><circle cx="14" cy="14" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">RANSAC 谐波净化</span><span class="en">RANSAC Harmonic Filtering</span></h3>
+                <p><span class="zh">低音泛音密集、易被锤击声污染。统计抽样自动剔除"假泛音"，只相信可靠谐波，把玄学低音变成<span class="hl">可复现的科学</span>。</span><span class="en">The bass is a thicket of partials muddied by the hammer strike. Statistical sampling rejects the false ones and trusts only reliable harmonics — turning the black art of bass into <span class="hl">reproducible science</span>.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M17 17l5 5"/><path d="M9 12h2l1.5-3 2 6 1.5-3H19"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">Zoom-FFT 低音超分辨</span><span class="en">Zoom-FFT Bass Resolution</span></h3>
+                <p><span class="zh">在 27Hz 这样的极低音，普通频谱根本看不清。频谱放大 + 自回归超分辨，把分辨率推到 <span class="hl">0.01 赫兹级</span>，看清每一丝偏差。</span><span class="en">At frequencies as low as 27 Hz an ordinary spectrum is a blur. Spectral zoom plus auto-regressive super-resolution pushes effective resolution to <span class="hl">about 0.01 Hz</span> — every fraction of a cent, visible.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0"/><path d="M2 18c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0" opacity=".4"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">相位声码器精修</span><span class="en">Phase-Vocoder Refinement</span></h3>
+                <p><span class="zh">用相邻帧的相位信息，在不放慢响应的前提下把频率精度再提<span class="hl">一个量级</span>——实时与精准，这次都要。</span><span class="en">Phase information across frames sharpens frequency accuracy by <span class="hl">an order of magnitude</span> — without slowing the response. Real-time and precise, at once.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v-2M7.5 18V10M12 14v-4M16.5 20V6M21 16v-6M25 15v-2"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">自适应噪声门</span><span class="en">Adaptive Noise Gate</span></h3>
+                <p><span class="zh">实时测量环境噪声、避开敲键瞬间的杂音，只在干净信号上锁定音高，<span class="hl">吵闹房间里也不乱跳</span>。</span><span class="en">It measures the room in real time and skips the hammer's attack transient, locking pitch only on clean signal — <span class="hl">no jitter in a noisy room</span>.</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 💡 为你而生 -->
+    <section class="section-padding reveal">
+        <h2 class="section-title"><span class="zh">把专业经验，<br>变成<span class="hl">谁都会用</span>的体验</span><span class="en">A pro's expertise,<br>made usable by <span class="hl">anyone</span></span></h2>
+        <p class="section-subtitle"><span class="zh">从麦克风怎么放，到每台琴的成长曲线，复杂的事我们替你想好了。</span><span class="en">From where to hold your phone to each piano's progress over time — the hard parts, handled.</span></p>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="6" height="13" rx="3"/><path d="M7 13a7 7 0 0 0 14 0M14 20v4M10 24h8"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">麦克风摆位引导</span><span class="en">Mic-Placement Coach</span></h3>
+                <p><span class="zh"><span class="hl">5 星实时评级</span>帮你找到最佳采集位置，零基础也能采到专业级数据。</span><span class="en">A live <span class="hl">5-star meter</span> guides you to the best spot — pro-grade data, no experience needed.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V5M4 22h20"/><path d="M7 18l5-5 4 3 7-8"/><path d="M23 6v4h-4"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">多琴档案 · 历史趋势</span><span class="en">Multi-Piano History</span></h3>
+                <p><span class="zh">按琴保存档案与每次调律的误差趋势。琴主看见琴在变好，调音师拥有一份<span class="hl">随身客户档案</span>。</span><span class="en">Per-piano profiles and tuning-error trends over time. Owners watch their piano improve; pros get a <span class="hl">pocket CRM</span>.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 8A10 10 0 1 0 24 14"/><path d="M14 9v5l4 2"/><path d="M23 4v5h-5"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">数据飞轮（可选·匿名）</span><span class="en">Data Flywheel (opt-in)</span></h3>
+                <p><span class="zh">在你授权下匿名贡献调音数据，帮助算法持续进化。<span class="hl">默认关闭、随时可关</span>——隐私优先。</span><span class="en">With your permission, anonymous tuning data helps the algorithm keep improving. <span class="hl">Off by default, always optional</span> — privacy first.</span></p>
             </div>
         </div>
     </section>
