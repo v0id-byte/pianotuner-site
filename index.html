@@ -62,7 +62,7 @@
         }
 
         :root {
-            --primary-color: #e6a15c; 
+            --primary-color: #e6a15c; --accent-cool: #2dd4bf; 
             --bg-color: #050505; 
             --surface-color: #121212;
             --text-main: #ffffff;
@@ -175,7 +175,7 @@
         .card-icon { font-size: 48px; margin-bottom: 25px; display: inline-block; }
         .card h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); letter-spacing: -0.5px; }
         .card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
-        .hl { color: var(--primary-color); font-weight: 700; }
+        .hl { color: var(--primary-color); font-weight: 700; } .hl-cool { color: var(--accent-cool); font-weight: 700; }
 
         /* --- 首屏 Hero --- */
         .hero { 
@@ -296,7 +296,12 @@
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
   mask-composite: intersect; pointer-events: none; }
-</style>
+        /* —— Apple 式丝滑动效 —— */
+        .reveal.active { animation: fadeIn 0.9s ease forwards; }
+        .stg-item { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+        .stg-item.in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce){ .stg-item{ transition:none!important; transform:none!important; opacity:1!important } .hero-product{ transform:none!important } }
+    </style>
 
 <body class="lang-zh">
     <header>
@@ -343,8 +348,8 @@
             </h1>
             
             <p style="animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0;">
-                <span class="zh">全新进化！iOS 原生架构 + 端侧实时算法。搭载 FOC 闭环电机，实现全音域 88 键高精度自动化调音。支持 BLE OTA 无线升级，让调音器像手机一样不断进化。</span>
-                <span class="en">Fully Evolved! Native iOS with on-device computing. Powered by FOC closed-loop motors for all 88 keys. Now supports BLE OTA for continuous evolution.</span>
+                <span class="zh">让整台钢琴，回到出厂般的精准——自动、稳定、可进化。</span>
+                <span class="en">Bring your whole piano back to factory-fresh precision — automatic, steady, ever-evolving.</span>
             </p>
             
             <div style="display: flex; gap: 24px; align-items: center; justify-content: center; animation: fadeInUp 1s ease-out 0.5s forwards; opacity: 0;">
@@ -362,8 +367,20 @@
         <img class="hero-product" src="hero-product.webp" alt="Piano Tuner 自动钢琴调音机器人" loading="eager" decoding="async">
     </section>
 
-    <!-- 工作原理流程 -->
-    <section id="how-it-works" class="section-padding workflow-section reveal">
+    <!-- 速览好处 -->
+    <section class="section-padding reveal" style="padding-top:100px;padding-bottom:100px;">
+        <h2 class="section-title"><span class="zh">一眼看懂</span><span class="en">The highlights</span></h2>
+        <div class="stg" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px 40px;max-width:1080px;margin:0 auto;">
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--primary-color);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M17 17l5 5"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">实验室级低音分辨率</span><span class="en">Lab-grade bass resolution</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">最难的低音也稳如教科书</span><span class="en">Rock-solid even in the deepest bass</span></div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--accent-cool);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">端侧计算 · 无需联网</span><span class="en">On-device · no internet</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">隐私优先，即时响应</span><span class="en">Privacy-first, instant response</span></div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--primary-color);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="16" height="22" rx="2.5"/><path d="M10 9h8M10 13h8M10 17h5"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">专业健康报告</span><span class="en">Pro health report</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">分频段评分 · 逐键定位 · 可打印</span><span class="en">Per-register scores, per-key spots, printable</span></div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--primary-color);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="6" height="11" rx="3"/><path d="M7 12a7 7 0 0 0 14 0M14 19v4"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">5 星麦克风引导</span><span class="en">5-star mic coach</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">零基础也能采到好数据</span><span class="en">Great data, no experience needed</span></div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--primary-color);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 8A10 10 0 1 0 24 14"/><path d="M23 4v5h-5"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">BLE OTA 无线进化</span><span class="en">BLE OTA evolution</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">像手机一样不断升级</span><span class="en">Keeps improving, like your phone</span></div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><span style="color:var(--primary-color);flex:0 0 auto;line-height:0;"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a10 10 0 1 0 10 10"/><path d="M9 14l3 3 7-7"/></svg></span><div><div style="font-weight:800;font-size:16px;"><span class="zh">±1 音分自动调准</span><span class="en">±1-cent auto-tuning</span></div><div style="color:var(--text-muted);font-size:13.5px;margin-top:4px;line-height:1.6;"><span class="zh">自动逐弦，精准稳定</span><span class="en">Auto, string by string</span></div></div></div>
+        </div>
+    </section>
+
+<section id="how-it-works" class="section-padding workflow-section reveal">
         <h2 id="start-here" class="section-title"><span class="zh">将复杂的声学物理，化为极简的 3 步</span><span class="en">Complex Physics. 3 Simple Steps.</span></h2>
         <p class="section-subtitle"><span class="zh">无需懂乐理，无需听“拍音”。把粗重的活儿交给电机，把复杂的数学交给端侧算力（iPhone 本机）。</span><span class="en">No music theory required. Leave the heavy lifting to the motor, and the math to on-device computing.</span></p>
         
@@ -387,38 +404,46 @@
         </div>
     </section>
 
-    <!-- 个性化 Railsback 优化器专栏 -->
-    <section id="railsback" class="section-padding reveal" style="background: #000; border-top: 1px solid rgba(230,161,92,0.1); border-bottom: 1px solid #1a1a1a;">
-        <div class="tech-container">
-            <div class="tech-content">
-                <div class="pro-badge" style="margin-bottom: 20px;"><span class="zh">核心算法订阅</span><span class="en">ALGORITHM SUBSCRIPTION</span></div>
-                <h2 style="font-size: 42px; font-weight: 900; margin-bottom: 25px; line-height: 1.2;"><span class="zh">个性化 Railsback<br>优化器</span><span class="en">Personalized Railsback Optimizer</span></h2>
-                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
-                    <span class="zh">这不仅是调准，更是调出“灵魂”。通过<b>端侧自研优化引擎</b>，我们能根据您钢琴琴弦的独特物理不谐和性，动态拟合出专属的黄金拉伸曲线。</span>
-                    <span class="en">More than just in tune — it brings out the soul. Using an <b>on-device proprietary optimizer</b>, we dynamically fit a bespoke golden stretch curve to your piano strings' unique inharmonicity.</span>
-                </p>
-                <div style="background: rgba(230, 161, 92, 0.05); border-left: 4px solid var(--primary-color); padding: 25px; border-radius: 8px; cursor: pointer; transition: all 0.3s;" onclick="location.href='buy_railsback.html'">
-                    <p style="font-weight: 700; color: #fff; margin-bottom: 12px;"><span class="zh">年度算法服务包</span><span class="en">Annual Algorithm Service</span></p>
-                    <ul style="list-style: none; font-size: 15px; color: var(--text-muted);">
-                        <li style="margin-bottom: 10px;">✦ <span class="zh">±1 音分实验室级采样精度</span><span class="en">±1 Cents lab-grade sampling precision</span></li>
-                        <li style="margin-bottom: 10px;">✦ <span class="zh">端侧实时拟合</span><span class="en">On-Device Fitting</span></li>
-                        <li>✦ <span class="zh">适配 88 键全音域极致拉伸</span><span class="en">Full 88-key stretch optimization</span></li>
-                    </ul>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <span style="display: inline-block; background: var(--primary-color); color: #000; padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 800; text-transform: uppercase;">
-                            <span class="zh">即将开放</span><span class="en">Coming Soon</span>
-                        </span>
-                    </div>
-                </div>
+<section class="section-padding reveal" style="background: radial-gradient(120% 95% at 10% 0%, rgba(230,161,92,0.09), transparent 55%), #000; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;">
+        <h2 class="section-title"><span class="zh">听得比人耳更细，<br>连<span class="hl">最难的低音</span>也稳</span><span class="en">Finer than the human ear —<br>steady even in the <span class="hl">hardest bass</span></span></h2>
+        <p class="section-subtitle"><span class="zh">钢琴最难调的是低音区：泛音密集、易被杂音污染。一套真正的端侧信号处理引擎，把它驯服。</span><span class="en">The bass is where tuning gets hard — dense partials, easily masked by noise. A real on-device DSP engine tames it.</span></p>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="6.5"/><circle cx="6" cy="6" r="1.4"/><circle cx="22.5" cy="7" r="1.4"/><circle cx="5.5" cy="21" r="1.4"/><circle cx="23" cy="21" r="1.4"/><circle cx="14" cy="14" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+                <div style="margin-bottom:12px"><span class="pro-badge">PRO</span></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">智能谐波净化</span><span class="en">Smart Harmonic Cleansing</span></h3>
+                <p><span class="zh">低音泛音密集、易被锤击声污染。系统智能识别并剔除被干扰的"假泛音"，只相信可靠谐波，把玄学低音变成<span class="hl">可复现的科学</span>。</span><span class="en">The bass is a thicket of partials muddied by the hammer strike. The system intelligently identifies and rejects the corrupted ones, trusting only reliable harmonics — turning the black art of bass into <span class="hl">reproducible science</span>.</span></p>
             </div>
-            <div class="tech-image" style="position: relative;">
-                <img src="railsback_curve.png" alt="Railsback Curve" class="curve-img" style="max-width: 500px; border-radius: 20px; border: 1px solid rgba(230,161,92,0.2); box-shadow: 0 0 50px rgba(230,161,92,0.1);">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M17 17l5 5"/><path d="M9 12h2l1.5-3 2 6 1.5-3H19"/></svg></div>
+                <div style="margin-bottom:12px"><span class="pro-badge">PRO</span></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">低音超分辨引擎</span><span class="en">Bass Super-Resolution Engine</span></h3>
+                <p><span class="zh">在极低音区，普通频谱根本看不清。专有超分辨技术实现<span class="hl">实验室级低音分辨率</span>，看清每一丝偏差。</span><span class="en">In the deepest bass, an ordinary spectrum is a blur. A proprietary super-resolution technique delivers <span class="hl">lab-grade bass resolution</span> — every fraction of a cent, visible.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0"/><path d="M2 18c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0" opacity=".4"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">亚音分精修</span><span class="en">Sub-cent Refinement</span></h3>
+                <p><span class="zh">在不放慢响应速度的前提下，把频率精度再提<span class="hl">一个量级</span>——实时与精准，这次都要。</span><span class="en">Sharpens frequency accuracy by <span class="hl">an order of magnitude</span> — without slowing the response. Real-time and precise, at once.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v-2M7.5 18V10M12 14v-4M16.5 20V6M21 16v-6M25 15v-2"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">智能抗噪锁定</span><span class="en">Smart Noise Rejection</span></h3>
+                <p><span class="zh">在嘈杂环境中智能过滤干扰、避开击键瞬间的杂音，只锁定干净信号，<span class="hl">吵闹房间里也不乱跳</span>。</span><span class="en">Intelligently filters interference and the hammer's attack noise, locking only on clean signal — <span class="hl">no jitter in a noisy room</span>.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h18"/><path d="M7 10v8M12 10v8M17 10v8"/><path d="M21 11l2 3-2 3"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">时序一致性引擎</span><span class="en">Temporal Coherence</span></h3>
+                <p><span class="zh">用历史帧交叉验证每一次读数，过滤单帧跳变，<span class="hl">示数稳、不闪烁</span>。</span><span class="en">Cross-checks each reading against recent frames to filter out single-frame glitches — <span class="hl">steady, never flickering</span>.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M10 20V6M15 20v-8M20 20v-5"/><circle cx="20" cy="4.5" r="2.2"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">谐波锁定门控</span><span class="en">Harmonic-Lock Gating</span></h3>
+                <p><span class="zh">低音区要求多阶谐波同时稳定锁定才推进，<span class="hl">从源头杜绝"锁错音"</span>。</span><span class="en">In the bass, it advances only when multiple harmonics lock together — <span class="hl">no false locks</span>.</span></p>
             </div>
         </div>
     </section>
 
-    <!-- 软件与算法可视化 -->
-    <section id="software" class="section-padding reveal" style="background: #000; overflow: hidden; border-bottom: 1px solid #1a1a1a;">
+<section id="software" class="section-padding reveal" style="background: #000; overflow: hidden; border-bottom: 1px solid #1a1a1a;">
         <div class="tech-container">
             <div class="tech-content">
                 <div class="industry-first-tag">
@@ -452,14 +477,35 @@
         </div>
     </section>
 
-    <!-- 核心优势 -->
-    <section id="features" class="section-padding reveal">
+<section class="section-padding reveal">
+        <h2 class="section-title"><span class="zh">把专业经验，<br>变成<span class="hl">谁都会用</span>的体验</span><span class="en">A pro's expertise,<br>made usable by <span class="hl">anyone</span></span></h2>
+        <p class="section-subtitle"><span class="zh">从麦克风怎么放，到每台琴的成长曲线，复杂的事我们替你想好了。</span><span class="en">From where to hold your phone to each piano's progress over time — the hard parts, handled.</span></p>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="6" height="13" rx="3"/><path d="M7 13a7 7 0 0 0 14 0M14 20v4M10 24h8"/></svg></div>
+                <h3 style="color:var(--primary-color)"><span class="zh">麦克风摆位引导</span><span class="en">Mic-Placement Coach</span></h3>
+                <p><span class="zh"><span class="hl">5 星实时评级</span>帮你找到最佳采集位置，零基础也能采到专业级数据。</span><span class="en">A live <span class="hl">5-star meter</span> guides you to the best spot — pro-grade data, no experience needed.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--accent-cool)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V5M4 22h20"/><path d="M7 18l5-5 4 3 7-8"/><path d="M23 6v4h-4"/></svg></div>
+                <h3 style="color:var(--accent-cool)"><span class="zh">多琴档案 · 历史趋势</span><span class="en">Multi-Piano History</span></h3>
+                <p><span class="zh">按琴保存档案与每次调律的误差趋势。琴主看见琴在变好，调音师拥有一份<span class="hl-cool">随身客户档案</span>。</span><span class="en">Per-piano profiles and tuning-error trends over time. Owners watch their piano improve; pros get a <span class="hl-cool">pocket CRM</span>.</span></p>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="color:var(--accent-cool)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 8A10 10 0 1 0 24 14"/><path d="M14 9v5l4 2"/><path d="M23 4v5h-5"/></svg></div>
+                <h3 style="color:var(--accent-cool)"><span class="zh">数据飞轮（可选·匿名）</span><span class="en">Data Flywheel (opt-in)</span></h3>
+                <p><span class="zh">在你授权下匿名贡献调音数据，帮助算法持续进化。<span class="hl-cool">默认关闭、随时可关</span>——隐私优先。</span><span class="en">With your permission, anonymous tuning data helps the algorithm keep improving. <span class="hl-cool">Off by default, always optional</span> — privacy first.</span></p>
+            </div>
+        </div>
+    </section>
+
+<section id="features" class="section-padding reveal">
         <h2 class="section-title"><span class="zh">让专业调音更易获得</span><span class="en">Making pro tuning more accessible</span></h2>
         <div class="grid-3" style="margin-top: 50px;">
             <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 21V10"/><path d="M10 14l4-4 4 4"/><path d="M8 7.5a8.5 8.5 0 0 1 12 0" opacity=".5"/><path d="M10.5 10.6a5 5 0 0 1 7 0" opacity=".8"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">BLE OTA 无线进化</span><span class="en">BLE OTA Wireless Evolution</span></h3>
-                <p><span class="zh">支持调音硬件 OTA 架构。通过手机 App 即可一键为调音器推送最新的 FOC 驱动参数和声学采样逻辑，让你的硬件持续进化。</span><span class="en">OTA for tuning hardware. Push the latest FOC drivers and acoustic logic via the App, keeping your gear forever young.</span></p>
+                <div class="card-icon" style="color:var(--accent-cool)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 21V10"/><path d="M10 14l4-4 4 4"/><path d="M8 7.5a8.5 8.5 0 0 1 12 0" opacity=".5"/><path d="M10.5 10.6a5 5 0 0 1 7 0" opacity=".8"/></svg></div>
+                <h3 style="color:var(--accent-cool)"><span class="zh">BLE OTA 无线进化</span><span class="en">BLE OTA Wireless Evolution</span></h3>
+                <p><span class="zh">支持调音硬件 OTA 架构。通过手机 App 即可一键为调音器推送最新的 FOC 驱动参数和声学采样逻辑，让你的硬件<span class="hl-cool">持续进化</span>。</span><span class="en">OTA for tuning hardware. Push the latest FOC drivers and acoustic logic via the App, keeping your gear <span class="hl-cool">forever young</span>.</span></p>
             </div>
             <div class="card">
                 <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="2.4"/><circle cx="6.5" cy="7" r="1.7"/><circle cx="21.5" cy="7" r="1.7"/><circle cx="6.5" cy="21" r="1.7"/><circle cx="21.5" cy="21" r="1.7"/><path d="M8 8.2l4 4M20 8.2l-4 4M8 19.8l4-4M20 19.8l-4-4"/></svg></div>
@@ -488,14 +534,14 @@
                 <p><span class="zh">采用高性价比执行节点，将算力移至手机端侧。极限压缩硬件成本与体积，让专业调音触手可及。</span><span class="en">Uses a cost-effective execution node, moving computation onto the phone. Drastically reducing hardware cost and size.</span></p>
             </div>
             <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12.5" width="16" height="11" rx="2.5"/><path d="M9 12.5V9a5 5 0 0 1 10 0v3.5"/><circle cx="14" cy="18" r="1.4"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">BLE 安全认证</span><span class="en">Secure BLE Pairing</span></h3>
-                <p><span class="zh">采用加密配对认证，未经授权的设备无法驱动电机，从源头杜绝误连与恶意操控。</span><span class="en">Encrypted pairing authentication means unauthorized devices can't drive the motor — blocking mis-connections and tampering at the source.</span></p>
+                <div class="card-icon" style="color:var(--accent-cool)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12.5" width="16" height="11" rx="2.5"/><path d="M9 12.5V9a5 5 0 0 1 10 0v3.5"/><circle cx="14" cy="18" r="1.4"/></svg></div>
+                <h3 style="color:var(--accent-cool)"><span class="zh">BLE 安全认证</span><span class="en">Secure BLE Pairing</span></h3>
+                <p><span class="zh">采用加密配对认证，未经授权的设备无法驱动电机，<span class="hl-cool">从源头杜绝误连与恶意操控</span>。</span><span class="en">Encrypted pairing authentication means unauthorized devices can't drive the motor — <span class="hl-cool">blocking mis-connections and tampering</span> at the source.</span></p>
             </div>
             <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a10 10 0 1 0 10 10"/><path d="M14 8v6l4 2"/><path d="M20 4v5h-5"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">钢琴档案记忆「免预采集」</span><span class="en">Piano Memory</span></h3>
-                <p><span class="zh">系统为每台钢琴记忆其不谐性档案，同一台钢琴二次调音可直接跳过重复的不谐性采集，开机即调。</span><span class="en">Each piano's inharmonicity profile is remembered, so a returning piano skips repeat sampling — start tuning right away.</span></p>
+                <div class="card-icon" style="color:var(--accent-cool)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a10 10 0 1 0 10 10"/><path d="M14 8v6l4 2"/><path d="M20 4v5h-5"/></svg></div>
+                <h3 style="color:var(--accent-cool)"><span class="zh">钢琴档案记忆「免预采集」</span><span class="en">Piano Memory</span></h3>
+                <p><span class="zh">系统为每台钢琴记忆其不谐性档案，同一台钢琴二次调音可直接跳过重复的不谐性采集，<span class="hl-cool">开机即调</span>。</span><span class="en">Each piano's inharmonicity profile is remembered, so a returning piano skips repeat sampling — <span class="hl-cool">start tuning right away</span>.</span></p>
             </div>
             <div class="card">
                 <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a9 9 0 0 1 14.5-2"/><path d="M23 6v5h-5"/><path d="M23 20a9 9 0 0 1-14.5 2"/><path d="M5 22v-5h5"/></svg></div>
@@ -505,61 +551,78 @@
         </div>
     </section>
 
-    <!-- 🎼 声学引擎 (DSP) -->
-    <section class="section-padding reveal" style="background: #000; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;">
-        <h2 class="section-title"><span class="zh">听得比人耳更细，<br>连<span class="hl">最难的低音</span>也稳</span><span class="en">Finer than the human ear —<br>steady even in the <span class="hl">hardest bass</span></span></h2>
-        <p class="section-subtitle"><span class="zh">钢琴最难调的是低音区：泛音密集、易被杂音污染。一套真正的端侧信号处理引擎，把它驯服。</span><span class="en">The bass is where tuning gets hard — dense partials, easily masked by noise. A real on-device DSP engine tames it.</span></p>
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="6.5"/><circle cx="6" cy="6" r="1.4"/><circle cx="22.5" cy="7" r="1.4"/><circle cx="5.5" cy="21" r="1.4"/><circle cx="23" cy="21" r="1.4"/><circle cx="14" cy="14" r="1.6" fill="currentColor" stroke="none"/></svg></div>
-                <div style="margin-bottom:12px"><span class="pro-badge">PRO</span></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">智能谐波净化</span><span class="en">Smart Harmonic Cleansing</span></h3>
-                <p><span class="zh">低音泛音密集、易被锤击声污染。系统智能识别并剔除被干扰的"假泛音"，只相信可靠谐波，把玄学低音变成<span class="hl">可复现的科学</span>。</span><span class="en">The bass is a thicket of partials muddied by the hammer strike. The system intelligently identifies and rejects the corrupted ones, trusting only reliable harmonics — turning the black art of bass into <span class="hl">reproducible science</span>.</span></p>
+    <!-- 隐私 · 端侧 -->
+    <section class="section-padding reveal" style="background:radial-gradient(120% 95% at 90% 0%, rgba(70,175,165,0.10), transparent 55%), #000;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;">
+        <h2 class="section-title"><span class="zh">你的数据，留在你<span class="hl-cool">手机里</span></span><span class="en">Your data stays <span class="hl-cool">on your device</span></span></h2>
+        <p class="section-subtitle"><span class="zh">调律曲线在本机生成，核心数据无需上云。我们不卖数据、不做广告追踪。</span><span class="en">Your tuning curve is computed on-device — core data never needs the cloud. We don't sell data or run ad tracking.</span></p>
+        <div class="stg" style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;max-width:980px;margin:0 auto;">
+            <div style="flex:1;min-width:260px;background:var(--surface-color);border:1px solid rgba(255,255,255,0.04);border-radius:18px;padding:30px;"><div style="color:var(--accent-cool);margin-bottom:14px;line-height:0;"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="14" height="22" rx="2.5"/><path d="M12 21h4"/></svg></div><div style="font-weight:800;font-size:18px;margin-bottom:8px;"><span class="zh">端侧本地计算</span><span class="en">Computed on-device</span></div><div style="color:var(--text-muted);font-size:14px;line-height:1.65;"><span class="zh">个性化曲线在 iPhone 本机生成，<span class="hl-cool">全程无需联网</span>。</span><span class="en">Your personalized curve is generated on your iPhone — <span class="hl-cool">no internet required</span>.</span></div></div>
+            <div style="flex:1;min-width:260px;background:var(--surface-color);border:1px solid rgba(255,255,255,0.04);border-radius:18px;padding:30px;"><div style="color:var(--accent-cool);margin-bottom:14px;line-height:0;"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3a9 9 0 0 1 9 9c0 6-9 13-9 13"/><path d="M14 25S5 18 5 12a9 9 0 0 1 4-7.5"/><path d="M10.5 12.5l2.5 2.5 4.5-5"/></svg></div><div style="font-weight:800;font-size:18px;margin-bottom:8px;"><span class="zh">匿名 · 默认关闭</span><span class="en">Anonymous · off by default</span></div><div style="color:var(--text-muted);font-size:14px;line-height:1.65;"><span class="zh">是否贡献匿名数据<span class="hl-cool">完全由你决定</span>，随时可关。</span><span class="en">Sharing anonymous data is <span class="hl-cool">entirely your choice</span> — toggle it off anytime.</span></div></div>
+            <div style="flex:1;min-width:260px;background:var(--surface-color);border:1px solid rgba(255,255,255,0.04);border-radius:18px;padding:30px;"><div style="color:var(--accent-cool);margin-bottom:14px;line-height:0;"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="10"/><path d="M9 9l10 10M19 9L9 19"/></svg></div><div style="font-weight:800;font-size:18px;margin-bottom:8px;"><span class="zh">不卖数据 · 不追踪</span><span class="en">No selling · no tracking</span></div><div style="color:var(--text-muted);font-size:14px;line-height:1.65;"><span class="zh">我们<span class="hl-cool">从不出售个人数据</span>，也没有第三方广告追踪。</span><span class="en">We <span class="hl-cool">never sell personal data</span> and run no third-party ad tracking.</span></div></div>
+        </div>
+    </section>
+
+<section id="railsback" class="section-padding reveal" style="background: #000; border-top: 1px solid rgba(230,161,92,0.1); border-bottom: 1px solid #1a1a1a;">
+        <div class="tech-container">
+            <div class="tech-content">
+                <div class="pro-badge" style="margin-bottom: 20px;"><span class="zh">核心算法订阅</span><span class="en">ALGORITHM SUBSCRIPTION</span></div>
+                <h2 style="font-size: 42px; font-weight: 900; margin-bottom: 25px; line-height: 1.2;"><span class="zh">个性化 Railsback<br>优化器</span><span class="en">Personalized Railsback Optimizer</span></h2>
+                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                    <span class="zh">这不仅是调准，更是调出“灵魂”。通过<b>端侧自研优化引擎</b>，我们能根据您钢琴琴弦的独特物理不谐和性，动态拟合出专属的黄金拉伸曲线。</span>
+                    <span class="en">More than just in tune — it brings out the soul. Using an <b>on-device proprietary optimizer</b>, we dynamically fit a bespoke golden stretch curve to your piano strings' unique inharmonicity.</span>
+                </p>
+                <div style="background: rgba(230, 161, 92, 0.05); border-left: 4px solid var(--primary-color); padding: 25px; border-radius: 8px; cursor: pointer; transition: all 0.3s;" onclick="location.href='buy_railsback.html'">
+                    <p style="font-weight: 700; color: #fff; margin-bottom: 12px;"><span class="zh">年度算法服务包</span><span class="en">Annual Algorithm Service</span></p>
+                    <ul style="list-style: none; font-size: 15px; color: var(--text-muted);">
+                        <li style="margin-bottom: 10px;">✦ <span class="zh">±1 音分实验室级采样精度</span><span class="en">±1 Cents lab-grade sampling precision</span></li>
+                        <li style="margin-bottom: 10px;">✦ <span class="zh">端侧实时拟合</span><span class="en">On-Device Fitting</span></li>
+                        <li>✦ <span class="zh">适配 88 键全音域极致拉伸</span><span class="en">Full 88-key stretch optimization</span></li>
+                    </ul>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <span style="display: inline-block; background: var(--primary-color); color: #000; padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 800; text-transform: uppercase;">
+                            <span class="zh">即将开放</span><span class="en">Coming Soon</span>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M17 17l5 5"/><path d="M9 12h2l1.5-3 2 6 1.5-3H19"/></svg></div>
-                <div style="margin-bottom:12px"><span class="pro-badge">PRO</span></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">低音超分辨引擎</span><span class="en">Bass Super-Resolution Engine</span></h3>
-                <p><span class="zh">在极低音区，普通频谱根本看不清。专有超分辨技术实现<span class="hl">实验室级低音分辨率</span>，看清每一丝偏差。</span><span class="en">In the deepest bass, an ordinary spectrum is a blur. A proprietary super-resolution technique delivers <span class="hl">lab-grade bass resolution</span> — every fraction of a cent, visible.</span></p>
-            </div>
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0"/><path d="M2 18c2.5-7 5-7 7 0s4.5 7 7 0 4.5-7 6 0" opacity=".4"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">亚音分精修</span><span class="en">Sub-cent Refinement</span></h3>
-                <p><span class="zh">在不放慢响应速度的前提下，把频率精度再提<span class="hl">一个量级</span>——实时与精准，这次都要。</span><span class="en">Sharpens frequency accuracy by <span class="hl">an order of magnitude</span> — without slowing the response. Real-time and precise, at once.</span></p>
-            </div>
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v-2M7.5 18V10M12 14v-4M16.5 20V6M21 16v-6M25 15v-2"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">智能抗噪锁定</span><span class="en">Smart Noise Rejection</span></h3>
-                <p><span class="zh">在嘈杂环境中智能过滤干扰、避开击键瞬间的杂音，只锁定干净信号，<span class="hl">吵闹房间里也不乱跳</span>。</span><span class="en">Intelligently filters interference and the hammer's attack noise, locking only on clean signal — <span class="hl">no jitter in a noisy room</span>.</span></p>
+            <div class="tech-image" style="position: relative;">
+                <img src="railsback_curve.png" alt="Railsback Curve" class="curve-img" style="max-width: 500px; border-radius: 20px; border: 1px solid rgba(230,161,92,0.2); box-shadow: 0 0 50px rgba(230,161,92,0.1);">
             </div>
         </div>
     </section>
 
-    <!-- 💡 为你而生 -->
-    <section class="section-padding reveal">
-        <h2 class="section-title"><span class="zh">把专业经验，<br>变成<span class="hl">谁都会用</span>的体验</span><span class="en">A pro's expertise,<br>made usable by <span class="hl">anyone</span></span></h2>
-        <p class="section-subtitle"><span class="zh">从麦克风怎么放，到每台琴的成长曲线，复杂的事我们替你想好了。</span><span class="en">From where to hold your phone to each piano's progress over time — the hard parts, handled.</span></p>
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="6" height="13" rx="3"/><path d="M7 13a7 7 0 0 0 14 0M14 20v4M10 24h8"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">麦克风摆位引导</span><span class="en">Mic-Placement Coach</span></h3>
-                <p><span class="zh"><span class="hl">5 星实时评级</span>帮你找到最佳采集位置，零基础也能采到专业级数据。</span><span class="en">A live <span class="hl">5-star meter</span> guides you to the best spot — pro-grade data, no experience needed.</span></p>
+<section id="technology" class="tech-section reveal">
+        <div class="tech-container">
+            <div class="tech-image">
+                <img src="pcb.png" alt="Piano Tuner 智能钢琴调音机器人 PCBA 板" class="pcb-img">
             </div>
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V5M4 22h20"/><path d="M7 18l5-5 4 3 7-8"/><path d="M23 6v4h-4"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">多琴档案 · 历史趋势</span><span class="en">Multi-Piano History</span></h3>
-                <p><span class="zh">按琴保存档案与每次调律的误差趋势。琴主看见琴在变好，调音师拥有一份<span class="hl">随身客户档案</span>。</span><span class="en">Per-piano profiles and tuning-error trends over time. Owners watch their piano improve; pros get a <span class="hl">pocket CRM</span>.</span></p>
-            </div>
-            <div class="card">
-                <div class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 8A10 10 0 1 0 24 14"/><path d="M14 9v5l4 2"/><path d="M23 4v5h-5"/></svg></div>
-                <h3 style="color:var(--primary-color)"><span class="zh">数据飞轮（可选·匿名）</span><span class="en">Data Flywheel (opt-in)</span></h3>
-                <p><span class="zh">在你授权下匿名贡献调音数据，帮助算法持续进化。<span class="hl">默认关闭、随时可关</span>——隐私优先。</span><span class="en">With your permission, anonymous tuning data helps the algorithm keep improving. <span class="hl">Off by default, always optional</span> — privacy first.</span></p>
+            <div class="tech-content">
+                <h2><span class="zh">底层架构重塑，<br>让硬件具备灵魂。</span><span class="en">Rebuilding the Core.<br>Hardware with a Soul.</span></h2>
+                <ul class="tech-list">
+                    <li>
+                        <div>
+                            <h4><span class="zh">OTA 差分更新架构</span><span class="en">OTA Differential Update</span></h4>
+                            <p><span class="zh">执行端预留双分区断电保护升级，支持在不拆机的情况下通过蓝牙更新 FOC 驱动逻辑，适应各种钢琴弦轴阻力特性。</span><span class="en">Dual-bank power-loss protected OTA allows updating FOC logic via BLE without disassembly, adapting to various pin resistance.</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h4><span class="zh">端侧拉伸优化引擎</span><span class="en">On-Device Stretch Optimizer</span></h4>
+                            <p><span class="zh">自研优化引擎，基于实测不谐性（B 值）在本机毫秒级生成专属拉伸曲线，全程无需联网。</span><span class="en">A proprietary optimizer computes a bespoke stretch curve on-device in milliseconds from each piano's measured inharmonicity (B) — no internet required.</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h4><span class="zh">FOC 闭环动力单元</span><span class="en">FOC Closed-Loop Drive</span></h4>
+                            <p><span class="zh">基于空心杯无刷 FOC 电机+精密行星减速箱，实现亚度级的转角分辨率，闭环控制+编码器，静音 40dB，5 年免维护寿命，PID 响应速度 &lt; 50ms，确保在调音临界点实现精准锁死。</span><span class="en">Based on coreless brushless FOC motor + precision planetary gearbox, achieving sub-degree angular resolution with closed-loop control + encoder, 40dB quiet, 5-year lifespan, PID response &lt; 50ms for precise locking.</span></p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- 核心对比表格 -->
-    <section class="section-padding comparison-section reveal">
+<section class="section-padding comparison-section reveal">
         <h2 class="section-title"><span class="zh">为什么选择 Piano Tuner？</span><span class="en">Why Choose Piano Tuner?</span></h2>
         <p class="section-subtitle"><span class="zh">对比传统调音方式，我们不仅是更便宜，更是更精准。</span><span class="en">Beyond affordability, we bring superior precision.</span></p>
         
@@ -603,8 +666,7 @@
         </div>
     </section>
 
-    <!-- 回本计算器 (ROI Calculator) -->
-    <section class="section-padding reveal" style="background: radial-gradient(circle at 50% 50%, #1a1510 0%, #000 100%);">
+<section class="section-padding reveal" style="background: radial-gradient(circle at 50% 50%, #1a1510 0%, #000 100%);">
         <h2 class="section-title"><span class="zh">一次投入，长期省心</span><span class="en">A long-term saving</span></h2>
         <p class="section-subtitle"><span class="zh">根据您的身份，计算 Piano Tuner 能为您节省或创造多少价值。</span><span class="en">Calculate how much value Piano Tuner saves or creates for you.</span></p>
 
@@ -658,40 +720,7 @@
         </div>
     </section>
 
-    <!-- 硬核技术解析 -->
-    <section id="technology" class="tech-section reveal">
-        <div class="tech-container">
-            <div class="tech-image">
-                <img src="pcb.png" alt="Piano Tuner 智能钢琴调音机器人 PCBA 板" class="pcb-img">
-            </div>
-            <div class="tech-content">
-                <h2><span class="zh">底层架构重塑，<br>让硬件具备灵魂。</span><span class="en">Rebuilding the Core.<br>Hardware with a Soul.</span></h2>
-                <ul class="tech-list">
-                    <li>
-                        <div>
-                            <h4><span class="zh">OTA 差分更新架构</span><span class="en">OTA Differential Update</span></h4>
-                            <p><span class="zh">执行端预留双分区断电保护升级，支持在不拆机的情况下通过蓝牙更新 FOC 驱动逻辑，适应各种钢琴弦轴阻力特性。</span><span class="en">Dual-bank power-loss protected OTA allows updating FOC logic via BLE without disassembly, adapting to various pin resistance.</span></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <h4><span class="zh">端侧拉伸优化引擎</span><span class="en">On-Device Stretch Optimizer</span></h4>
-                            <p><span class="zh">自研优化引擎，基于实测不谐性（B 值）在本机毫秒级生成专属拉伸曲线，全程无需联网。</span><span class="en">A proprietary optimizer computes a bespoke stretch curve on-device in milliseconds from each piano's measured inharmonicity (B) — no internet required.</span></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <h4><span class="zh">FOC 闭环动力单元</span><span class="en">FOC Closed-Loop Drive</span></h4>
-                            <p><span class="zh">基于空心杯无刷 FOC 电机+精密行星减速箱，实现亚度级的转角分辨率，闭环控制+编码器，静音 40dB，5 年免维护寿命，PID 响应速度 &lt; 50ms，确保在调音临界点实现精准锁死。</span><span class="en">Based on coreless brushless FOC motor + precision planetary gearbox, achieving sub-degree angular resolution with closed-loop control + encoder, 40dB quiet, 5-year lifespan, PID response &lt; 50ms for precise locking.</span></p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="section-padding faq-section reveal">
+<section id="faq" class="section-padding faq-section reveal">
         <h2 class="section-title"><span class="zh">常见问题解答</span><span class="en">Frequently Asked Questions</span></h2>
         <p class="section-subtitle"><span class="zh">针对安全、精度及适配性的深度解答。</span><span class="en">In-depth answers about safety, precision and compatibility.</span></p>
         
@@ -738,8 +767,7 @@
         </div>
     </section>
 
-    <!-- 项目迭代时间轴 -->
-    <section id="roadmap" class="timeline-section reveal">
+<section id="roadmap" class="timeline-section reveal">
         <h2 class="section-title" style="color: #fff;"><span class="zh">硬核进化的足迹</span><span class="en">Evolution Roadmap</span></h2>
         
         <div class="timeline">
@@ -765,8 +793,7 @@
         </div>
     </section>
 
-    <!-- 底部转化 -->
-    <section id="join" class="cta-section reveal">
+<section id="join" class="cta-section reveal">
         <h2><span class="zh">进化，永无止境</span><span class="en">Evolution Never Stops</span></h2>
         <p><span class="zh">V2.0 原型机已集成最新 OTA 架构。现在加入内测，你的调音器将随我们的算法更新 engagement 而同步进化。</span><span class="en">The V2.0 prototype now features the OTA architecture. Join now and your tuner will evolve alongside our algorithms.</span></p>
         <div style="display: flex; gap: 20px; justify-content: center;">
@@ -797,6 +824,33 @@
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } });
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // —— Apple 式逐个上浮 (stagger) ——
+        (function(){
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          var groups = document.querySelectorAll('.grid-3, .tech-list, .step-container, .stg');
+          groups.forEach(function(g){ Array.prototype.forEach.call(g.children, function(c){ c.classList.add('stg-item'); }); });
+          var io = new IntersectionObserver(function(ents){
+            ents.forEach(function(e){
+              if (e.isIntersecting){
+                Array.prototype.forEach.call(e.target.children, function(c,i){ c.style.transitionDelay=(i*70)+'ms'; c.classList.add('in'); });
+                io.unobserve(e.target);
+              }
+            });
+          }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+          groups.forEach(function(g){ io.observe(g); });
+        })();
+        // —— hero 轻视差 ——
+        (function(){
+          var img = document.querySelector('.hero-product');
+          if (!img || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          var ticking=false;
+          window.addEventListener('scroll', function(){
+            if (ticking) return; ticking=true;
+            requestAnimationFrame(function(){ var y=Math.min(window.scrollY,600); img.style.transform='translateY('+(y*0.12)+'px)'; ticking=false; });
+          }, { passive:true });
+        })();
+
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 const item = q.parentElement;
