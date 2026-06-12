@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="Piano Tuner | 暂停销售 · Coming Soon" data-t-en="Piano Tuner | Sales Paused · Coming Soon">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,9 +40,34 @@
 
         .lang-switch { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-stack); }
         .lang-switch:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
+        @media (max-width: 600px) {
+            header { padding: 12px 4%; gap: 8px; }
+            .logo-text { font-size: 18px; letter-spacing: 1px; }
+        }
+        /* —— 阻尼滚动揭示 / Damped scroll reveal —— */
+        .reveal { opacity: 0; transform: translateY(34px); transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        .reveal.active { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
 </style>
 </head>
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <div class="logo-container" onclick="location.href='index.html'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;">
@@ -58,8 +83,21 @@
             <div class="logo-text">PIANO<span>TUNER</span></div>
         </div>
         <button class="lang-switch" onclick="toggleLanguage()">EN / 中文</button>
+        <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </header>
-    <main class="notice-section">
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
+    <main class="notice-section reveal">
         <span class="notice-eyebrow"><span class="zh">暂停销售</span><span class="en">Sales Paused</span></span>
         <h1><span class="zh">极早鸟预售已结束</span><span class="en">Ultra-Early-Bird Pre-Sale Has Ended</span></h1>
         <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中，预计约两个月后开放新一轮早鸟预售。</span><span class="en">Piano Tuner V2.1 is in development — a new early-bird round is expected to open in about two months.</span></p>
@@ -91,11 +129,15 @@
     </footer>
 
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             body.classList.toggle('lang-zh');
             body.classList.toggle('lang-en');
         }
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>

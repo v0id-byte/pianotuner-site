@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="Piano Tuner 专业版 | 旗舰级数字化调律解决方案" data-t-en="Piano Tuner Pro | Flagship Digital Tuning Solution" data-d-zh="Piano Tuner 专业版:Turbo 模式快 3 倍、高阶 FFT、±1 音分精度，为专业调音师与音乐学校打造的旗舰数字化调律方案。" data-d-en="Piano Tuner Pro: 3x faster Turbo mode, high-resolution FFT, ±1 cent accuracy — the flagship digital tuning solution for professional tuners and music schools.">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title class="zh">Piano Tuner 专业版 | 旗舰级数字化调律解决方案</title>
-    <title class="en">Piano Tuner Pro | Flagship Digital Tuning Solution</title>
+    <title>Piano Tuner 专业版 | 旗舰级数字化调律解决方案</title>
     <meta name="description" content="调音慢、精度差？Pro版精度±1音分，Turbo快3倍，专业调音师和音乐学校的首选。自动调音，效率翻倍。">
-    <meta name="description" content="Piano tuning too slow? Pro delivers ±1 cent accuracy with Turbo mode—3x faster. Built for pro tuners and music schools. Auto precision that keeps up." lang="en">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,8 +25,9 @@
 
         .pro-ease { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
 
         .text-shimmer {
             background: linear-gradient(90deg, #fff 0%, var(--primary-color) 50%, #fff 100%);
@@ -160,17 +159,37 @@
             .hero h1 { font-size: 42px; }
             .tech-container { flex-direction: column-reverse; gap: 40px; }
             .nav-links { display: none; }
+            .nav-right .btn-primary { display: none; }
             .tech-content { min-width: auto; }
             .tech-image { max-width: 100%; }
+            .section-padding { padding: 72px 5%; }
+            .grid-3 { grid-template-columns: 1fr; }
         }
 
     .card-icon svg { width: 46px; height: 46px; display: block; } .hl { color: var(--primary-color); font-weight: 700; }
 .pro-badge-large svg { width: 46px; height: 46px; display: inline-block; }
 .i-inline { width: 1.1em; height: 1.1em; vertical-align: -0.18em; display: inline-block; margin-right: 0.35em; }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
 </style>
 </head>
 
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <div class="logo-container" onclick="window.location.href='index.html'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px;">
@@ -194,16 +213,30 @@
         <div class="nav-right">
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
             <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
 
     <section class="hero">
         <div class="hero-content-wrapper">
             <div class="industry-first-tag">Professional Upgrade</div>
             <h1 class="zh title-animate">为专业调律师<br><span class="text-shimmer">赋予数字灵魂</span></h1>
             <h1 class="en title-animate">Digital Soul for<br><span class="text-shimmer">Professional Tuners</span></h1>
-            <p class="zh">解锁高精度声学分析、极速电机性能与云端业务管理系统，开启数字化调律新纪元。</p>
-            <p class="en">Unlock high-res acoustics, turbo performance, and cloud management. Start a new era of digital tuning.</p>
+            <p class="zh">高精度声学、Turbo 电机、云端业务管理，一台调音器全包。</p>
+            <p class="en">High-res acoustics, Turbo motor, cloud management — one tuner.</p>
             <div style="display: flex; gap: 20px; opacity: 0; animation: titleReveal 0.8s 0.8s ease forwards;">
                 <a href="buy.html" class="btn-primary" style="padding: 14px 32px; font-size: 15px;"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
             </div>
@@ -217,14 +250,14 @@
                 <div class="industry-first-tag"><span class="zh">核心黑科技</span><span class="en">CORE TECH</span></div>
                 <h2 class="section-title" style="text-align: left; margin-bottom: 30px;"><span class="zh">调音曲线 动态拟合引擎</span><span class="en">Dynamic 调音曲线 Fitting Engine</span></h2>
                 <p style="color: var(--text-muted); font-size: 19px; margin-bottom: 40px; line-height: 1.8;">
-                    <span class="zh">不同于标准版的通用曲线，专业版搭载了<b>端侧拉伸优化引擎</b>。它根据钢琴实测不谐性（B 值），用自研优化算法在本机毫秒级拟合出专属的全音域拉伸曲线，确定、可复现、全程无需联网。</span>
-                    <span class="en">Beyond generic curves, the Pro tier features an <b>on-device stretch optimizer</b>. From your piano's measured inharmonicity (B), a proprietary optimizer fits a bespoke full-range stretch curve on-device in milliseconds — deterministic, reproducible, no internet required.</span>
+                    <span class="zh">从钢琴实测不谐性（B 值），<b>端侧拉伸优化引擎</b>毫秒级拟合专属全音域曲线——确定、可复现、无需联网。</span>
+                    <span class="en">From your piano's measured inharmonicity (B), the <b>on-device stretch optimizer</b> fits a bespoke full-range curve in milliseconds — deterministic, reproducible, offline.</span>
                 </p>
                 <ul class="tech-list">
                     <li class="reveal">
                         <div>
                             <h4><span class="zh">全音域物理模型补偿</span><span class="en">Global Physical Model Compensation</span></h4>
-                            <p><span class="zh">根据钢琴实测不谐性，一次性在本机生成专属全音域拉伸曲线，使整台钢琴的力学平衡逼近机械性能上限。</span><span class="en">Computes a bespoke full-range stretch curve on-device from your piano's measured inharmonicity, bringing mechanical balance near the mechanical limit.</span></p>
+                            <p><span class="zh">从实测不谐性本机生成专属全音域曲线，力学平衡逼近机械上限。</span><span class="en">A bespoke full-range curve from measured inharmonicity, bringing mechanical balance near the limit.</span></p>
                         </div>
                     </li>
                     <li class="reveal">
@@ -249,7 +282,7 @@
             <div class="card card-pro reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="2.4"/><circle cx="6.5" cy="7" r="1.7"/><circle cx="21.5" cy="7" r="1.7"/><circle cx="6.5" cy="21" r="1.7"/><circle cx="21.5" cy="21" r="1.7"/><path d="M8 8.2l4 4M20 8.2l-4 4M8 19.8l4-4M20 19.8l-4-4"/></svg></span>
                 <h3 style="color:var(--primary-color)"><span class="zh">端侧拉伸优化引擎</span><span class="en">On-Device Stretch Optimizer</span></h3>
-                <p><span class="zh">根据钢琴实测不谐性（B 值），在本机用自研优化算法拟合专属拉伸曲线，确定、可复现，实现真正的物理一致性。</span><span class="en">From your piano's measured inharmonicity (B), a proprietary optimizer fits a bespoke stretch curve on-device — deterministic and reproducible, for true physical consistency.</span></p>
+                <p><span class="zh">从实测不谐性（B 值）本机拟合专属拉伸曲线，确定、可复现。</span><span class="en">Fits a bespoke stretch curve on-device from measured inharmonicity (B) — deterministic, reproducible.</span></p>
             </div>
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11.5" cy="11.5" r="6.5"/><path d="M16.4 16.4 22 22"/></svg></span>
@@ -269,7 +302,7 @@
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 23h20"/><path d="M8 23v-7M14 23V7.5M20 23v-11"/></svg></span>
                 <h3 style="color:var(--primary-color)"><span class="zh">PDF 钢琴健康报告</span><span class="en">PDF Health Reports</span></h3>
-                <p><span class="zh">低、中、高音区<span class="hl">分别评分</span>，逐键定位问题并附维护建议，纯本机生成、可打印——专业溢价的实际兑现物。</span><span class="en">Separate scores for bass, mid and treble, <span class="hl">per-key problem spots</span> and advice — generated on-device, print-ready. The real deliverable behind a Pro's premium.</span></p>
+                <p><span class="zh">低、中、高音区<span class="hl">分别评分</span>，逐键定位问题并附建议，本机生成、可打印。</span><span class="en">Separate scores for bass, mid and treble, <span class="hl">per-key problem spots</span> and advice — generated on-device, print-ready.</span></p>
             </div>
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5" width="19" height="18" rx="2.5"/><path d="M9.3 5v18M14 5v18M18.7 5v18"/><path d="M11.6 5v7.6M16.4 5v7.6" stroke-width="3.4"/></svg></span>
@@ -294,7 +327,7 @@
                 <tbody>
                     <tr><td><span class="zh">适用场景</span><span class="en">Best For</span></td><td><span class="zh">家庭练习 / 日常维护</span><span class="en">Home Practice / DIY</span></td><td class="highlight-cell"><span class="zh">职业调律师 / 音乐机构</span><span class="en">Pro Tuners / Institutions</span></td></tr>
                     <tr><td><span class="zh">采样精度</span><span class="en">Precision</span></td><td>±1 音分 (±1 Cents)</td><td class="highlight-cell">±1 音分 (±1 Cents)</td></tr>
-                    <tr><td><span class="zh">调音曲线 优化器</span><span class="en">Optimizer</span></td><td><span class="zh">通用曲线 (可单独订阅)</span><span class="en">Universal (Add-on)</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">全局优化</span><span class="en">Global Optimization</span></td></tr>
+                    <tr><td><span class="zh">调音曲线 优化器</span><span class="en">Optimizer</span></td><td><span class="zh">通用曲线 (可单独订阅)</span><span class="en">Universal (Add-on)</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">端侧拉伸优化</span><span class="en">On-Device Stretch</span></td></tr>
                     <tr><td><span class="zh">电机性能</span><span class="en">Performance</span></td><td><span class="zh">静音稳定模式</span><span class="en">Silent/Stable</span></td><td class="highlight-cell"><span class="zh">Turbo 涡轮性能加速</span><span class="en">Turbo Performance</span></td></tr>
                     <tr><td><span class="zh">云端 CRM</span><span class="en">Cloud CRM</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">数字化客户档案库</span><span class="en">Digital Customer Archive</span></td></tr>
                     <tr><td><span class="zh">健康报告</span><span class="en">Health Reports</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">PDF 深度分析报告</span><span class="en">PDF Deep Analysis</span></td></tr>
@@ -310,8 +343,8 @@
         <div class="cta-content-wrapper">
             <h2 class="reveal"><span class="zh">开启您的专业数字化调律</span><span class="en">Start Your Professional Tuning</span></h2>
             <p class="reveal" style="color: var(--text-muted); margin-bottom: 40px;">
-                <span class="zh">一次性买断专业版许可证，让您的调音技术跃迁到数字时代。</span>
-                <span class="en">One-time purchase for the Pro license. Upgrade your tuning skill to the digital age.</span>
+                <span class="zh">一次性买断专业版许可证。</span>
+                <span class="en">One-time Pro license. Buy once, own it.</span>
             </p>
             <div style="background: rgba(230,161,92,0.08); border: 1px solid rgba(230,161,92,0.2); border-radius: 10px; padding: 14px 18px; margin-bottom: 25px; font-size: 12px; color: #888; line-height: 1.7; max-width: 500px; text-align: left;">
                 <span class="zh">
@@ -345,6 +378,8 @@
     </footer>
 
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             body.classList.toggle('lang-zh');
@@ -352,12 +387,13 @@
         }
 
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { 
-                if (entry.isIntersecting) { 
-                    entry.target.classList.add('active'); 
-                } 
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: '0px 0px -12% 0px' });
         
         document.querySelectorAll('.reveal').forEach((el, index) => {
             if(el.classList.contains('card')) {
@@ -366,5 +402,6 @@
             observer.observe(el);
         });
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>

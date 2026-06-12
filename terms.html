@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="服务条款 | Piano Tuner" data-t-en="Terms of Service | Piano Tuner">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,10 +126,38 @@
             .nav-right .btn-primary { display: none; }
             footer .foot-links a { display: inline-block; margin: 4px 8px; }
         }
+
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* —— 阻尼式滚动揭示 —— */
+        .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal.active {
+            opacity: 1; transform: none;
+            transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
+        }
     </style>
 </head>
 
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <a href="index.html" class="logo-container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;">
@@ -158,8 +186,22 @@
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
             <a href="pro.html" class="btn-primary" style="background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);"><span class="zh">获取专业版</span><span class="en">GET PRO</span></a>
             <a href="buy.html" class="btn-primary"><span class="zh">预定首发</span><span class="en">PRE-ORDER</span></a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
 
     <section class="legal-hero">
         <span class="tag"><span class="zh">法律条款</span><span class="en">LEGAL</span></span>
@@ -173,7 +215,7 @@
             <span class="en">Welcome to Piano Tuner. These Terms of Service ("Terms") form an agreement between you and MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner, "we", "us") regarding your use of the Piano Tuner tuning robot hardware and its companion iOS app (together, the "Product"). Please read them carefully before use, especially the safety and limitation-of-liability sections.</span>
         </p>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">1</span><span class="zh">接受条款</span><span class="en">Acceptance of Terms</span></h2>
             <p>
                 <span class="zh">当您下载、安装或使用本产品时，即表示您已阅读、理解并同意接受本条款。如果您不同意本条款的任何内容，请勿使用本产品。</span>
@@ -181,7 +223,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">2</span><span class="zh">应用使用许可</span><span class="en">License to Use the App</span></h2>
             <p>
                 <span class="zh">在您遵守本条款的前提下，我们授予您一项有限的、非独占、不可转让、可撤销的许可，仅供您为个人或内部业务目的，配合本产品硬件使用配套应用。您不得对应用进行出租、转售、反向工程、反编译或试图提取其源代码，除非相关法律明确允许。</span>
@@ -189,7 +231,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">3</span><span class="zh">硬件使用与安全须知</span><span class="en">Hardware Use & Safety</span></h2>
             <div class="callout">
                 <p>
@@ -209,7 +251,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">4</span><span class="zh">硬件质保</span><span class="en">Hardware Warranty</span></h2>
             <p>
                 <span class="zh">我们为本产品硬件提供自购买之日起<strong>一年</strong>的有限质保，保证其在正常使用下无材料及工艺缺陷。质保<strong>不涵盖</strong>因误用、意外、未经授权的拆解或改装、违反安全说明的操作，或正常磨损所导致的损坏。质保期内的有效索赔，我们将自行选择对产品进行维修或更换。</span>
@@ -217,7 +259,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">5</span><span class="zh">软件「按现状」提供与 OTA 更新</span><span class="en">Software "As Is" & OTA Updates</span></h2>
             <p>
                 <span class="zh">本产品的软件与固件按<strong>「现状」及「现有」</strong>提供，不附带任何明示或暗示的担保。我们可能不时通过 BLE OTA 等方式推送固件与应用更新，以修复问题、提升性能或增加功能。部分更新可能是正常使用本产品所必需的；继续使用即表示您同意接收此类更新。</span>
@@ -225,15 +267,15 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">6</span><span class="zh">知识产权</span><span class="en">Intellectual Property</span></h2>
             <p>
-                <span class="zh">本产品及其所有组成部分——包括但不限于核心算法、硬件结构、全闭环控制逻辑、软件、界面、商标与标识——的全部知识产权均归我们所有，并受相关法律及在审专利保护。本条款未明确授予您的权利，我们均予以保留。未经授权，严禁任何形式的商业拆解、逆向工程或仿造。</span>
-                <span class="en">All intellectual property in the Product and its components — including but not limited to the core algorithms, hardware architecture, closed-loop control logic, software, interface, trademarks, and logos — belongs to us and is protected by applicable law and pending patents. We reserve all rights not expressly granted to you in these Terms. Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
+                <span class="zh">本产品及其所有组成部分——包括但不限于核心算法、硬件结构、全闭环控制逻辑、软件、界面、商标与标识——的全部知识产权均归我们所有，并受相关法律保护；其中整机硬件结构及全闭环控制逻辑另有在审发明专利。本条款未明确授予您的权利，我们均予以保留。未经授权，严禁任何形式的商业拆解、逆向工程或仿造。</span>
+                <span class="en">All intellectual property in the Product and its components — including but not limited to the core algorithms, hardware architecture, closed-loop control logic, software, interface, trademarks, and logos — belongs to us and is protected by applicable law; the hardware architecture and closed-loop control logic are further covered by a pending invention patent. We reserve all rights not expressly granted to you in these Terms. Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">7</span><span class="zh">免责声明与责任限制</span><span class="en">Disclaimers & Limitation of Liability</span></h2>
             <p>
                 <span class="zh">本产品是一种机械设备。在适用法律允许的最大范围内，我们不对适销性、特定用途适用性或不侵权作出任何暗示担保。您理解并接受，对钢琴进行调音存在固有的机械风险（例如琴弦或弦轴在张力下的固有特性）。</span>
@@ -245,7 +287,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">8</span><span class="zh">账户与激活码（CDK）</span><span class="en">Accounts & CDK</span></h2>
             <p>
                 <span class="zh">部分功能或服务可能需要账户或激活码（CDK）。您应对账户与激活码的保管负责，并对在其下发生的活动承担责任。激活码不得转售或用于未经授权的用途。</span>
@@ -259,7 +301,7 @@
             </div>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">9</span><span class="zh">条款变更</span><span class="en">Changes to These Terms</span></h2>
             <p>
                 <span class="zh">我们可能会不时更新本条款。重大变更将通过应用内或本页面公示，并更新顶部的「最后更新」日期。变更生效后继续使用本产品，即表示您接受更新后的条款。</span>
@@ -267,7 +309,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">10</span><span class="zh">适用法律与争议解决</span><span class="en">Governing Law & Disputes</span></h2>
             <p>
                 <span class="zh">本条款受中华人民共和国法律管辖并依其解释。因本条款或本产品引起的任何争议，应提交至深圳市有管辖权的人民法院解决。</span>
@@ -275,7 +317,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">11</span><span class="zh">联系我们</span><span class="en">Contact Us</span></h2>
             <p>
                 <span class="zh">如对本服务条款有任何疑问，请联系：<a href="mailto:support@pianotuner.top">support@pianotuner.top</a></span>
@@ -307,6 +349,8 @@
     </footer>
 
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             if (body.classList.contains('lang-zh')) {
@@ -317,6 +361,8 @@
                 document.title = "服务条款 | Piano Tuner";
             }
         }
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>

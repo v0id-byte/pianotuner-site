@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="隐私政策 | Piano Tuner" data-t-en="Privacy Policy | Piano Tuner">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,10 +126,38 @@
             .nav-right .btn-primary { display: none; }
             footer .foot-links a { display: inline-block; margin: 4px 8px; }
         }
+
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* —— 阻尼式滚动揭示 —— */
+        .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal.active {
+            opacity: 1; transform: none;
+            transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
+        }
     </style>
 </head>
 
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <a href="index.html" class="logo-container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;">
@@ -158,8 +186,22 @@
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
             <a href="pro.html" class="btn-primary" style="background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);"><span class="zh">获取专业版</span><span class="en">GET PRO</span></a>
             <a href="buy.html" class="btn-primary"><span class="zh">预定首发</span><span class="en">PRE-ORDER</span></a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
 
     <section class="legal-hero">
         <span class="tag"><span class="zh">法律条款</span><span class="en">LEGAL</span></span>
@@ -173,7 +215,7 @@
             <span class="en">This Privacy Policy explains how MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner, "we", "us") collects, uses, and protects information when you use the Piano Tuner tuning robot and its companion iOS app (together, the "Product"). We follow a data-minimization principle: most processing happens locally on your device, and we upload data to the cloud only when it is necessary to deliver a feature you use.</span>
         </p>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">1</span><span class="zh">我们收集哪些信息</span><span class="en">What We Collect</span></h2>
 
             <h3><span class="zh">麦克风（音频）</span><span class="en">Microphone (Audio)</span></h3>
@@ -213,7 +255,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">2</span><span class="zh">我们如何使用信息</span><span class="en">How We Use Information</span></h2>
             <ul>
                 <li><span class="zh">实时检测音高并驱动调音硬件完成调律。</span><span class="en">Detect pitch in real time and drive the tuning hardware.</span></li>
@@ -224,7 +266,7 @@
             </ul>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">3</span><span class="zh">云端服务</span><span class="en">Cloud Service</span></h2>
             <p>
                 <span class="zh">为了计算个性化调律曲线并跟踪调音会话，钢琴的测量数据会被发送至我们的云端服务（<strong>api.pianotuner.top</strong>）。这些数据关联到钢琴档案 / ID，<strong>而非您的个人身份</strong>。除此处所述用途外，我们不会将其用于其他目的。</span>
@@ -232,7 +274,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">4</span><span class="zh">信息共享</span><span class="en">Sharing</span></h2>
             <div class="callout">
                 <p>
@@ -246,7 +288,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">5</span><span class="zh">存储与安全</span><span class="en">Storage & Security</span></h2>
             <p>
                 <span class="zh">钢琴档案与本地设置主要保存在您的设备上。发送至云端的测量数据通过加密传输，并仅在为您提供调律功能所需的范围内保留。我们采取合理的技术与组织措施保护数据，但请注意，任何通过互联网传输或存储的方式都无法做到绝对安全。</span>
@@ -254,7 +296,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">6</span><span class="zh">您的选择与权利</span><span class="en">Your Choices & Rights</span></h2>
             <ul>
                 <li><span class="zh"><strong>授权控制：</strong>麦克风与蓝牙权限可在系统设置中随时撤销；匿名遥测与算法改进数据均为可选，可在应用内随时关闭。</span><span class="en"><strong>Permission control:</strong> Microphone and Bluetooth access can be revoked anytime in system settings; anonymous telemetry and algorithm-improvement contributions are optional and can be switched off in the app at any time.</span></li>
@@ -262,7 +304,7 @@
             </ul>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">7</span><span class="zh">儿童</span><span class="en">Children</span></h2>
             <p>
                 <span class="zh">本产品不面向儿童设计，也不会有意收集儿童的个人信息。</span>
@@ -270,7 +312,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">8</span><span class="zh">政策变更</span><span class="en">Changes to This Policy</span></h2>
             <p>
                 <span class="zh">我们可能会不时更新本隐私政策。重大变更将通过应用内或本页面公示，并更新顶部的「最后更新」日期。继续使用本产品即表示您接受更新后的政策。</span>
@@ -278,7 +320,7 @@
             </p>
         </section>
 
-        <section class="legal-section">
+        <section class="legal-section reveal">
             <h2><span class="num">9</span><span class="zh">联系我们</span><span class="en">Contact Us</span></h2>
             <p>
                 <span class="zh">如对本隐私政策有任何疑问，或希望行使您的权利，请联系：<a href="mailto:support@pianotuner.top">support@pianotuner.top</a></span>
@@ -310,6 +352,8 @@
     </footer>
 
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             if (body.classList.contains('lang-zh')) {
@@ -320,6 +364,8 @@
                 document.title = "隐私政策 | Piano Tuner";
             }
         }
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="关于我们 | Piano Tuner" data-t-en="About Us | Piano Tuner">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -158,10 +158,13 @@
 
         /* ── Animate on scroll ── */
         .reveal {
-            opacity: 0; transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            opacity: 0; transform: translateY(34px);
+            transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
         }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal.visible { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
+        }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
@@ -312,6 +315,8 @@
             .contact-box { padding: 48px 28px; }
             .hero-cta-group { flex-direction: column; }
             .nav-links { display: none; }
+            .nav-toggle { display: flex; }
+            header .btn-primary { display: none; }
             .btn-gold, .btn-outline { width: 220px; text-align: center; }
         }
         @media (max-width: 480px) {
@@ -352,9 +357,26 @@
         @media (prefers-reduced-motion: reduce) {
             .aurora { animation: none; }
         }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
     </style>
 </head>
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <div class="aurora-container"><div class="aurora"></div></div>
 
 <!-- Header -->
@@ -381,8 +403,21 @@
         <a href="buy.html" class="btn-primary">
             <span class="zh">即将开放预售</span><span class="en">Coming Soon</span>
         </a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
 </header>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
 
 <main>
     <!-- Hero -->
@@ -398,8 +433,8 @@
             <span class="outline-text en">Perfectly Tuned</span>
         </h1>
         <p class="hero-sub">
-            <span class="zh">Piano Tuner V2.0 自动化钢琴调律机器人<br>硬件 · 软件 · 端侧 AI 三位一体</span>
-            <span class="en">Automated Piano Tuning Robot<br>Hardware · Software · On-Device AI — All in One</span>
+            <span class="zh">为专业调音师打造的自动调音器。<br>硬件 · 软件 · 端侧 AI,三位一体。</span>
+            <span class="en">An automatic tuner, built for pros.<br>Hardware · Software · On-Device AI — in one.</span>
         </p>
         <div class="hero-cta-group">
             <a href="buy.html" class="btn-gold">
@@ -438,8 +473,8 @@
                 <span class="tag"><span class="zh">精密硬件</span><span class="en">Precision Hardware</span></span>
                 <h3><span class="zh">智能硬件核心</span><span class="en">Smart Hardware Core</span></h3>
                 <p>
-                    <span class="zh">高性能微控制器 + 精密电机，精准扭矩控制、蓝牙无线连接与智能闭环调速。</span>
-                    <span class="en">High-performance microcontroller and precision motor, with accurate torque control, Bluetooth wireless connectivity, and a smart closed-loop drive.</span>
+                    <span class="zh">精密 <span style="color:var(--primary)">FOC 电机</span>，精准扭矩控制，蓝牙直连。</span>
+                    <span class="en">A precision <span style="color:var(--primary)">FOC motor</span> with accurate torque control and direct Bluetooth.</span>
                 </p>
             </div>
             <div class="tinity-card reveal reveal-delay-2">
@@ -449,8 +484,8 @@
                 <span class="tag"><span class="zh">原生 App</span><span class="en">Native App</span></span>
                 <h3><span class="zh">iOS 智能操控</span><span class="en">iOS Smart Control</span></h3>
                 <p>
-                    <span class="zh">SwiftUI 原生开发，Apple 专业音频处理框架实现硬件级音频分析，CoreBluetooth 直连设备，实时波形显示。</span>
-                    <span class="en">SwiftUI native development, hardware-grade audio analysis via Apple's pro audio framework, CoreBluetooth direct device connection, and real-time waveform display.</span>
+                    <span class="zh">SwiftUI 原生开发，借 <span style="color:var(--primary)">iOS 原生硬件加速</span>做硬件级音频分析，实时波形显示。</span>
+                    <span class="en">SwiftUI native, hardware-grade audio analysis on <span style="color:var(--primary)">iOS hardware acceleration</span>, with real-time waveforms.</span>
                 </p>
             </div>
             <div class="tinity-card reveal reveal-delay-3">
@@ -460,8 +495,8 @@
                 <span class="tag"><span class="zh">云端服务</span><span class="en">Cloud Services</span></span>
                 <h3><span class="zh">档案、报告与固件</span><span class="en">Profiles, Reports & Firmware</span></h3>
                 <p>
-                    <span class="zh">个性化拉伸曲线在 iPhone 本机端侧生成；云端负责会话记录、按钢琴缓存 B 值、客户档案、报告提交与固件更新。</span>
-                    <span class="en">The personalized stretch curve is computed on-device on your iPhone; the cloud handles session tracking, per-piano B-value caching, profiles, report submission, and firmware updates.</span>
+                    <span class="zh">拉伸曲线在 iPhone <span style="color:#2DD4BF">端侧</span>生成；云端只存档案、报告、按钢琴缓存的 B 值与固件。</span>
+                    <span class="en">The stretch curve is computed <span style="color:#2DD4BF">on-device</span>; the cloud only keeps profiles, reports, per-piano B-values, and firmware.</span>
                 </p>
             </div>
         </div>
@@ -475,10 +510,10 @@
         </div>
         <div class="stats-grid reveal reveal-delay-1">
             <div class="stat-item">
-                <div class="stat-number" data-target="16">0</div>
+                <div class="stat-number" data-target="24">0</div>
                 <div class="stat-unit">N·m</div>
                 <div class="stat-label"><span class="zh">峰值扭矩</span><span class="en">Peak Torque</span></div>
-                <div class="stat-sublabel"><span class="zh">额定 10 N·m / 峰值 16 N·m</span><span class="en">10 N·m rated / 16 N·m peak</span></div>
+                <div class="stat-sublabel"><span class="zh">额定 5.39 N·m / 峰值 24 N·m</span><span class="en">5.39 N·m rated / 24 N·m peak</span></div>
             </div>
             <div class="stat-item">
                 <div class="stat-number" data-target="88" data-suffix="-keys">0</div>
@@ -512,8 +547,8 @@
                 <span class="zh">」</span><span class="en">"</span>
             </p>
             <p class="vision-desc">
-                <span class="zh">我们相信，先进的技术不应只服务于少数人。Piano Tuner V2.0 让专业级调律走进千家万户，每一位钢琴拥有者都值得拥有一台调律精准的乐器。</span>
-                <span class="en">We believe advanced technology should serve everyone. Piano Tuner V2.0 brings professional-grade tuning to every home — every piano owner deserves a precisely tuned instrument.</span>
+                <span class="zh">把专业级调律带进每一台钢琴，每位拥有者都值得一件音准的乐器。</span>
+                <span class="en">Professional-grade tuning for every piano — every owner deserves an instrument in tune.</span>
             </p>
         </div>
     </section>
@@ -621,6 +656,8 @@
     </footer>
 
 <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
     // Language Toggle
     function toggleLanguage() {
         const body = document.body;
@@ -640,6 +677,7 @@
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
                 // Count-up animation for stat numbers
                 const numEl = entry.target.querySelector('.stat-number');
                 if (numEl && !numEl.dataset.animated) {
@@ -660,12 +698,13 @@
                 }
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -12% 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // Also observe stat items for count-up
     document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
 </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>
