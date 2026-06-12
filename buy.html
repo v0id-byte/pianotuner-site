@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="Piano Tuner | 暂停销售 · Coming Soon" data-t-en="Piano Tuner | Sales Paused · Coming Soon">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,10 +42,31 @@
         .notice-btn-text:hover { color: var(--primary-color); }
         footer { text-align: center; padding: 40px 5% 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer .footer-links { margin-bottom: 6px; }
-        @media (max-width: 600px) { .notice-ctas { flex-direction: column; } .notice-btn-primary, .notice-btn-secondary { width: 100%; text-align: center; } }
+        /* —— 阻尼滚动揭示 / Damped scroll reveal —— */
+        .reveal { opacity: 0; transform: translateY(34px); transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        .reveal.active { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
+        @media (max-width: 600px) { .notice-ctas { flex-direction: column; } .notice-btn-primary, .notice-btn-secondary { width: 100%; text-align: center; } header { padding: 12px 4%; } .logo-text { font-size: 18px; letter-spacing: 1px; } .nav-right { gap: 10px; } }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
 </style>
 </head>
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <div class="logo-container" onclick="location.href='index.html'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 40px; width: auto; display: block;"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient></defs><g><path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round"/><path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)"/><rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)"/><rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)"/></g></svg>
@@ -53,13 +74,31 @@
         </div>
         <div class="nav-right">
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
-    <main class="notice-section">
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
+    <main class="notice-section reveal">
         <span class="notice-eyebrow"><span class="zh">暂停销售</span><span class="en">Sales Paused</span></span>
         <h1><span class="zh">极早鸟预售已结束</span><span class="en">Ultra-Early-Bird Pre-Sale Has Ended</span></h1>
         <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中，预计约两个月后开放新一轮早鸟预售。</span><span class="en">Piano Tuner V2.1 is in development — a new early-bird round is expected to open in about two months.</span></p>
-        <p class="notice-body"><span class="zh">感谢你的关注与支持。极早鸟预售名额已结束，我们正在打磨 V2.1 的硬件与算法。想在第一时间收到开售通知，欢迎下载 App 抢先体验，或联系我们登记。</span><span class="en">Thank you for your interest and support. The ultra-early-bird pre-sale has ended, and we're refining the V2.1 hardware and algorithms. To be notified first, try the app for early access or get in touch.</span></p>
+        <p class="notice-body"><span class="zh">感谢你的关注与支持。极早鸟预售名额已结束，我们正在打磨 V2.1 的硬件与算法。想在第一时间收到开售通知，留下邮箱即可，也欢迎下载 App 抢先体验。</span><span class="en">Thank you for your interest and support. The ultra-early-bird pre-sale has ended, and we're refining the V2.1 hardware and algorithms. To be notified first, leave your email below, or try the app for early access.</span></p>
+        <form class="notify-form" onsubmit="ptSubscribe(event,'buy-page')" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:center; max-width:480px; margin:0 auto 16px;">
+            <input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email" style="flex:1; min-width:220px; padding:15px 18px; border-radius:10px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.05); color:#fff; font-size:15px; font-family:var(--font-stack);">
+            <button type="submit" class="notice-btn-primary" style="border:none; cursor:pointer; font-family:var(--font-stack);"><span class="zh">通知我开售</span><span class="en">Notify me</span></button>
+        </form>
+        <p class="notify-status" role="status" aria-live="polite" style="display:none; font-size:14px; font-weight:700; margin:0 auto 30px; min-height:1em;"></p>
         <div class="notice-ctas">
             <a class="notice-btn-primary" href="index.html"><span class="zh">了解产品</span><span class="en">Explore the Product</span></a>
             <a class="notice-btn-secondary" href="https://testflight.apple.com/join/hV2YV4eE" target="_blank"><span class="zh">下载 App 抢先体验</span><span class="en">Try the App (TestFlight)</span></a>
@@ -68,6 +107,8 @@
     </main>
 
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             var body = document.body;
             if (body.classList.contains('lang-zh')) {
@@ -78,6 +119,7 @@
                 body.classList.add('lang-zh');
             }
         }
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
 
     <footer>
@@ -98,5 +140,30 @@
             <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
         </p>
     </footer>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>
+    function ptSubscribe(e, source){
+        e.preventDefault();
+        var form = e.target;
+        var input = form.querySelector('input[type=email]');
+        var status = (form.parentNode && form.parentNode.querySelector('.notify-status')) || form.nextElementSibling;
+        var isEn = document.body.classList.contains('lang-en');
+        var email = (input && input.value || '').trim();
+        if(!email || email.indexOf('@') < 1 || email.indexOf('.') < 0){
+            ptStatus(status, isEn ? 'Please enter a valid email.' : '请输入有效的邮箱地址。', '#ff6b6b'); return;
+        }
+        var btn = form.querySelector('button'); if(btn) btn.disabled = true;
+        fetch('/api/pianotuner/subscribe', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({email: email, source: source || '', lang: isEn ? 'en' : 'zh'})
+        }).then(function(r){ return r.ok; }).then(function(ok){
+            if(ok){ ptStatus(status, isEn ? "Thanks! We'll email you when pre-orders open." : '已登记！开售时我们会第一时间邮件通知你。', '#52c41a'); form.reset(); }
+            else { ptStatus(status, isEn ? 'Please try again, or email us directly.' : '提交失败，请重试或直接邮件联系我们。', '#ff6b6b'); if(btn) btn.disabled = false; }
+        }).catch(function(){
+            ptStatus(status, isEn ? 'Network error — please try again.' : '网络错误，请稍后重试。', '#ff6b6b'); if(btn) btn.disabled = false;
+        });
+    }
+    function ptStatus(el, msg, color){ if(!el) return; el.textContent = msg; el.style.color = color; el.style.display = 'block'; }
+    </script>
 </body>
 </html>

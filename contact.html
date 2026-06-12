@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="联系我们 | Piano Tuner" data-t-en="Contact Us | Piano Tuner">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@
         .btn-submit { width: 100%; padding: 18px; background: var(--primary-color); color: #000; border: none; border-radius: 30px; font-family: var(--font-stack); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 30px rgba(230, 161, 92, 0.5); }
         footer { text-align: center; padding: 40px; color: #444; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); font-weight: 600; margin-top: 80px; }
-        @media (max-width: 768px) { .page-hero h1 { font-size: 32px; } .b2b-section { padding: 40px 20px; } .email-section { padding: 40px 20px; } .form-section { padding: 40px 20px; } .email-row { gap: 30px; } }
+        @media (max-width: 768px) { .page-hero h1 { font-size: 32px; } .b2b-section { padding: 40px 20px; } .email-section { padding: 40px 20px; } .form-section { padding: 40px 20px; } .email-row { gap: 30px; } .nav-toggle { display: flex; } header .nav-right .btn-primary { display: none; } .section-padding { padding: 100px 5% 60px 5%; } .form-group input, .form-group textarea, .form-group select { max-width: 100%; min-width: 0; } }
 
         /* Spotlight Card Effect */
         .card-spotlight {
@@ -99,10 +99,31 @@
             position: relative;
             z-index: 2;
         }
+        /* —— Damped scroll reveal —— */
+        .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
     .i-inline { width: 1.1em; height: 1.1em; vertical-align: -0.18em; display: inline-block; margin-right: 0.3em; }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+        }
 </style>
 </head>
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <div class="logo-container">
             <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
@@ -113,16 +134,30 @@
         <div class="nav-right">
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
             <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
 
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
+
     <main class="section-padding">
-        <div class="page-hero">
+        <div class="page-hero reveal">
             <h1><span class="zh">联系我们</span><span class="en">Contact Us</span></h1>
-            <p><span class="zh">有任何问题或合作意向？我们随时恭候您的来信。</span><span class="en">Have questions or partnership inquiries? We'd love to hear from you.</span></p>
+            <p><span class="zh">有问题或合作意向？欢迎来信。</span><span class="en">Questions or partnerships? We'd love to hear from you.</span></p>
         </div>
 
-        <div class="contact-grid">
+        <div class="contact-grid reveal">
             <div class="contact-card card-spotlight">
                 <div class="contact-icon">
                     <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -154,9 +189,9 @@
             </div>
         </div>
 
-        <div class="b2b-section">
+        <div class="b2b-section reveal">
             <h2><span class="zh">企业级合作</span><span class="en">Enterprise Partnership</span></h2>
-            <p><span class="zh">我们欢迎琴行、钢琴厂、专业调律师等企业伙伴洽谈合作</span><span class="en">We welcome partnerships with piano stores, manufacturers, and professional tuners</span></p>
+            <p><span class="zh">面向琴行、钢琴厂与专业调律师。</span><span class="en">For piano stores, manufacturers, and professional tuners.</span></p>
             <div class="b2b-grid">
                 <div class="b2b-item card-spotlight">
                     <h4><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5V21.5h18V11.5"/><path d="M3.5 6.5h21l-1.4 5H4.9z"/><path d="M11 21.5V15.5h6v6"/></svg>琴行合作</span><span class="en"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5V21.5h18V11.5"/><path d="M3.5 6.5h21l-1.4 5H4.9z"/><path d="M11 21.5V15.5h6v6"/></svg>Piano Stores</span></h4>
@@ -173,7 +208,7 @@
             </div>
         </div>
 
-        <div class="email-section">
+        <div class="email-section reveal">
             <h2><span class="zh">发送邮件</span><span class="en">Send Email</span></h2>
             <div class="email-row">
                 <div class="email-item">
@@ -187,7 +222,19 @@
             </div>
         </div>
 
-        <div class="form-section">
+        <div class="form-section reveal">
+            <h2><span class="zh">开售通知 · 抢先登记</span><span class="en">Pre-order Alerts</span></h2>
+            <p style="text-align:center; color:#9a9a9a; font-size:14px; margin-top:-24px; margin-bottom:32px;">
+                <span class="zh">留下邮箱，新一轮早鸟预售开启时第一时间通知你。</span><span class="en">Leave your email and we'll notify you the moment the next early-bird round opens.</span>
+            </p>
+            <form class="notify-form" onsubmit="ptSubscribe(event,'contact-page')" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:520px; margin:0 auto;">
+                <input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email" style="flex:1; min-width:220px; padding:15px 18px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.3); color:var(--text-main); font-size:15px; font-family:var(--font-stack);">
+                <button type="submit" style="padding:15px 30px; border:none; border-radius:30px; background:var(--primary-color); color:#000; font-weight:800; font-size:15px; cursor:pointer; font-family:var(--font-stack); text-transform:uppercase; letter-spacing:1px;"><span class="zh">通知我</span><span class="en">Notify me</span></button>
+            </form>
+            <p class="notify-status" role="status" aria-live="polite" style="display:none; font-size:14px; font-weight:700; text-align:center; margin-top:18px; min-height:1em;"></p>
+        </div>
+
+        <div class="form-section reveal">
             <h2><span class="zh">给我们留言</span><span class="en">Send a Message</span></h2>
             <p style="text-align:center; color:#9a9a9a; font-size:14px; margin-top:-24px; margin-bottom:32px;">
                 <span class="zh">我们将在 1–2 个工作日内回复。</span><span class="en">We reply within 1–2 business days.</span>
@@ -253,6 +300,8 @@
             });
         }
 
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             if (body.classList.contains('lang-zh')) {
@@ -325,6 +374,33 @@
             });
         }
         initSpotlight();
+
+        // Damped scroll reveal
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
+
+        function ptSubscribe(e, source){
+            e.preventDefault();
+            var form = e.target;
+            var input = form.querySelector('input[type=email]');
+            var status = (form.parentNode && form.parentNode.querySelector('.notify-status')) || form.nextElementSibling;
+            var isEn = document.body.classList.contains('lang-en');
+            var email = (input && input.value || '').trim();
+            if(!email || email.indexOf('@') < 1 || email.indexOf('.') < 0){
+                ptStatus(status, isEn ? 'Please enter a valid email.' : '请输入有效的邮箱地址。', '#ff6b6b'); return;
+            }
+            var btn = form.querySelector('button'); if(btn) btn.disabled = true;
+            fetch('/api/pianotuner/subscribe', {
+                method:'POST', headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({email: email, source: source || '', lang: isEn ? 'en' : 'zh'})
+            }).then(function(r){ return r.ok; }).then(function(ok){
+                if(ok){ ptStatus(status, isEn ? "Thanks! We'll email you when pre-orders open." : '已登记！开售时我们会第一时间邮件通知你。', '#52c41a'); form.reset(); }
+                else { ptStatus(status, isEn ? 'Please try again, or email us directly.' : '提交失败，请重试或直接邮件联系我们。', '#ff6b6b'); if(btn) btn.disabled = false; }
+            }).catch(function(){
+                ptStatus(status, isEn ? 'Network error — please try again.' : '网络错误，请稍后重试。', '#ff6b6b'); if(btn) btn.disabled = false;
+            });
+        }
+        function ptStatus(el, msg, color){ if(!el) return; el.textContent = msg; el.style.color = color; el.style.display = 'block'; }
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>

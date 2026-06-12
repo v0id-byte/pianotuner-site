@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-t-zh="Piano Tuner | 帮助与支持中心" data-t-en="Piano Tuner | Support Center">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,9 +87,34 @@
             position: relative;
             z-index: 2;
         }
+        /* —— Damped scroll reveal —— */
+        .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
+        /* —— 移动端导航（汉堡菜单）—— */
+        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
+        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
+        @media (max-width: 900px) {
+            html { overflow-x: hidden; scroll-padding-top: 76px; }
+            img { max-width: 100%; height: auto; }
+            .nav-toggle { display: flex; }
+            .nav-right .btn-primary { display: none; }
+            .section-padding { padding: 80px 6%; padding-top: 120px; }
+            .section-title { font-size: 30px; }
+            .card { padding: 28px 22px; }
+        }
     </style>
 </head>
 <body class="lang-zh">
+    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
     <header>
         <div class="logo-container">
             <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
@@ -100,14 +125,27 @@
         <div class="nav-right">
             <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
             <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
         </div>
     </header>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
+        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
+        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
+        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
+        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
+        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
+        <div class="mobile-menu-cta">
+            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
+            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
+        </div>
+    </nav>
 
     <main class="section-padding">
-        <h1 class="section-title"><span class="zh">帮助与支持中心</span><span class="en">Support Center</span></h1>
-        <p class="section-subtitle"><span class="zh">Piano Tuner V2.0 使用指南、常见问题与技术支持。</span><span class="en">Guides, FAQs, and technical support for your Piano Tuner V2.0.</span></p>
+        <h1 class="section-title reveal"><span class="zh">帮助与支持中心</span><span class="en">Support Center</span></h1>
+        <p class="section-subtitle reveal"><span class="zh">使用指南、常见问题与技术支持。</span><span class="en">Guides, FAQs, and technical support.</span></p>
 
-        <div class="card card-spotlight">
+        <div class="card card-spotlight reveal">
             <h3><span class="zh">快速上手指南</span><span class="en">Quick Start Guide</span></h3>
             <ul>
                 <li><strong><span class="zh">第一步：硬件组装:</span><span class="en">Step 1: Assembly:</span></strong> <span class="zh">将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。</span><span class="en">Attach the tuning socket and screw in the ergonomic side handle.</span></li>
@@ -116,13 +154,13 @@
             </ul>
         </div>
 
-        <div class="card card-spotlight">
+        <div class="card card-spotlight reveal">
             <h3><span class="zh">常见问题解答 (FAQ)</span><span class="en">Frequently Asked Questions</span></h3>
-             <p><strong><span class="zh">高扭矩输出安全吗？我该如何正确握持？</span><span class="en">Is the high torque output safe? How should I hold it?</span></strong><br><span class="zh">本设备具备工业级高扭矩（额定 10 N·m / 峰值 16 N·m）。为了您的安全和调音精度，务必使用包装内附带的人体工程学侧手柄。请用主手握住带有防滑蒙皮的机身，另一只手紧握侧手柄，以双手形成的合力稳定对抗反向扭矩。</span><span class="en">The device delivers industrial-grade torque (10 N·m rated / 16 N·m peak). For your safety and tuning accuracy, always use the included ergonomic side handle. Hold the grip-coated body with your main hand and the side handle with the other, using both hands together to steadily counteract the reaction force.</span></p><br>
+             <p><strong><span class="zh">高扭矩输出安全吗？我该如何正确握持？</span><span class="en">Is the high torque output safe? How should I hold it?</span></strong><br><span class="zh">本设备具备工业级高扭矩（额定 5.39 N·m / 峰值 24 N·m）。为了您的安全和调音精度，务必使用包装内附带的人体工程学侧手柄。请用主手握住带有防滑蒙皮的机身，另一只手紧握侧手柄，以双手形成的合力稳定对抗反向扭矩。</span><span class="en">The device delivers industrial-grade torque (5.39 N·m rated / 24 N·m peak). For your safety and tuning accuracy, always use the included ergonomic side handle. Hold the grip-coated body with your main hand and the side handle with the other, using both hands together to steadily counteract the reaction force.</span></p><br>
              <p><strong><span class="zh">固件如何更新？</span><span class="en">How do I update the firmware?</span></strong><br><span class="zh">我们通过蓝牙（BLE）提供 OTA（Over-the-Air）固件升级。当有新固件发布时，您将在 App 内收到推送，根据提示即可一键完成升级，让您的设备不断进化。</span><span class="en">We provide OTA (Over-the-Air) firmware updates via Bluetooth (BLE). When a new firmware is released, you'll be notified in the app and can update with one tap.</span></p>
         </div>
 
-        <div class="faq-section" style="margin-top: 80px;">
+        <div class="faq-section reveal" style="margin-top: 80px;">
             <h2 class="section-title"><span class="zh">常见问题解答</span><span class="en">FAQ</span></h2>
             <div class="faq-container">
                 <div class="faq-item card-spotlight">
@@ -136,6 +174,10 @@
                 <div class="faq-item card-spotlight">
                     <button type="button" class="faq-question" aria-expanded="false"><span class="zh">支持哪些钢琴型号？</span><span class="en">Which pianos are supported?</span></button>
                     <div class="faq-answer"><span class="zh">支持绝大多数标准 88 键立式钢琴和三角钢琴。系统会根据云端算法自动适配。</span><span class="en">Compatible with most standard 88-key upright and grand pianos. The system auto-adapts via cloud algorithms.</span></div>
+                </div>
+                <div class="faq-item card-spotlight">
+                    <button type="button" class="faq-question" aria-expanded="false"><span class="zh">支持 Android 手机吗？</span><span class="en">Does it support Android phones?</span></button>
+                    <div class="faq-answer"><span class="zh">目前 App 仅支持 iPhone（iOS）。Android 版本正在开发中，预计在早鸟预售开启时同步上线。</span><span class="en">The app currently supports iPhone (iOS) only. An Android version is in development and is expected to launch alongside the early-bird pre-order.</span></div>
                 </div>
                 <div class="faq-item card-spotlight">
                     <button type="button" class="faq-question" aria-expanded="false"><span class="zh">供电方式是什么？</span><span class="en">How is it powered?</span></button>
@@ -163,14 +205,14 @@
                 </div>
                 <div class="faq-item card-spotlight">
                     <button type="button" class="faq-question" aria-expanded="false"><span class="zh">在信号差的地方能正常使用吗？</span><span class="en">Can I use it where signal is poor?</span></button>
-                    <div class="faq-answer"><span class="zh">调音核心算法分本地（iOS 端：标准版）和云端（Pro 专属：全局优化，±1 音分）两层。基础调音功能完全不依赖网络；Pro 的云端优化在信号恢复后可自动同步结果。</span><span class="en">The core algorithm has two layers: local (iOS, Standard) and cloud (Pro-only global optimization, ±1 Cents). Basic tuning works fully offline; Pro's cloud optimization syncs automatically once signal returns.</span></div>
+                    <div class="faq-answer"><span class="zh">调音核心分本地（iOS 端：标准版）和云端（Pro 专属：±1 音分）两层。基础调音功能完全不依赖网络；Pro 的云端优化在信号恢复后可自动同步结果。</span><span class="en">The core has two layers: local (iOS, Standard) and cloud (Pro-only, ±1 Cents). Basic tuning works fully offline; Pro's cloud optimization syncs automatically once signal returns.</span></div>
                 </div>
             </div>
         </div>
         
-        <h2 class="section-title" style="margin-top:70px;"><span class="zh">视频教程库</span><span class="en">Video Tutorials</span></h2>
-        <p class="section-subtitle"><span class="zh">视频教程正在制作中，敬请期待。</span><span class="en">Video tutorials are in production — stay tuned.</span></p>
-        <div class="video-grid">
+        <h2 class="section-title reveal" style="margin-top:70px;"><span class="zh">视频教程库</span><span class="en">Video Tutorials</span></h2>
+        <p class="section-subtitle reveal"><span class="zh">制作中，敬请期待。</span><span class="en">In production — stay tuned.</span></p>
+        <div class="video-grid reveal">
             <div class="video-placeholder"><h3><span class="zh">开箱与首次组装</span><span class="en">Unboxing & Assembly</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
             <div class="video-placeholder"><h3><span class="zh">App 全功能详解</span><span class="en">Full App Walkthrough</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
             <div class="video-placeholder"><h3><span class="zh">人体工程学手柄的正确用法</span><span class="en">Using the Ergonomic Handle</span></h3><p><span class="zh">即将上线</span><span class="en">Coming Soon</span></p></div>
@@ -196,6 +238,8 @@
         </p>
     </footer>
     <script>
+        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
         function toggleLanguage() {
             const body = document.body;
             if (body.classList.contains('lang-zh')) {
@@ -235,6 +279,10 @@
             });
         }
         initSpotlight();
+
+        // Damped scroll reveal
+        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
 </body>
 </html>
