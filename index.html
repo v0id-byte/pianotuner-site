@@ -221,6 +221,29 @@
         }
         .hero p { font-size: 20px; color: #e8e2da; margin: 0 0 40px 0; font-weight: 500; line-height: 1.6; text-shadow: 0 1px 18px rgba(0,0,0,0.78); }
 
+        /* —— 银色配色 · 全屏 showcase —— */
+        .silver-show {
+            position: relative; min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding: 8vh 6% 0; text-align: center;
+            background: #c7c1b7 url('silver-land.webp') center center / cover no-repeat;
+            overflow: hidden;
+        }
+        .silver-show::before {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(180deg, rgba(238,235,230,0.97) 0%, rgba(238,235,230,0.82) 22%, rgba(238,235,230,0) 52%);
+        }
+        .silver-show-inner { position: relative; z-index: 1; max-width: 760px; }
+        .silver-eyebrow { display: inline-block; color: #9a6a22; font-size: 13px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+        .silver-h2 { font-size: clamp(34px, 5.4vw, 60px); font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin: 0 0 22px; color: #1c1a16; }
+        .silver-sub { font-size: 18px; line-height: 1.6; color: #3a352e; margin: 0 auto; max-width: 600px; font-weight: 500; text-shadow: 0 1px 10px rgba(238,235,230,0.85); }
+        .silver-mobile-img { display: none; }
+        @media (max-width: 900px) {
+            .silver-show { min-height: auto; padding: 112px 6% 60px; background-image: none; background-color: #c7c1b7; }
+            .silver-show::before { display: none; }
+            .silver-mobile-img { display: block; width: 100%; margin-top: 30px; border-radius: 14px; }
+        }
+
         /* --- 工作原理流程 --- */
         .workflow-section { background: var(--surface-color); border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
         .step-container { display: flex; max-width: 1000px; margin: 0 auto; gap: 40px; position: relative; }
@@ -433,10 +456,18 @@
     </section>
 
     <!-- 这是什么 · 为调音师打造 / What it is -->
-    <section class="reveal section-padding" style="padding-top:118px; padding-bottom:118px; border-bottom:1px solid #1a1a1a; text-align:center;">
-        <span style="display:inline-block; color:var(--primary-color); font-size:13px; font-weight:800; letter-spacing:3px; text-transform:uppercase; margin-bottom:24px;"><span class="zh">为调音师打造的自动调音器</span><span class="en">An automatic tuner — built for pros</span></span>
-        <h2 style="font-size:clamp(34px,5.4vw,60px); font-weight:900; letter-spacing:-1.5px; line-height:1.1; margin:0 auto 28px; color:#fff;"><span class="zh">拧弦的体力活，<br>交给电机。</span><span class="en">Let the motor<br>turn the pins.</span></h2>
-        <p style="max-width:600px; margin:0 auto; font-size:19px; line-height:1.65; color:var(--text-muted);"><span class="zh">一个套在弦轴上的精密执行器，配 iPhone App。你把关音色，它替你逐弦精准拧到位——整台 88 键，稳定一致。</span><span class="en">A precision actuator on the tuning pin, paired with an iPhone app. You guide the result; it turns every pin to pitch — all 88 keys, consistently.</span></p>
+    <!-- 银色配色 · 全屏 showcase -->
+    <section class="reveal silver-show">
+        <div class="silver-show-inner">
+            <span class="silver-eyebrow"><span class="zh">为调音师打造的自动调音器</span><span class="en">An automatic tuner — built for pros</span></span>
+            <h2 class="silver-h2"><span class="zh">拧弦的体力活，<br>交给电机。</span><span class="en">Let the motor<br>turn the pins.</span></h2>
+            <p class="silver-sub"><span class="zh">一个套在弦轴上的精密执行器，配 iPhone App。你把关音色，它替你逐弦精准拧到位——整台 88 键，稳定一致。</span><span class="en">A precision actuator on the tuning pin, paired with an iPhone app. You guide the result; it turns every pin to pitch — all 88 keys, consistently.</span></p>
+            <img class="silver-mobile-img" src="silver-land.webp" alt="Piano Tuner — 银色配色 / Silver finish" loading="lazy">
+        </div>
+    </section>
+
+    <!-- 调音师痛点 · 三列 -->
+    <section class="reveal section-padding" style="padding-top:30px; padding-bottom:110px; border-bottom:1px solid #1a1a1a; background:#000;">
 
         <div class="grid-3" style="margin-top:70px; text-align:left;">
             <div>
@@ -679,7 +710,7 @@
 <section id="technology" class="tech-section reveal">
         <div class="tech-container">
             <div class="tech-image">
-                <img src="pcb.png" alt="Piano Tuner 智能钢琴调音机器人 PCBA 板" class="pcb-img">
+                <img src="cutaway.webp" alt="Piano Tuner 内部剖面 — 电机与电子" loading="lazy" style="width:100%; max-width:560px; border-radius:18px; border:1px solid rgba(255,255,255,0.08); box-shadow:0 24px 60px rgba(0,0,0,0.5); display:block;">
             </div>
             <div class="tech-content">
                 <h2><span class="zh">底层架构重塑，<br>让硬件具备灵魂。</span><span class="en">Rebuilding the Core.<br>Hardware with a Soul.</span></h2>
