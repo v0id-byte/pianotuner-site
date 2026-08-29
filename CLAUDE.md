@@ -138,7 +138,9 @@ local == git == origin filesystem
 Cloudflare response = origin + 已知 edge transforms
 ```
 
-流程：`tar` 备份 `/var/www/html/` → `scp` → A/B 两级验收 → 同一轮 `git add/commit/push` → 复验各页 200、`/api/pianotuner/subscribe` 通、`sitemap.xml` 可达。
+**origin = `root@192.255.139.83:/var/www/html-pianotuner/`（云端 VPS，端口 22，前置 Cloudflare）。树莓派 `rpi@mc.void1211.com:1211:/var/www/html/` 是不承接流量的陈旧镜像 —— 部署到那里会「成功」但线上毫无变化（2026-08-29 已踩过一次）。判定 origin 只能拿 Cloudflare 实际响应体的 sha256 去比候选主机上的文件，不要拿两台候选主机互比：它们可能只是都停在同一份旧内容上。**
+
+流程：`tar` 备份 `/var/www/html-pianotuner/` → `scp` → `chown -R www-data:www-data` → A/B 两级验收 → 同一轮 `git add/commit/push` → 复验各页 200、`/api/pianotuner/subscribe` 通、`sitemap.xml` 可达。
 **部署清单必须显式排除任何 claims 文件。**
 
 ### 已知的、有意的例外
