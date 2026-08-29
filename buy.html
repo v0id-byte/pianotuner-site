@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Piano Tuner 极早鸟预售已结束，V2.1 正在研发中。Sales paused — a new early-bird round is coming soon.">
+    <meta name="description" content="Piano Tuner 极早鸟预售已结束，V2.1 研发中，新一轮早鸟预售计划 2026 Q4 开启。Sales paused — a new early-bird round is coming soon.">
     <title>Piano Tuner | 暂停销售 · Coming Soon</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.pianotuner.top/buy.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
-        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         
@@ -18,7 +19,7 @@
 
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
+        .logo-text { font-family: var(--font-stack); font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
         .logo-text span { color: var(--primary-color); }
         
         .nav-right { display: flex; align-items: center; gap: 20px; }
@@ -43,8 +44,9 @@
         footer { text-align: center; padding: 40px 5% 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer .footer-links { margin-bottom: 6px; }
         /* —— 阻尼滚动揭示 / Damped scroll reveal —— */
-        .reveal { opacity: 0; transform: translateY(34px); transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
-        .reveal.active { opacity: 1; transform: none; }
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        .reveal-ready .reveal.active { opacity: 1; transform: none; }
         @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
         @media (max-width: 600px) { .notice-ctas { flex-direction: column; } .notice-btn-primary, .notice-btn-secondary { width: 100%; text-align: center; } header { padding: 12px 4%; } .logo-text { font-size: 18px; letter-spacing: 1px; } .nav-right { gap: 10px; } }
         /* —— 移动端导航（汉堡菜单）—— */
@@ -92,7 +94,7 @@
     <main class="notice-section reveal">
         <span class="notice-eyebrow"><span class="zh">暂停销售</span><span class="en">Sales Paused</span></span>
         <h1><span class="zh">极早鸟预售已结束</span><span class="en">Ultra-Early-Bird Pre-Sale Has Ended</span></h1>
-        <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中，预计约两个月后开放新一轮早鸟预售。</span><span class="en">Piano Tuner V2.1 is in development — a new early-bird round is expected to open in about two months.</span></p>
+        <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中。新一轮早鸟预售计划于 <b>2026 年第四季度</b>开启，首批发货预计 <b>2027 年第一至第二季度</b>。留下邮箱，开售第一时间通知你。</span><span class="en">Piano Tuner V2.1 is in development. The next early-bird round is planned for <b>Q4 2026</b>, with first shipments expected <b>Q1–Q2 2027</b>. Leave your email and we'll tell you the moment it opens.</span></p>
         <p class="notice-body"><span class="zh">感谢你的关注与支持。极早鸟预售名额已结束，我们正在打磨 V2.1 的硬件与算法。想在第一时间收到开售通知，留下邮箱即可，也欢迎下载 App 抢先体验。</span><span class="en">Thank you for your interest and support. The ultra-early-bird pre-sale has ended, and we're refining the V2.1 hardware and algorithms. To be notified first, leave your email below, or try the app for early access.</span></p>
         <form class="notify-form" onsubmit="ptSubscribe(event,'buy-page')" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:center; max-width:480px; margin:0 auto 16px;">
             <input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email" style="flex:1; min-width:220px; padding:15px 18px; border-radius:10px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.05); color:#fff; font-size:15px; font-family:var(--font-stack);">
@@ -119,7 +121,7 @@
                 body.classList.add('lang-zh');
             }
         }
-        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
+        (function(){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
 
     <footer>
@@ -137,10 +139,10 @@
             <a href="terms.html" style="color: var(--text-muted); margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
         </div>
         <p style="color: var(--text-muted); font-size: 12px; margin: 8px 0 0 0;">
-            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
         </p>
     </footer>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
     <script>
     function ptSubscribe(e, source){
         e.preventDefault();

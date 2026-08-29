@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>关于我们 | Piano Tuner</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.pianotuner.top/about.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
         :root {
             --primary: #e6a15c;
@@ -26,7 +27,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: var(--font-stack);
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
@@ -157,11 +158,12 @@
         }
 
         /* ── Animate on scroll ── */
-        .reveal {
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal {
             opacity: 0; transform: translateY(34px);
             transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
         }
-        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-ready .reveal.visible { opacity: 1; transform: none; }
         @media (prefers-reduced-motion: reduce) {
             .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
         }
@@ -510,25 +512,25 @@
         </div>
         <div class="stats-grid reveal reveal-delay-1">
             <div class="stat-item">
-                <div class="stat-number" data-target="24">0</div>
-                <div class="stat-unit">N·m</div>
-                <div class="stat-label"><span class="zh">峰值扭矩</span><span class="en">Peak Torque</span></div>
-                <div class="stat-sublabel"><span class="zh">额定 5.39 N·m / 峰值 24 N·m</span><span class="en">5.39 N·m rated / 24 N·m peak</span></div>
+                <div class="stat-number" data-target="1">1</div>
+                <div class="stat-unit"><span class="zh">台</span><span class="en">device</span></div>
+                <div class="stat-label"><span class="zh">走遍全场</span><span class="en">Covers Them All</span></div>
+                <div class="stat-sublabel"><span class="zh">按琴建档，多台钢琴共用一台设备</span><span class="en">Per-piano profiles, one shared device</span></div>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-target="88" data-suffix="-keys">0</div>
+                <div class="stat-number" data-target="88" data-suffix="-keys">88-keys</div>
                 <div class="stat-unit">keys</div>
                 <div class="stat-label"><span class="zh">全键覆盖</span><span class="en">Full Key Coverage</span></div>
                 <div class="stat-sublabel"><span class="zh">88 键标准钢琴</span><span class="en">88-key Standard</span></div>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-target="50" data-prefix="&lt;">0</div>
-                <div class="stat-unit">ms</div>
-                <div class="stat-label"><span class="zh">PID 响应</span><span class="en">PID Response</span></div>
-                <div class="stat-sublabel"><span class="zh">实时闭环</span><span class="en">Real-time Loop</span></div>
+                <div class="stat-number" data-target="3">3</div>
+                <div class="stat-unit"><span class="zh">项</span><span class="en">pillars</span></div>
+                <div class="stat-label"><span class="zh">硬件 · 软件 · 端侧 AI</span><span class="en">Hardware · Software · On-Device AI</span></div>
+                <div class="stat-sublabel"><span class="zh">三位一体</span><span class="en">One integrated system</span></div>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-target="2026">0</div>
+                <div class="stat-number" data-target="2026">2026</div>
                 <div class="stat-unit"></div>
                 <div class="stat-label"><span class="zh">创立年份</span><span class="en">Founded</span></div>
                 <div class="stat-sublabel"><span class="zh">融谱智能</span><span class="en">MelSpectrum</span></div>
@@ -557,63 +559,27 @@
     <section class="team-section">
         <div class="team-header reveal">
             <span class="section-label"><span class="zh">核心团队</span><span class="en">Our Team</span></span>
-            <h2 class="section-title"><span class="zh">九位</span><span class="en">Nine</span> <span style="color:var(--primary)"><span class="zh">核心成员</span><span class="en">Core Members</span></span></h2>
+            <h2 class="section-title"><span class="zh">创始</span><span class="en">Founding</span> <span style="color:var(--primary)"><span class="zh">团队</span><span class="en">Team</span></span></h2>
             <div class="divider"></div>
         </div>
         <div class="team-grid">
             <div class="team-card reveal">
+                <div class="team-avatar"><span>覃</span></div>
+                <h4><span class="zh">覃刘浩然</span><span class="en">Qin Liuhaoran</span></h4>
+                <span class="role"><span class="zh">创始人 · 技术负责人</span><span class="en">Founder · Head of Engineering</span></span>
+                <p><span class="zh">端侧算法、固件与整机架构</span><span class="en">On-device algorithms, firmware &amp; system architecture</span></p>
+            </div>
+            <div class="team-card reveal">
+                <div class="team-avatar"><span>张</span></div>
+                <h4><span class="zh">张奚瑞</span><span class="en">Zhang Xirui</span></h4>
+                <span class="role"><span class="zh">联合创始人 · CTO</span><span class="en">Co-Founder · CTO</span></span>
+                <p><span class="zh">调律算法与控制策略</span><span class="en">Tuning algorithms &amp; control strategy</span></p>
+            </div>
+            <div class="team-card reveal">
                 <div class="team-avatar"><span>M</span></div>
-                <h4>Melt</h4>
+                <h4><span class="zh">Melt</span><span class="en">Melt</span></h4>
                 <span class="role"><span class="zh">联合创始人</span><span class="en">Co-Founder</span></span>
-                <p><span class="zh">指挥官 · 决策调度与汇报</span><span class="en">Commander · decisions &amp; coordination</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>谋</span></div>
-                <h4><span class="zh">谋哥</span><span class="en">Mouge</span></h4>
-                <span class="role"><span class="zh">商务拓展</span><span class="en">Business</span></span>
-                <p><span class="zh">市场调研 · 竞品分析 · BP</span><span class="en">Market research · competitive analysis · BP</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>黄</span></div>
-                <h4><span class="zh">老黄</span><span class="en">Lao Huang</span></h4>
-                <span class="role"><span class="zh">硬件与固件</span><span class="en">Hardware</span></span>
-                <p><span class="zh">智能硬件 · BLE · 精密电机控制 · OTA</span><span class="en">Smart hardware · BLE · precision motor control · OTA updates</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>苹</span></div>
-                <h4><span class="zh">小苹果</span><span class="en">Xiao Pingguo</span></h4>
-                <span class="role"><span class="zh">iOS 开发</span><span class="en">iOS Dev</span></span>
-                <p><span class="zh">SwiftUI · 专业音频处理 · CoreBluetooth</span><span class="en">SwiftUI · pro audio processing · CoreBluetooth</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>安</span></div>
-                <h4><span class="zh">小安</span><span class="en">Xiao An</span></h4>
-                <span class="role"><span class="zh">Android 开发</span><span class="en">Android Dev</span></span>
-                <p><span class="zh">Kotlin · Jetpack Compose</span><span class="en">Kotlin · Jetpack Compose</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>云</span></div>
-                <h4><span class="zh">云姐</span><span class="en">Yun Jie</span></h4>
-                <span class="role"><span class="zh">云服务与运维</span><span class="en">Cloud</span></span>
-                <p><span class="zh">Flask · API · PostgreSQL</span><span class="en">Flask · API · PostgreSQL</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>艺</span></div>
-                <h4><span class="zh">小艺</span><span class="en">Xiao Yi</span></h4>
-                <span class="role"><span class="zh">产品设计</span><span class="en">Product Design</span></span>
-                <p><span class="zh">界面设计 · Figma · 动效</span><span class="en">UI design · Figma · animations</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>智</span></div>
-                <h4><span class="zh">智专</span><span class="en">Zhi Zhuan</span></h4>
-                <span class="role"><span class="zh">知识产权</span><span class="en">IP</span></span>
-                <p><span class="zh">专利检索 · 挖掘 · 撰写</span><span class="en">Patent search · mining · drafting</span></p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar"><span>钱</span></div>
-                <h4><span class="zh">小钱</span><span class="en">Xiao Qian</span></h4>
-                <span class="role"><span class="zh">财务</span><span class="en">Finance</span></span>
-                <p><span class="zh">财务记账 · 提醒 · 报表</span><span class="en">Financial tracking · reminders · reports</span></p>
+                <p><span class="zh">产品决策与统筹</span><span class="en">Product direction &amp; coordination</span></p>
             </div>
         </div>
     </section>
@@ -651,7 +617,7 @@
             <a href="terms.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
         </div>
         <p style="color: #9a9a9a; font-size: 12px; margin: 8px 0 0 0;">
-            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
         </p>
     </footer>
 
@@ -683,6 +649,7 @@
                 if (numEl && !numEl.dataset.animated) {
                     numEl.dataset.animated = 'true';
                     const target = parseInt(numEl.dataset.target);
+                    numEl.textContent = (numEl.dataset.prefix || '') + '0' + (numEl.dataset.suffix || '');
                     const prefix = numEl.dataset.prefix || '';
                     const suffix = numEl.dataset.suffix || '';
                     let start = 0;
@@ -700,11 +667,13 @@
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -12% 0px' });
 
+    if('IntersectionObserver' in window){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}}
+
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // Also observe stat items for count-up
     document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
 </script>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
 </body>
 </html>

@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>联系我们 | Piano Tuner</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.pianotuner.top/contact.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
-        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
@@ -100,8 +101,9 @@
             z-index: 2;
         }
         /* —— Damped scroll reveal —— */
-        .reveal { opacity: 0; transform: translateY(34px); }
-        .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal-ready .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
         @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
     .i-inline { width: 1.1em; height: 1.1em; vertical-align: -0.18em; display: inline-block; margin-right: 0.3em; }
         /* —— 移动端导航（汉堡菜单）—— */
@@ -174,7 +176,7 @@
                 <h3><span class="zh">微信客服</span><span class="en">WeChat</span></h3>
                 <p><span class="zh">微信搜索或扫码添加</span><span class="en">Search or scan to add</span></p>
                 <div class="wechat-qr">
-                    <img src="images/wechat-qr.jpg" alt="企业微信二维码" style="max-width: 180px; border-radius: 8px; display: block; margin: 0 auto;">
+                    <img src="images/wechat-qr.webp" alt="企业微信二维码" style="max-width: 180px; border-radius: 8px; display: block; margin: 0 auto;">
                     <p style="margin-top: 12px; font-size: 13px;"><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3a6 6 0 0 1 6 6c0 4.5-6 12-6 12S8 13.5 8 9a6 6 0 0 1 6-6z"/><circle cx="14" cy="9" r="2.2"/></svg>扫码添加企业微信</span><span class="en">Scan to add WeChat</span></p>
                 </div>
             </div>
@@ -288,7 +290,7 @@
             <a href="terms.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
         </div>
         <p style="color: #9a9a9a; font-size: 12px; margin: 8px 0 0 0;">
-            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
         </p>
     </footer>
 
@@ -376,7 +378,7 @@
         initSpotlight();
 
         // Damped scroll reveal
-        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
+        (function(){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
 
         function ptSubscribe(e, source){
             e.preventDefault();
@@ -401,6 +403,6 @@
         }
         function ptStatus(el, msg, color){ if(!el) return; el.textContent = msg; el.style.color = color; el.style.display = 'block'; }
     </script>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
 </body>
 </html>

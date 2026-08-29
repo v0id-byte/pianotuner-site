@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano Tuner | 暂停销售 · Coming Soon</title>
-    <meta name="description" content="Piano Tuner 极早鸟预售已结束，V2.1 正在研发中。Sales paused — a new early-bird round is coming soon.">
+    <meta name="description" content="Piano Tuner 极早鸟预售已结束，V2.1 研发中，新一轮早鸟预售计划 2026 Q4 开启。Sales paused — a new early-bird round is coming soon.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
+    <link rel="canonical" href="https://www.pianotuner.top/beta_preorder.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
         :root {
             --primary-color: #e6a15c;
@@ -17,7 +17,7 @@
             --surface-color: #121212;
             --text-main: #ffffff;
             --text-muted: #888888;
-            --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
             --danger-color: #e05c5c;
         }
 
@@ -54,7 +54,7 @@
             padding: 15px 5%; background: rgba(5,5,5,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #fff; text-transform: uppercase; cursor: pointer; }
+        .logo-text { font-family: var(--font-stack); font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #fff; text-transform: uppercase; cursor: pointer; }
         .logo-text span { color: var(--primary-color); }
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s; text-transform: uppercase; }
@@ -128,7 +128,7 @@
         .scarcity-inner { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
         .scarcity-item { text-align: center; }
         .scarcity-number {
-            font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 900;
+            font-family: var(--font-stack); font-size: 30px; font-weight: 900;
             color: var(--primary-color); line-height: 1;
         }
         .scarcity-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
@@ -173,7 +173,7 @@
             padding: 5px 14px; border-radius: 4px; font-size: 11px; font-weight: 800;
             letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px;
         }
-        .pricing-price { font-family: 'Montserrat', sans-serif; font-size: 54px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+        .pricing-price { font-family: var(--font-stack); font-size: 54px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
         .pricing-price sup { font-size: 26px; vertical-align: top; margin-top: 10px; font-weight: 700; }
         .pricing-savings { color: #6ddc8b; font-size: 13px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 6px; }
         .pricing-detail { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
@@ -182,7 +182,7 @@
         .pricing-detail-value { font-weight: 700; color: var(--text-main); }
         .pricing-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; margin-bottom: 28px; }
         .pricing-total-label { font-size: 17px; font-weight: 800; }
-        .pricing-total-value { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900; color: var(--primary-color); }
+        .pricing-total-value { font-family: var(--font-stack); font-size: 28px; font-weight: 900; color: var(--primary-color); }
         .pricing-note {
             background: rgba(224,92,92,0.08); border: 1px solid rgba(224,92,92,0.25);
             border-radius: 8px; padding: 12px 16px; margin-bottom: 28px; display: flex; gap: 10px; align-items: flex-start;
@@ -209,7 +209,7 @@
         .step { text-align: center; position: relative; z-index: 1; }
         .step-num {
             width: 52px; height: 52px; border-radius: 50%; background: var(--primary-color); color: #000;
-            font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 900;
+            font-family: var(--font-stack); font-size: 20px; font-weight: 900;
             display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
             border: 3px solid var(--surface-color); box-shadow: 0 0 20px rgba(230,161,92,0.4);
         }
@@ -261,8 +261,9 @@
         footer .footer-links a.active { color: var(--primary-color); }
 
         /* Scroll reveal */
-        .reveal { opacity: 0; transform: translateY(34px); }
-        .reveal.active {
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal-ready .reveal.active {
             opacity: 1; transform: none;
             transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
         }
@@ -342,7 +343,7 @@
     <main class="notice-section reveal">
         <span class="notice-eyebrow"><span class="zh">暂停销售</span><span class="en">Sales Paused</span></span>
         <h1><span class="zh">极早鸟预售已结束</span><span class="en">Ultra-Early-Bird Pre-Sale Has Ended</span></h1>
-        <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中，预计约两个月后开放新一轮早鸟预售。</span><span class="en">Piano Tuner V2.1 is in development — a new early-bird round is expected to open in about two months.</span></p>
+        <p class="notice-subhead"><span class="zh">Piano Tuner V2.1 正在研发中。新一轮早鸟预售计划于 <b>2026 年第四季度</b>开启，首批发货预计 <b>2027 年第一至第二季度</b>。留下邮箱，开售第一时间通知你。</span><span class="en">Piano Tuner V2.1 is in development. The next early-bird round is planned for <b>Q4 2026</b>, with first shipments expected <b>Q1–Q2 2027</b>. Leave your email and we'll tell you the moment it opens.</span></p>
         <p class="notice-body"><span class="zh">我们正在打磨 V2.1 的硬件与算法。想第一时间收到开售通知，下载 App 抢先体验，或联系我们登记。</span><span class="en">We're refining the V2.1 hardware and algorithms. To hear first when it opens, try the app for early access or get in touch.</span></p>
         <div class="notice-ctas">
             <a class="notice-btn-primary" href="index.html"><span class="zh">了解产品</span><span class="en">Explore the Product</span></a>
@@ -363,7 +364,7 @@
         </div>
         <p>
             <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner | <a href="https://www.pianotuner.top">www.pianotuner.top</a> 用创新造就美好.</span>
-            <span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner | <a href="https://www.pianotuner.top">www.pianotuner.top</a> Innovating for a better melody.</span>
+            <span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner | <a href="https://www.pianotuner.top">www.pianotuner.top</a> Innovating for a better melody.</span>
             All Rights Reserved.
         </p>
     </footer>
@@ -376,9 +377,9 @@
             body.classList.toggle('lang-zh');
             body.classList.toggle('lang-en');
         }
-        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
+        (function(){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
 
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
 </body>
 </html>

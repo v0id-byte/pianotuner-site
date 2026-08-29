@@ -1,1 +1,16 @@
 .DS_Store
+
+# Gate F 事实治理清单只存在于知识图谱 vault —— 本仓库是 public，
+# 且生产服务器会直接吐静态文件，claims 正文绝不能进入公开面。
+# 仓库内只保留 CLAIMS-VERSION 这一行版本号指针。
+website-public-claims.md
+*.claims.md
+_internal/
+
+# local tooling: dev-server launch config (machine-specific paths) and task worktrees
+.claude/
+
+# demo1.mp4 (14MB) 是 demo.html 的演示视频，按决定只放服务器、不进 git。
+# 这是「local == git == origin」铁律的一个**有意例外** —— 部署校验时它会出现在
+# origin 而不在仓库里，那是预期行为，不要"修复"成同步。
+demo1.mp4

@@ -8,10 +8,9 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.pianotuner.top/terms.html">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -33,7 +32,7 @@
             --surface-color: #121212;
             --text-main: #ffffff;
             --text-muted: #888888;
-            --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
             --border-glow: rgba(230, 161, 92, 0.1);
         }
 
@@ -51,7 +50,7 @@
             z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
+        .logo-text { font-family: var(--font-stack); font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
         .logo-text span { color: var(--primary-color); }
         .nav-center { display: flex; align-items: center; gap: 35px; }
         .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s ease; text-transform: uppercase; }
@@ -145,8 +144,9 @@
         }
 
         /* —— 阻尼式滚动揭示 —— */
-        .reveal { opacity: 0; transform: translateY(34px); }
-        .reveal.active {
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal-ready .reveal.active {
             opacity: 1; transform: none;
             transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1);
         }
@@ -206,13 +206,13 @@
     <section class="legal-hero">
         <span class="tag"><span class="zh">法律条款</span><span class="en">LEGAL</span></span>
         <h1><span class="zh">服务条款</span><span class="en">Terms of Service</span></h1>
-        <p class="updated"><span class="zh">最后更新：2026 年 5 月 31 日</span><span class="en">Last updated: May 31, 2026</span></p>
+        <p class="updated"><span class="zh">最后更新：2026 年 8 月 29 日</span><span class="en">Last updated: August 29, 2026</span></p>
     </section>
 
     <main class="legal-body">
         <p class="intro">
-            <span class="zh">欢迎使用 Piano Tuner。本服务条款（以下简称「本条款」）是您与深圳市美谱声学科技有限公司（品牌「液态声学」/ Piano Tuner，以下简称「我们」）之间就 Piano Tuner 调音机器人硬件及配套 iOS 应用（以下统称「本产品」）使用所达成的协议。请在使用前仔细阅读，尤其是关于安全使用与责任限制的条款。</span>
-            <span class="en">Welcome to Piano Tuner. These Terms of Service ("Terms") form an agreement between you and MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner, "we", "us") regarding your use of the Piano Tuner tuning robot hardware and its companion iOS app (together, the "Product"). Please read them carefully before use, especially the safety and limitation-of-liability sections.</span>
+            <span class="zh">欢迎使用 Piano Tuner。本服务条款（以下简称「本条款」）是您与融谱智能科技（深圳）有限公司（品牌 MelSpectrum / Piano Tuner，以下简称「我们」）之间就 Piano Tuner 调音机器人硬件及配套 iOS 应用（以下统称「本产品」）使用所达成的协议。请在使用前仔细阅读，尤其是关于安全使用与责任限制的条款。</span>
+            <span class="en">Welcome to Piano Tuner. These Terms of Service ("Terms") form an agreement between you and 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand (Piano Tuner; "we", "us") regarding your use of the Piano Tuner tuning robot hardware and its companion iOS app (together, the "Product"). Please read them carefully before use, especially the safety and limitation-of-liability sections.</span>
         </p>
 
         <section class="legal-section reveal">
@@ -270,8 +270,8 @@
         <section class="legal-section reveal">
             <h2><span class="num">6</span><span class="zh">知识产权</span><span class="en">Intellectual Property</span></h2>
             <p>
-                <span class="zh">本产品及其所有组成部分——包括但不限于核心算法、硬件结构、全闭环控制逻辑、软件、界面、商标与标识——的全部知识产权均归我们所有，并受相关法律保护；其中整机硬件结构及全闭环控制逻辑另有在审发明专利。本条款未明确授予您的权利，我们均予以保留。未经授权，严禁任何形式的商业拆解、逆向工程或仿造。</span>
-                <span class="en">All intellectual property in the Product and its components — including but not limited to the core algorithms, hardware architecture, closed-loop control logic, software, interface, trademarks, and logos — belongs to us and is protected by applicable law; the hardware architecture and closed-loop control logic are further covered by a pending invention patent. We reserve all rights not expressly granted to you in these Terms. Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
+                <span class="zh">本产品及其所有组成部分——包括但不限于核心算法、硬件结构、全闭环控制逻辑、软件、界面、商标与标识——的全部知识产权均归我们所有，并受相关法律保护；其中部分技术已进入发明专利申请程序。本条款未明确授予您的权利，我们均予以保留。未经授权，严禁任何形式的商业拆解、逆向工程或仿造。</span>
+                <span class="en">All intellectual property in the Product and its components — including but not limited to the core algorithms, hardware architecture, closed-loop control logic, software, interface, trademarks, and logos — belongs to us and is protected by applicable law; invention patent applications covering certain of these technologies have been filed. We reserve all rights not expressly granted to you in these Terms. Unauthorized commercial disassembly, reverse engineering, or imitation is strictly prohibited.</span>
             </p>
         </section>
 
@@ -324,8 +324,8 @@
                 <span class="en">For any questions about these Terms, contact us at: <a href="mailto:support@pianotuner.top">support@pianotuner.top</a></span>
             </p>
             <p>
-                <span class="zh">深圳市美谱声学科技有限公司（品牌「液态声学」/ Piano Tuner）</span>
-                <span class="en">MelSpectrum Technology (Shenzhen) Co., Ltd. (brand "Liquid Acoustics" / Piano Tuner)</span>
+                <span class="zh">融谱智能科技（深圳）有限公司（品牌 MelSpectrum / Piano Tuner）</span>
+                <span class="en">融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand (Piano Tuner)</span>
             </p>
         </section>
     </main>
@@ -344,8 +344,8 @@
             <span class="sep">|</span>
             <a href="terms.html"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
         </div>
-        <p class="copy"><span class="zh">&copy; 2026 Piano Tuner. 用创新造就美好. 保留所有权利.</span><span class="en">&copy; 2026 Piano Tuner. Innovating for a better melody. All rights reserved.</span></p>
-        <p class="company"><span class="zh">深圳市美谱声学科技有限公司</span><span class="en">MelSpectrum Technology (Shenzhen) Co., Ltd.</span></p>
+        <p class="copy"><span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好. 保留所有权利.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. All rights reserved.</span></p>
+        <p class="company"><span class="zh">融谱智能科技（深圳）有限公司</span><span class="en">融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand</span></p>
     </footer>
 
     <script>
@@ -361,8 +361,8 @@
                 document.title = "服务条款 | Piano Tuner";
             }
         }
-        (function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
+        (function(){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
     </script>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
 </body>
 </html>

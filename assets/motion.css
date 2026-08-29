@@ -1,0 +1,51 @@
+/*
+ * Piano Tuner — motion layer (Stage 2A infrastructure)
+ *
+ * CONTRACT — read before adding anything here:
+ *
+ *   Content is readable by default. A motion element's *animated initial state*
+ *   (hidden, offset, clipped) may ONLY be expressed under `.motion-ready`, which
+ *   assets/motion.js adds after GSAP and its plugins have actually loaded and
+ *   registered. If motion.js 404s, fails to parse, or JS is off entirely, the
+ *   class is never added and every rule below simply does not apply.
+ *
+ *   Never write `[data-motion] { opacity: 0 }` at the top level. That is the bug
+ *   this file exists to prevent.
+ */
+
+/* Elements opt in by attribute; they stay fully visible until motion is proven live. */
+[data-motion] { opacity: 1; }
+
+.motion-ready [data-motion="fade-up"] {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+}
+
+.motion-ready [data-motion="line-mask"] > .pt-line-inner {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* SplitText line wrapper — clips the rising line */
+.pt-line-mask { overflow: hidden; display: block; }
+
+/* A failed motion.js is diagnosed, not compensated for: the absence of
+   .motion-ready already keeps everything visible. This class only exists so a
+   failure is visible in the DOM for debugging. */
+.motion-failed [data-motion] { opacity: 1 !important; transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready [data-motion],
+  .motion-ready [data-motion="line-mask"] > .pt-line-inner {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* SplitText line masks. The wrapper clips; the inner line slides up out of it.
+   Only ever applied under .motion-ready — with no JS the heading is plain text. */
+.motion-ready .pt-hline { will-change: transform; }
+.motion-ready .section-title { overflow: visible; }

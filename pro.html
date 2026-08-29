@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-t-zh="Piano Tuner 专业版 | 旗舰级数字化调律解决方案" data-t-en="Piano Tuner Pro | Flagship Digital Tuning Solution" data-d-zh="Piano Tuner 专业版:Turbo 模式快 3 倍、高阶 FFT、±1 音分精度，为专业调音师与音乐学校打造的旗舰数字化调律方案。" data-d-en="Piano Tuner Pro: 3x faster Turbo mode, high-resolution FFT, ±1 cent accuracy — the flagship digital tuning solution for professional tuners and music schools.">
+<html lang="zh-CN" data-t-zh="Piano Tuner 专业版 | 旗舰级数字化调律解决方案" data-t-en="Piano Tuner Pro | Flagship Digital Tuning Solution" data-d-zh="Piano Tuner 专业版：端侧拉伸优化、高阶 FFT 泛音分析、多琴档案与 PDF 钢琴健康报告，为专业调音师与音乐机构打造的旗舰数字化调律方案。" data-d-en="Piano Tuner Pro: on-device stretch optimization, high-resolution FFT overtone analysis, multi-piano archives and PDF health reports — the flagship digital tuning solution for professional tuners and institutions.">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Piano Tuner 专业版 | 旗舰级数字化调律解决方案</title>
-    <meta name="description" content="调音慢、精度差？Pro版精度±1音分，Turbo快3倍，专业调音师和音乐学校的首选。自动调音，效率翻倍。">
+    <meta name="description" content="Piano Tuner 专业版：端侧拉伸优化、专业频率分析、多琴档案与 PDF 钢琴健康报告，为职业调律师与音乐机构打造。">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
+    <link rel="canonical" href="https://www.pianotuner.top/pro.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="stylesheet" href="assets/fonts.css">
     <style>
         :root {
             --primary-color: #e6a15c; 
@@ -18,15 +18,16 @@
             --surface-color: #121212;
             --text-main: #ffffff;
             --text-muted: #9a9a9a;
-            --font-stack: 'Montserrat', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
             --primary-glow: rgba(230, 161, 92, 0.3);
             --border-glow: rgba(230, 161, 92, 0.1);
         }
 
         .pro-ease { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        .reveal { opacity: 0; transform: translateY(34px); }
-        .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
+        .reveal { opacity: 1; }
+        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); }
+        .reveal-ready .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
         @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
 
         .text-shimmer {
@@ -65,7 +66,7 @@
         }
 
         .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
+        .logo-text { font-family: var(--font-stack); font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; }
         .logo-text span { color: var(--primary-color); }
 
         .nav-center { display: flex; align-items: center; gap: 35px; }
@@ -263,13 +264,33 @@
                     <li class="reveal">
                         <div>
                             <h4><span class="zh">智能声学极窄拉伸</span><span class="en">Psychoacoustic Micro-Stretch</span></h4>
-                            <p><span class="zh">支持 ±1 音分 (±1 Cents) 专业精度极精微调，确保从 A0 到 C8 的全音域和谐过渡。</span><span class="en">Supports ±1 Cents precision, ensuring a harmonic transition from A0 to C8.</span></p>
+                            <p><span class="zh">以 ±2 音分<sup class="fn-ref"><a href="#precision-note">*</a></sup>的精度做极精微调，确保从 A0 到 C8 的全音域和谐过渡。</span><span class="en">Works to ±2 cents<sup class="fn-ref"><a href="#precision-note">*</a></sup> prerget precision, ensuring a harmonic transition from A0 to C8.</span></p>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="tech-image reveal">
-                <img src="railsback_curve.png" alt="调音曲线 Curve" class="curve-img">
+                <figure class="rb-figure">
+<svg class="rb-svg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="示意图：Railsback 拉伸曲线，低音区偏低、高音区偏高，A4 为基准">
+  <defs>
+    <linearGradient id="rbFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e6a15c" stop-opacity=".30"/>
+      <stop offset="100%" stop-color="#e6a15c" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <line x1="58" y1="357.1" x2="974" y2="357.1" class="rb-grid"/><text x="48" y="361.1" class="rb-ylab">-30</text><line x1="58" y1="286.1" x2="974" y2="286.1" class="rb-grid"/><text x="48" y="290.1" class="rb-ylab">-15</text><line x1="58" y1="215.2" x2="974" y2="215.2" class="rb-grid"/><text x="48" y="219.2" class="rb-ylab">+0</text><line x1="58" y1="144.2" x2="974" y2="144.2" class="rb-grid"/><text x="48" y="148.2" class="rb-ylab">+15</text><line x1="58" y1="73.3" x2="974" y2="73.3" class="rb-grid"/><text x="48" y="77.3" class="rb-ylab">+30</text>
+  <path d="M58.0 215.2 L974.0 215.2" class="rb-zero"/>
+  <text x="974" y="206.2" class="rb-zlab" text-anchor="end">12-TET</text>
+  <path d="M58.0 215.2 L58.0 343.7 L68.5 320.5 L79.1 301.7 L89.6 286.4 L100.1 274.1 L110.6 264.0 L121.2 255.9 L131.7 249.2 L142.2 243.9 L152.8 239.5 L163.3 235.9 L173.8 232.9 L184.3 230.5 L194.9 228.5 L205.4 226.8 L215.9 225.5 L226.5 224.3 L237.0 223.4 L247.5 222.6 L258.0 222.0 L268.6 221.4 L279.1 220.9 L289.6 220.5 L300.2 220.2 L310.7 219.9 L321.2 219.6 L331.7 219.4 L342.3 219.2 L352.8 219.0 L363.3 218.9 L373.9 218.7 L384.4 218.6 L394.9 218.5 L405.4 218.3 L416.0 218.1 L426.5 218.0 L437.0 217.8 L447.6 217.6 L458.1 217.5 L468.6 217.3 L479.1 217.1 L489.7 216.9 L500.2 216.7 L510.7 216.5 L521.3 216.3 L531.8 216.0 L542.3 215.8 L552.9 215.5 L563.4 215.2 L573.9 214.9 L584.4 214.6 L595.0 214.2 L605.5 213.9 L616.0 213.4 L626.6 213.0 L637.1 212.5 L647.6 212.0 L658.1 211.5 L668.7 210.9 L679.2 210.2 L689.7 209.5 L700.3 208.7 L710.8 207.7 L721.3 206.7 L731.8 205.6 L742.4 204.4 L752.9 203.0 L763.4 201.5 L774.0 199.8 L784.5 197.8 L795.0 195.7 L805.5 193.2 L816.1 190.5 L826.6 187.4 L837.1 183.9 L847.7 179.9 L858.2 175.3 L868.7 170.1 L879.2 164.2 L889.8 157.4 L900.3 149.7 L910.8 140.8 L921.4 130.6 L931.9 118.8 L942.4 105.3 L952.9 89.7 L963.5 71.7 L974.0 50.8 L974.0 215.2 Z" class="rb-area" fill="url(#rbFill)"/>
+  <path d="M58.0 343.7 L68.5 320.5 L79.1 301.7 L89.6 286.4 L100.1 274.1 L110.6 264.0 L121.2 255.9 L131.7 249.2 L142.2 243.9 L152.8 239.5 L163.3 235.9 L173.8 232.9 L184.3 230.5 L194.9 228.5 L205.4 226.8 L215.9 225.5 L226.5 224.3 L237.0 223.4 L247.5 222.6 L258.0 222.0 L268.6 221.4 L279.1 220.9 L289.6 220.5 L300.2 220.2 L310.7 219.9 L321.2 219.6 L331.7 219.4 L342.3 219.2 L352.8 219.0 L363.3 218.9 L373.9 218.7 L384.4 218.6 L394.9 218.5 L405.4 218.3 L416.0 218.1 L426.5 218.0 L437.0 217.8 L447.6 217.6 L458.1 217.5 L468.6 217.3 L479.1 217.1 L489.7 216.9 L500.2 216.7 L510.7 216.5 L521.3 216.3 L531.8 216.0 L542.3 215.8 L552.9 215.5 L563.4 215.2 L573.9 214.9 L584.4 214.6 L595.0 214.2 L605.5 213.9 L616.0 213.4 L626.6 213.0 L637.1 212.5 L647.6 212.0 L658.1 211.5 L668.7 210.9 L679.2 210.2 L689.7 209.5 L700.3 208.7 L710.8 207.7 L721.3 206.7 L731.8 205.6 L742.4 204.4 L752.9 203.0 L763.4 201.5 L774.0 199.8 L784.5 197.8 L795.0 195.7 L805.5 193.2 L816.1 190.5 L826.6 187.4 L837.1 183.9 L847.7 179.9 L858.2 175.3 L868.7 170.1 L879.2 164.2 L889.8 157.4 L900.3 149.7 L910.8 140.8 L921.4 130.6 L931.9 118.8 L942.4 105.3 L952.9 89.7 L963.5 71.7 L974.0 50.8" class="rb-curve" pathLength="1"/>
+  <text x="58.0" y="398" class="rb-xlab">A0</text><text x="184.3" y="398" class="rb-xlab">A1</text><text x="310.7" y="398" class="rb-xlab">A2</text><text x="437.0" y="398" class="rb-xlab">A3</text><text x="563.4" y="398" class="rb-xlab">A4</text><text x="689.7" y="398" class="rb-xlab">A5</text><text x="816.1" y="398" class="rb-xlab">A6</text><text x="974.0" y="398" class="rb-xlab">C8</text>
+</svg>
+                <figcaption class="rb-cap">
+                    <span class="zh">示意图 · 按标准非谐性模型生成（非实测数据）。每台琴的实际曲线由 App 在你的 iPhone 上现场拟合。</span>
+                    <span class="en">Illustrative · generated from the standard inharmonicity model, not measured data. Your piano's actual curve is fitted on your iPhone, on the spot.</span>
+                </figcaption>
+            </figure>
             </div>
         </div>
     </section>
@@ -287,7 +308,7 @@
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11.5" cy="11.5" r="6.5"/><path d="M16.4 16.4 22 22"/></svg></span>
                 <h3 style="color:var(--primary-color)"><span class="zh">专业级频率分析</span><span class="en">Professional Frequency Analysis</span></h3>
-                <p><span class="zh">基于声学原理的频率分析技术，实现高频 ±1 音分 (±1 Cents) 专业精度。</span><span class="en">Acoustic-based frequency analysis for ±1 Cents precision across the full range.</span></p>
+                <p><span class="zh">基于声学原理的频率分析技术，在高频区同样稳定收敛到目标精度。</span><span class="en">Acoustic-based frequency analysis that holds the target across the top octaves, and across the full range.</span></p>
             </div>
             <div class="card reveal">
                 <span class="card-icon" style="color:var(--primary-color)"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3 7 14h5l-1 9 9-13h-6l1-7z"/></svg></span>
@@ -326,13 +347,13 @@
                 </thead>
                 <tbody>
                     <tr><td><span class="zh">适用场景</span><span class="en">Best For</span></td><td><span class="zh">家庭练习 / 日常维护</span><span class="en">Home Practice / DIY</span></td><td class="highlight-cell"><span class="zh">职业调律师 / 音乐机构</span><span class="en">Pro Tuners / Institutions</span></td></tr>
-                    <tr><td><span class="zh">采样精度</span><span class="en">Precision</span></td><td>±1 音分 (±1 Cents)</td><td class="highlight-cell">±1 音分 (±1 Cents)</td></tr>
+                    <tr><td><span class="zh">采样精度</span><span class="en">Precision</span></td><td><span class="zh">±2 音分<sup class="fn-ref"><a href="#precision-note">*</a></sup></span><span class="en">±2 cents<sup class="fn-ref"><a href="#precision-note">*</a></sup></span></td><td class="highlight-cell"><span class="zh">±2 音分<sup class="fn-ref"><a href="#precision-note">*</a></sup></span><span class="en">±2 cents<sup class="fn-ref"><a href="#precision-note">*</a></sup></span></td></tr>
                     <tr><td><span class="zh">调音曲线 优化器</span><span class="en">Optimizer</span></td><td><span class="zh">通用曲线 (可单独订阅)</span><span class="en">Universal (Add-on)</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">端侧拉伸优化</span><span class="en">On-Device Stretch</span></td></tr>
                     <tr><td><span class="zh">电机性能</span><span class="en">Performance</span></td><td><span class="zh">静音稳定模式</span><span class="en">Silent/Stable</span></td><td class="highlight-cell"><span class="zh">Turbo 涡轮性能加速</span><span class="en">Turbo Performance</span></td></tr>
                     <tr><td><span class="zh">云端 CRM</span><span class="en">Cloud CRM</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">数字化客户档案库</span><span class="en">Digital Customer Archive</span></td></tr>
                     <tr><td><span class="zh">健康报告</span><span class="en">Health Reports</span></td><td class="cross">×</td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">PDF 深度分析报告</span><span class="en">PDF Deep Analysis</span></td></tr>
                     <tr><td><span class="zh">律制支持</span><span class="en">Temperaments</span></td><td style="color: #9a9a9a;"><span class="zh">平均律 (Equal)</span><span class="en">Equal Temperament</span></td><td class="highlight-cell"><span class="check">✓</span> <span class="zh">5 种历史律制</span><span class="en">5 Historical Temperaments</span></td></tr>
-                    <tr><td><span class="zh">授权方式</span><span class="en">Licensing</span></td><td><span class="zh">硬件内置</span><span class="en">Hardware Embedded</span></td><td class="highlight-cell"><span class="zh">永久 CDK (终身授权)</span><span class="en">Lifetime CDK</span></td></tr>
+                    <tr><td><span class="zh">授权方式</span><span class="en">Licensing</span></td><td><span class="zh">硬件内置</span><span class="en">Hardware Embedded</span></td><td class="highlight-cell"><span class="zh">Pro 年度订阅（¥499/年）</span><span class="en">Pro annual subscription (¥499/yr)</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -360,6 +381,12 @@
         </div>
     </section>
 
+    <div id="precision-note" class="page-notes">
+        <p>
+            <span class="zh"><span class="fn-mark">*</span> <b>±2 音分</b>为实验室测试结果，测试条件与量产版本、真实琴况均可能不同。实际表现受钢琴状态、弦轴摩擦、环境温湿度与操作方式影响；最终性能以量产版本的验证结果为准。</span>
+            <span class="en"><span class="fn-mark">*</span> <b>±2 cents</b> is a laboratory test result; test conditions may differ from the production unit and from a real instrument in the field. Actual performance depends on the piano's condition, tuning-pin friction, ambient temperature and humidity, and how the tool is used. Final performance will be as verified on the production version.</span>
+        </p>
+    </div>
     <footer>
         <div class="footer-links">
             <a href="about.html" style="color: var(--text-muted); margin: 0 8px;"><span class="zh">关于我们</span><span class="en">About</span></a>
@@ -373,7 +400,7 @@
             <a href="terms.html" style="color: var(--text-muted); margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
         </div>
         <p style="color: var(--text-muted); font-size: 12px; margin: 8px 0 0 0;">
-            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 MelSpectrum Technology (Shenzhen) Co., Ltd. | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
+            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
         </p>
     </footer>
 
@@ -395,6 +422,8 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -12% 0px' });
         
+        if('IntersectionObserver' in window){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}}
+        
         document.querySelectorAll('.reveal').forEach((el, index) => {
             if(el.classList.contains('card')) {
                 el.style.transitionDelay = `${(index % 3) * 0.15}s`;
@@ -402,6 +431,6 @@
             observer.observe(el);
         });
     </script>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}};});</script>
+    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
 </body>
 </html>
