@@ -54,6 +54,24 @@ lock = Math.max(600, Math.min(lock, window.innerHeight * 2.4));
 | **移动端** | **不 pin，也不加载视频**。`display:none` 拦不住请求——视频必须**不带 `src`** 出厂，只在桌面分支用 JS 注入 `data-src-*`；否则浏览器照样取 metadata |
 | **reduced-motion** | 不 pin、不加载，只显示 poster |
 | **无 JS / 库加载失败** | poster `<img>` 本身就是完整的首屏，不依赖任何脚本 |
+| **页面还有别的 pin** | 见下方「晚建 pin 会打乱后面所有 trigger」——必须 `ScrollTrigger.sort()` 再 `refresh()` |
+
+### ⚠️ 晚建的 pin 会打乱它后面所有 trigger（2026-08-30 踩过）
+
+滚动锁定的 pin **只能在视频报出 `duration` 之后才建**（锁定距离由片长推出），也就是说它是 `loadedmetadata` 回调里**异步**创建的。而此时页面上后面的 pin（本站是 `#how-it-works`）**早就量完并缓存了自己的 start/end**，那份缓存里**没有 hero 的 pin spacer**。
+
+后果：后面每个 trigger 都短了整整一个锁定距离（1440×900 下是 2100px），`#how-it-works` 提前 2100px 就 pin 住，把工作原理区直接拍在上一屏（银色 showcase）身上——表现为「下一页突然出现，再滑一下又突然消失」。
+
+**`ScrollTrigger.refresh()` 单独调用修不好**，因为它沿用陈旧的**创建顺序**。必须两步，且有先后：
+
+```js
+ScrollTrigger.sort();     // 按文档位置重排
+ScrollTrigger.refresh();  // 带着 spacer 重算 offset
+```
+
+建完 hero pin 之后要调一次；`PTMotion.refresh()`（字体就绪 / resize / 切语言的统一入口）里也做了同样两步，否则每次重排又会退回错误顺序。
+
+验收：`#how-it-works` 的 trigger `start` 必须等于它的 `getBoundingClientRect().top + scrollY - 64`，且**重载 / 切语言 / resize 三种情况都要各验一次**。
 
 ### 本地验证视频必须用支持 Range 的服务器
 
