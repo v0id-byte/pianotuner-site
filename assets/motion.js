@@ -66,7 +66,14 @@
   PT.ready = true;
 
   var ScrollTrigger = window.ScrollTrigger;
-  PT.refresh = function () { try { ScrollTrigger.refresh(); } catch (e) {} };
+  // sort() before refresh(): pin spacers are measured in trigger *creation*
+  // order, and this page creates one pin late (the hero, once the video reports
+  // its duration). refresh() on its own keeps that stale order and leaves every
+  // later trigger short by the hero's lock distance. sort() is cheap and
+  // idempotent, so the central re-layout entry point always does both.
+  PT.refresh = function () {
+    try { ScrollTrigger.sort(); ScrollTrigger.refresh(); } catch (e) {}
+  };
 
   /* ---------------------------------------------------------------------
    * Re-layout triggers.
@@ -509,6 +516,17 @@
               }
             }
           });
+
+          // This pin is born late -- only once the video reports its duration --
+          // so every trigger further down the page was measured while the hero's
+          // pin spacer did not exist yet. Their cached start/end are now short by
+          // the whole lock distance, which makes #how-it-works pin ~2100px early
+          // and slam the next section over the previous one. sort() puts the
+          // triggers back in document order; refresh() then recomputes offsets
+          // with the spacer in place. Order matters: refresh() alone does not fix
+          // it, because it keeps the stale creation order.
+          ScrollTrigger.sort();
+          ScrollTrigger.refresh();
         }
 
         if (video.readyState >= 1) wire();
