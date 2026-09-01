@@ -73,6 +73,16 @@ ScrollTrigger.refresh();  // 带着 spacer 重算 offset
 
 验收：`#how-it-works` 的 trigger `start` 必须等于它的 `getBoundingClientRect().top + scrollY - 64`，且**重载 / 切语言 / resize 三种情况都要各验一次**。
 
+### ⚠️ 换视频必须换文件名（2026-09-01 踩过）
+
+**不要原地覆盖同名的 hero 视频。** 滚动锁定会发大量 Range 请求，浏览器和 Cloudflare 都**按字节区间缓存**。一旦同一个 URL 的内容变了（本次 1572114 → 1863853 字节），手上还留着旧文件部分区间的客户端会把**旧区间和新区间拼在一起**，得到一个解不出来的流——表现就是首屏卡在 poster、「视频不播放」。
+
+规矩：
+
+- 换视频/poster 一律**带版本后缀**（`hero-v20m-v2.mp4`），让每个客户端拿到一个它从没缓存过的 URL。这样立刻生效，不用等 `max-age=14400` 过期
+- **旧文件名先留着别删**，继续指向当前内容。万一有人手上是旧 HTML，他拿到的是能播的视频而不是 404；等缓存轮换完再清理
+- 排查顺序：先用 `ffprobe` 比 profile/level/pix_fmt/faststart 排除编码问题，再用**带 cache-buster 的 URL** 复现。本次编码是清白的（新旧都是 H.264 High/yuv420p/faststart，新版 level 3.1 反而比旧版 5.0 更宽容）
+
 ### 本地验证视频必须用支持 Range 的服务器
 
 `python3 -m http.server` **对 Range 请求返回 200 而不是 206**，视频因此**完全无法 seek**，会伪装成「编解码器不支持」的假象（本项目已经误判过一次）。用 `.claude/launch.json` 里配的那个带 Range 的 dev server，或任何支持 206 的服务器。生产（Cloudflare→origin）实测返回 206，没问题。
