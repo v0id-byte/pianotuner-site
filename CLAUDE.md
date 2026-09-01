@@ -73,6 +73,22 @@ ScrollTrigger.refresh();  // 带着 spacer 重算 offset
 
 验收：`#how-it-works` 的 trigger `start` 必须等于它的 `getBoundingClientRect().top + scrollY - 64`，且**重载 / 切语言 / resize 三种情况都要各验一次**。
 
+> 2026-09-01 更新：`#how-it-works` **已经不再 pin 了**（见下）。全站现在只剩 hero 一个 pin，这个串档问题的触发面因此小了很多——但 `sort()` + `refresh()` 两步必须保留：只要将来再加第二个 pin，同样的坑立刻回来。
+
+### 3 步区不 pin：动效跟着区块「进场」走
+
+「将复杂的声学物理，化为极简的 3 步」**不要 pin**。它原来 pin 住时页面会停下来等连线画完，紧挨着上面的 hero pin，观感就是「突然卡住」。
+
+改成用区块自己的行程做 scrub：
+
+```js
+start: 'top bottom',    // 区块顶边从视口底部进场 -> 开始画
+end:   'top top+=64',   // 区块顶边贴到固定头部 -> 正好画完
+scrub: 0.5
+```
+
+全程不锁页面，所以没有任何可以「卡住」的地方。**移动端仍然什么都不建**——`.step-box` / `.step-line` 由页面自带的 IntersectionObserver（`.stg-item`）接管，别和它抢。
+
 ### ⚠️ 换视频必须换文件名（2026-09-01 踩过）
 
 **不要原地覆盖同名的 hero 视频。** 滚动锁定会发大量 Range 请求，浏览器和 Cloudflare 都**按字节区间缓存**。一旦同一个 URL 的内容变了（本次 1572114 → 1863853 字节），手上还留着旧文件部分区间的客户端会把**旧区间和新区间拼在一起**，得到一个解不出来的流——表现就是首屏卡在 poster、「视频不播放」。
