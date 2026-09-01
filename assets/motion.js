@@ -205,16 +205,22 @@
   });
 
   /* -------------------------------------------------------------------
-   * "3 simple steps" — pinned progression.
+   * "3 simple steps" — the path draws while the section travels up.
    *
-   * Desktop/tablet only, deliberately. On phones a pinned section fights
-   * the collapsing address bar: the viewport height changes mid-scroll, so
-   * the pin spacer is computed against a height that no longer exists,
-   * producing jumps, a giant gap, and a scroll position that restores
-   * wrongly on back-navigation. Mobile gets a plain staggered reveal.
+   * Deliberately NOT pinned. This section used to pin, which meant the page
+   * froze while the line drew; combined with the hero pin above it that read
+   * as the section snapping into place and sticking. Instead the line is
+   * scrubbed across the section's own approach: it starts the moment the
+   * section's top enters from the bottom of the viewport and is fully drawn
+   * by the time that top reaches the header. Nothing is ever locked, so
+   * there is nothing to get stuck on, and scrolling stays continuous.
+   *
+   * Desktop/tablet only. Phones keep the page's own IntersectionObserver
+   * stagger -- a second system on the same elements would fight it and could
+   * strand the steps at opacity 0.
    * ----------------------------------------------------------------- */
   PT.register({
-    name: 'steps-pin',
+    name: 'steps-path',
     build: function (gsap, ScrollTrigger, mm) {
       var sec = document.querySelector('#how-it-works');
       var boxes = sec && sec.querySelectorAll('.step-box');
@@ -222,38 +228,38 @@
       if (!sec || !boxes || boxes.length !== 3) return;
 
       mm.add({
-        pinned: '(min-width: 768px)',
+        desktop: '(min-width: 768px)',
         plain: '(max-width: 767px)'
       }, function (ctx) {
         var c = ctx.conditions;
 
         if (c.plain) {
-          // No pin on phones. Nothing else to do either: the page's own
-          // IntersectionObserver already tags .step-container children as
-          // .stg-item and staggers them in. Adding a second system here would
-          // fight it and could strand the steps at opacity 0.
+          // Nothing to do on phones: the page's own IntersectionObserver
+          // already tags .step-container children as .stg-item and staggers
+          // them in. Adding a second system here would fight it and could
+          // strand the steps at opacity 0.
           return;
         }
 
-        // pinned progression
         gsap.set(boxes, { opacity: 0.28 });
         if (line) gsap.set(line, { scaleX: 0, transformOrigin: 'left center' });
 
         var tl = gsap.timeline({
           scrollTrigger: {
             trigger: sec,
-            start: 'top top+=64',
-            end: '+=' + Math.round(window.innerHeight * 1.15),
-            pin: true,
-            pinSpacing: true,
+            // section top enters from the bottom edge -> section top docks
+            // under the fixed header. No pin, so the page never holds.
+            start: 'top bottom',
+            end: 'top top+=64',
             scrub: 0.5,
-            anticipatePin: 1,
             invalidateOnRefresh: true
           }
         });
+        // Finish the line a little before the end so the last box has room to
+        // land while the section is still settling, rather than all at once.
         if (line) tl.to(line, { scaleX: 1, ease: 'none', duration: 3 }, 0);
         for (var i = 0; i < boxes.length; i++) {
-          tl.to(boxes[i], { opacity: 1, duration: 0.8, ease: 'power2.out' }, i * 0.95);
+          tl.to(boxes[i], { opacity: 1, duration: 0.8, ease: 'power2.out' }, i * 0.85);
         }
       });
     }
