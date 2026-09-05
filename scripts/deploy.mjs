@@ -60,8 +60,10 @@ async function verifyLive(releaseSha) {
       // 允许已知的 edge transform：去掉它们再比
       const stripped = body.replace(/<script[^>]*email-decode[^>]*><\/script>/g, '').replace(/<script[^>]*cloudflareinsights[^>]*><\/script>/g, '');
       const local = readFileSync(rel, 'utf8');
-      const onlyKnown = stripped.replace(/\/cdn-cgi\/l\/email-protection[^"]*/g, 'MAILTO').replace(/<a[^>]*__cf_email__[^>]*>[\s\S]*?<\/a>/g, 'MAILTO');
-      const localNorm = local.replace(/mailto:[^"]*/g, 'MAILTO').replace(/<a class="[^"]*" href="MAILTO">[\s\S]*?<\/a>/g, 'MAILTO');
+      // Cloudflare 把 <a href="mailto:x"> x </a> 改写成 <a href="/cdn-cgi/l/email-protection#…"><span class="__cf_email__" …>[email protected]</span></a>，
+      // 标记在内层 span 上，所以整段 <a …>…</a> 一起归一化成 MAILTO（两边同样处理）。
+      const onlyKnown = stripped.replace(/<a[^>]*href="\/cdn-cgi\/l\/email-protection[^"]*"[^>]*>[\s\S]*?<\/a>/g, 'MAILTO').replace(/<span class="__cf_email__"[^>]*>[\s\S]*?<\/span>/g, 'MAILTO');
+      const localNorm = local.replace(/<a[^>]*href="mailto:[^"]*"[^>]*>[\s\S]*?<\/a>/g, 'MAILTO');
       if (onlyKnown.replace(/\s+/g, '') !== localNorm.replace(/\s+/g, '')) {
         fails.push(`${u} Cloudflare 响应 ≠ origin（cf-cache-status=${cfs}）——可能命中旧缓存，需 purge`);
       }
