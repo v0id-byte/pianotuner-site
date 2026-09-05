@@ -126,7 +126,8 @@ sh(`mkdir -p ${BACKUPS} ${RELEASES} && tar czf ${tarName} -C $(dirname $(readlin
 log(`备份 ${tarName} 已验证可读`);
 const avail = +sh(`df -B1 --output=avail /var/www | tail -1`).trim();
 if (avail < 500 * 1024 * 1024) die('磁盘剩余不足 500MB');
-const originOnlyBefore = sh(`cd ${ROOT} && for f in ${ORIGIN_ONLY.join(' ')}; do [ -e "$f" ] && (find "$f" -type f -exec sha256sum {} + | sort) ; done | sha256sum`).trim();
+// 切换过一次之后 ROOT 里的 ORIGIN_ONLY 项都是指向 legacy 的 symlink，必须 -L 跟进去，否则指纹是空输入的哈希（第二次部署 2026-09-05 踩到）
+const originOnlyBefore = sh(`cd ${ROOT} && for f in ${ORIGIN_ONLY.join(' ')}; do [ -e "$f" ] && (find -L "$f" -type f -exec sha256sum {} + | sort) ; done | sha256sum`).trim();
 log(`ORIGIN_ONLY 指纹 ${originOnlyBefore.slice(0, 16)}…`);
 
 function rollback(why) {
