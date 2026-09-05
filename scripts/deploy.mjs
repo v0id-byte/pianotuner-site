@@ -130,12 +130,19 @@ if (avail < 500 * 1024 * 1024) die('磁盘剩余不足 500MB');
 const originOnlyBefore = sh(`cd ${ROOT} && for f in ${ORIGIN_ONLY.join(' ')}; do [ -e "$f" ] && (find -L "$f" -type f -exec sha256sum {} + | sort) ; done | sha256sum`).trim();
 log(`ORIGIN_ONLY 指纹 ${originOnlyBefore.slice(0, 16)}…`);
 
+// 切换前的目标：切换过就是当前 release，首次切换是搬成 legacy 的原目录。失败时先把 docroot 切回去，再删新 release
+//（2026-09-05 第二次部署踩到：先删 release 再不管 symlink，站点直接 404）。
+const prevTarget = isLink === 'link' ? sh(`readlink -f ${ROOT}`).trim() : LEGACY;
+let switched = false;
 function rollback(why) {
   console.error(`deploy: 失败 —— ${why}，正在恢复`);
   try {
+    if (switched) {
+      sh(`ln -sfn ${prevTarget} ${ROOT}.new && mv -T ${ROOT}.new ${ROOT}`);
+      console.error(`deploy: docroot 已切回 ${prevTarget}`);
+    }
     sh(`rm -rf ${REL}`);
-    if (isLink === 'dir') { /* 还没切换过，真实目录原封不动 */ }
-    console.error('deploy: release 目录已清理，docroot 未被触碰');
+    console.error(`deploy: release 目录已清理${switched ? '' : '，docroot 未被触碰'}`);
   } catch (e) {
     console.error(`deploy: 恢复失败：${e.message}。备份在 ${tarName}，请人工处理`);
   }
@@ -167,6 +174,7 @@ try {
   } else {
     sh(`ln -s ${REL} ${ROOT}.new && mv -T ${ROOT}.new ${ROOT}`);
   }
+  switched = true;
   sh('nginx -t 2>&1 | tail -1');
   log(`已切换 ${ROOT} → ${REL}`);
   const originOnlyAfter = sh(`cd ${ROOT} && for f in ${ORIGIN_ONLY.join(' ')}; do [ -e "$f" ] && (find -L "$f" -type f -exec sha256sum {} + | sort) ; done | sha256sum`).trim();
@@ -182,7 +190,7 @@ const fails = await verifyLive(localSha);
 if (fails.length) {
   console.error('deploy: 在线验收未通过（docroot 已切换，备份与 legacy 均保留）：');
   for (const f of fails) console.error('  ✗ ' + f);
-  console.error(`  回退：ssh ${HOST} 'ln -sfn ${LEGACY} ${ROOT}.new && mv -T ${ROOT}.new ${ROOT}'`);
+  console.error(`  回退：ssh ${HOST} 'ln -sfn ${prevTarget} ${ROOT}.new && mv -T ${ROOT}.new ${ROOT}'`);
   process.exit(1);
 }
 log('在线验收通过。现在提交：git add -A -- ' + DEPLOY.join(' ') + ' && git commit && git push');
