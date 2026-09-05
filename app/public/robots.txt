@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-# 旧存档页已从 docroot 移除并返回 410；三个合并页改为 noindex 存根，不再 Disallow（Disallow 会让 noindex 永远读不到）
-Disallow: /refined_buy.html
-Disallow: /pro-backup-20260317.html
+# 旧存档页已从 docroot 移除并由 nginx 返回 410，三个合并页改为 noindex 存根——都不再 Disallow：
+# 被 Disallow 的 URL 不会再被抓取，搜索引擎就永远看不到 410 / noindex。
 Sitemap: https://www.pianotuner.top/sitemap.xml
