@@ -122,7 +122,7 @@ if (!APPLY) {
 
 // ---------- 1. 备份 ----------
 const tarName = `${BACKUPS}/html-pianotuner-${ts}.tgz`;
-sh(`mkdir -p ${BACKUPS} ${RELEASES} && tar czf ${tarName} -C /var/www $(basename $(readlink -f ${ROOT})) && tar -tzf ${tarName} > /dev/null`);
+sh(`mkdir -p ${BACKUPS} ${RELEASES} && tar czf ${tarName} -C $(dirname $(readlink -f ${ROOT})) $(basename $(readlink -f ${ROOT})) && tar -tzf ${tarName} > /dev/null`);
 log(`备份 ${tarName} 已验证可读`);
 const avail = +sh(`df -B1 --output=avail /var/www | tail -1`).trim();
 if (avail < 500 * 1024 * 1024) die('磁盘剩余不足 500MB');
