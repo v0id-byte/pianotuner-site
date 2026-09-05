@@ -89,7 +89,7 @@ origin = `root@192.255.139.83`，docroot `/var/www/html-pianotuner` **现在是 
 
 流程：预检（工作树干净、verify:root、ssh）→ tar 备份到 `/root/backups/` 并 `tar -tzf` 验证 → df 预检 → 上传整个 DEPLOY 到新 release（先 hashed 资产后 HTML）→ release 内逐文件 sha256 == 本地 → legacy 里所有不在 DEPLOY、也不在 410 名单里的顶层项 symlink 接入 → `nginx -t` → `mv -T` 原子切换 symlink → ORIGIN_ONLY 指纹前后一致 → 保留最近 3 个 release → 在线验收（18 URL 200 且 body == origin（只允许 email-protection / email-decode / Insights 差异）、6 存根跳转、sitemap/robots、`/api/pianotuner/subscribe` 可达、hero 视频两段 Range 206 字节一致、旧存档页 410）→ 打印 git 命令。任一步失败：release 目录清理，docroot 不动；切换后验收失败给出一行回退命令。
 
-**origin nginx 的 `limit_req zone=api_limit`（1r/s, burst 5）只在 `location /api/` 里**（2026-09-05 之前误放在 server 级，全站限速：部署脚本的在线验收从回环连发请求被限成 503，冷缓存首屏也会被限）。cloudflared 从 `[::1]:1212` 进来，nginx 看到的访客 IP 是 `::1`（未还原真实 IP）——别拿 access.log 的 `::1` 当本机流量。旧存档页由 nginx `location = … { return 410; }` 处理，本体在 `/root/backups/legacy-pages/`。
+**origin nginx 的 `limit_req zone=api_limit`（1r/s, burst 5）只在 `location /api/` 里**（2026-09-05 之前误放在 server 级，全站限速：部署脚本的在线验收从回环连发请求被限成 503，冷缓存首屏也会被限）。cloudflared 从 `[::1]:1212` 进来，`conf.d/cloudflare-ips.conf` 已把 `::1`/`127.0.0.1` 列为可信代理，access.log 里是访客真实 IP。旧存档页由 nginx `location = … { return 410; }` 处理，本体在 `/root/backups/legacy-pages/`。
 
 **全链无 rsync、只走显式清单。** origin nginx 对 `*.json` 一律 404，所以运行时不得 fetch 任何 .json（Railsback 数据烘成 `data/railsback.js`）。CSP `script-src 'self' 'unsafe-inline'`、`font-src 'self'`，Vite 产物兼容，依赖升级后复查。
 
