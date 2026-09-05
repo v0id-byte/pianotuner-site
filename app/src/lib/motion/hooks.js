@@ -232,3 +232,33 @@ export function useHeroCue(cueRef) {
     return () => st.kill();
   }, [cueRef]);
 }
+
+/**
+ * FAQ 手风琴：原生 <details> 语义不变（无 JS / reduced-motion 时仍能开合），有动效时接管 summary 点击，
+ * 用高度补间展开/收起 .faq__body。owner 只有这一个补间；开合改变文档高度，结束后 refreshSoon()。
+ */
+export function useFaqAccordion(scopeRef) {
+  useEffect(() => {
+    const scope = scopeRef.current;
+    if (!scope || prefersReduced()) return undefined;
+    const onClick = (e) => {
+      const summary = e.target.closest('summary');
+      if (!summary || !scope.contains(summary)) return;
+      const item = summary.parentElement;
+      const body = item.querySelector('.faq__body');
+      if (!body) return;
+      e.preventDefault();
+      if (item.dataset.animating) return;
+      item.dataset.animating = '1';
+      const done = () => { gsap.set(body, { clearProps: 'height,opacity' }); delete item.dataset.animating; refreshSoon(); };
+      if (!item.open) {
+        item.open = true;
+        gsap.fromTo(body, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: 0.5, ease: 'power3.out', onComplete: done });
+      } else {
+        gsap.to(body, { height: 0, opacity: 0, duration: 0.35, ease: 'power2.in', onComplete: () => { item.open = false; done(); } });
+      }
+    };
+    scope.addEventListener('click', onClick);
+    return () => scope.removeEventListener('click', onClick);
+  }, [scopeRef]);
+}

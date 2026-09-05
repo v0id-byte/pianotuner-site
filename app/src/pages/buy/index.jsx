@@ -9,7 +9,7 @@ import { TESTFLIGHT } from '../../data/site';
 export const meta = {
   navTheme: 'dark',
   zh: { title: 'Piano Tuner | 暂停销售 · 候补名单', desc: 'Piano Tuner 极早鸟预售已结束，V2.1 研发中，新一轮早鸟预售计划 2026 年第四季度开启，首批发货预计 2027 年第一至第二季度。留下邮箱，开售第一时间通知你。' },
-  en: { title: 'Piano Tuner | Sales Paused · Waitlist', desc: 'The ultra-early-bird pre-sale has ended. Piano Tuner V2.1 is in development; the next early-bird round is planned for Q4 2026, with first shipments expected Q1–Q2 2027. Leave your email to be notified first.' },
+  en: { title: 'Piano Tuner | Sales Paused · Waitlist', desc: 'The ultra-early-bird pre-sale has ended. The next early-bird round is planned for Q4 2026, first shipments Q1–Q2 2027. Leave your email to be notified first.' },
 };
 
 export default function Buy() {
@@ -33,7 +33,7 @@ export default function Buy() {
             <SubscribeForm source="buy-page" />
           </div>
           <div className="cta__links">
-            <Button href={TESTFLIGHT} external variant="dark">{t('下载 App 抢先体验', 'Try the app (TestFlight)')}</Button>
+            <Button href={TESTFLIGHT} external variant="dark">{t('下载 App 抢先体验', 'Download the app')}</Button>
             <BracketLink href={href(lang, 'index')} className="blink--onaccent">{t('了解产品', 'Explore the product')}</BracketLink>
             <BracketLink href={href(lang, 'pro')} className="blink--onaccent">{t('了解专业版', 'Explore Pro')}</BracketLink>
             <BracketLink href={href(lang, 'contact')} className="blink--onaccent">{t('联系我们', 'Contact us')}</BracketLink>

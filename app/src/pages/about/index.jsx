@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import { BracketLink, Button, Eyebrow, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
@@ -10,7 +11,7 @@ import { EMAIL_REPORT, MELSPECTRUM, LEGAL_ZH } from '../../data/site';
 
 export const meta = {
   navTheme: 'dark',
-  zh: { title: '关于我们 | Piano Tuner', desc: '融谱智能科技（深圳）有限公司，品牌 MelSpectrum。为专业调音师打造的自动调音器：硬件 · 软件 · 端侧 AI，三位一体。' },
+  zh: { title: '关于我们 | Piano Tuner', desc: '融谱智能科技（深圳）有限公司，品牌 MelSpectrum。为专业调律师打造的自动调音器：硬件 · 软件 · 端侧 AI，三位一体。' },
   en: { title: 'About Us | Piano Tuner', desc: '融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand. An automatic piano tuner built for pros: hardware, software and on-device AI in one.' },
   jsonLd: (lang, { self }) => ({
     '@context': 'https://schema.org',
@@ -43,7 +44,7 @@ function Trinity() {
   useStackDeck(deck);
   const cards = [
     { num: '01 · HARDWARE', title: t('智能硬件核心', 'Smart hardware core'), desc: t('精密 FOC 电机，精准扭矩控制，蓝牙直连。', 'A precision FOC motor with accurate torque control and direct Bluetooth.') },
-    { num: '02 · APP', title: t('iOS 智能操控', 'iOS smart control'), desc: t('SwiftUI 原生开发，借 iOS 原生硬件加速做硬件级音频分析，实时波形显示。', 'SwiftUI native, hardware-grade audio analysis on iOS hardware acceleration, with real-time waveforms.') },
+    { num: '02 · APP', title: t('iOS 智能操控', 'iOS smart control'), desc: t('SwiftUI 原生开发，借 iOS 原生硬件加速做硬件级音频分析，实时波形显示。', 'Built natively in SwiftUI, with hardware-accelerated audio analysis on iOS and real-time waveform display.') },
     { num: '03 · CLOUD', title: t('档案、报告与固件', 'Profiles, reports & firmware'), desc: t('拉伸曲线在 iPhone 端侧生成；云端只存档案、报告、按钢琴缓存的 B 值与固件。', 'The stretch curve is computed on-device; the cloud only keeps profiles, reports, per-piano B-values, and firmware.') },
   ];
   return (
@@ -52,7 +53,7 @@ function Trinity() {
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
           <article className="card" key={c.num} data-stack-card>
-            <span className="card__num t-ui">{c.num}</span>
+            <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
           </article>
@@ -124,7 +125,7 @@ export default function About() {
         eyebrow={t('MELSPECTRUM · 融谱智能科技（深圳）有限公司', '融谱智能科技（深圳）有限公司 · MELSPECTRUM')}
         l1={t('让每台钢琴', 'Every piano,')}
         l2={t('听见完美', 'perfectly tuned')}
-        sub={t('为专业调音师打造的自动调音器。硬件 · 软件 · 端侧 AI，三位一体。', 'An automatic tuner, built for pros. Hardware · Software · On-device AI — in one.')}
+        sub={t('为专业调律师打造的自动调音器。硬件 · 软件 · 端侧 AI，三位一体。', 'An automatic tuner, built for pros. Hardware · Software · On-device AI — in one.')}
         actions={<>
           <BracketLink href={href(lang, 'buy')} highlight>{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>
           <BracketLink href="#product">{t('了解更多', 'Learn more')}</BracketLink>

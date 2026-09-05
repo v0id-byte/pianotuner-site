@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
 import { BracketLink, Fn, SectionHead } from '../../components/ui';
@@ -23,7 +24,7 @@ export default function Support() {
   const steps = [
     { num: '01 · ASSEMBLY', title: t('硬件组装', 'Assembly'), desc: t('将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。', 'Attach the tuning socket and screw in the ergonomic side handle.') },
     { num: '02 · CONNECT', title: t('下载并连接 App', 'Connect the app'), desc: t('扫描产品包装内的二维码下载官方 App。开启手机蓝牙，并在 App 内选择您的设备进行配对。', 'Scan the QR code to download the app. Enable Bluetooth and pair your device.') },
-    { num: '03 · TUNE', title: t('开始首次调音', 'Start tuning'), desc: t('将设备套在钢琴的调音钉上，确保卡合稳固。根据 App 提示开始自动调律。注意：请务必双手握持，以对抗强大的反向扭矩。', 'Place the device on a tuning pin. Follow the app instructions. WARNING: always use both hands to counteract the high torque.') },
+    { num: '03 · TUNE', title: t('开始首次调音', 'Start tuning'), desc: t('将设备套在钢琴的弦轴上，确保卡合稳固。根据 App 提示开始自动调律。重要：请务必双手握持，以对抗强大的反向扭矩。', 'Place the device on a tuning pin. Follow the app instructions. Important: always use both hands to counteract the high torque.') },
   ];
   const faq = [
     [t('高扭矩输出安全吗？我该如何正确握持？', 'Is the high torque output safe? How should I hold it?'), t('本设备具备工业级高扭矩输出。为了您的安全和调音精度，务必使用包装内附带的人体工程学侧手柄。请用主手握住带有防滑蒙皮的机身，另一只手紧握侧手柄，以双手形成的合力稳定对抗反向扭矩。', 'The device delivers industrial-grade torque. For your safety and tuning accuracy, always use the included ergonomic side handle. Hold the grip-coated body with your main hand and the side handle with the other, using both hands together to steadily counteract the reaction force.')],
@@ -53,7 +54,7 @@ export default function Support() {
         <div className="steps">
           {steps.map((s) => (
             <article className="step" key={s.num}>
-              <span className="card__num t-ui">{s.num}</span>
+              <Scramble className="card__num t-ui">{s.num}</Scramble>
               <h3 className="t-h3">{s.title}</h3>
               <p className="card__desc t-body-sm">{s.desc}</p>
             </article>
@@ -80,8 +81,8 @@ export default function Support() {
         <SectionHead eyebrow={t('VIDEO · 视频教程库', 'VIDEO TUTORIALS')} title={t('视频教程库', 'Video tutorials')} sub={t('制作中，敬请期待。', 'In production — stay tuned.')} />
         <div className="stack-deck">
           {videos.map((v, i) => (
-            <article className="card" key={v}>
-              <span className="card__num t-ui">{String(i + 1).padStart(2, '0')} · {t('即将上线', 'COMING SOON')}</span>
+            <article className="card card--soon" key={v}>
+              <Scramble className="card__num t-ui">{String(i + 1).padStart(2, '0')} · {t('即将上线', 'COMING SOON')}</Scramble>
               <div className="mono-block" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
               <h3 className="t-h3">{v}</h3>
             </article>

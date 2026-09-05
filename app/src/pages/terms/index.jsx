@@ -5,7 +5,7 @@ import { EMAIL_SUPPORT } from '../../data/site';
 export const meta = {
   navTheme: 'dark',
   zh: { title: '服务条款 | Piano Tuner', desc: 'Piano Tuner 服务条款 — 应用使用许可、硬件使用与安全须知、一年质保、软件「按现状」提供、知识产权、责任限制及适用法律。' },
-  en: { title: 'Terms of Service | Piano Tuner', desc: 'Terms of Service for the Piano Tuner app and tuning robot — app license, hardware use and safety, one-year warranty, software "as is", intellectual property, limitation of liability and governing law.' },
+  en: { title: 'Terms of Service | Piano Tuner', desc: 'Piano Tuner terms of service: app license, hardware use and safety, one-year warranty, software "as is", intellectual property, liability, governing law.' },
   jsonLd: (lang, { self }) => ({ '@context': 'https://schema.org', '@type': 'WebPage', url: self, name: lang === 'en' ? 'Terms of Service' : '服务条款' }),
 };
 

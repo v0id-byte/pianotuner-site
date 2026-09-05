@@ -5,7 +5,7 @@ import { EMAIL_SUPPORT } from '../../data/site';
 export const meta = {
   navTheme: 'dark',
   zh: { title: '隐私政策 | Piano Tuner', desc: 'Piano Tuner 隐私政策 — 麦克风仅用于本地音高检测，蓝牙仅用于连接调音硬件，遥测与算法改进数据均为可选授权。' },
-  en: { title: 'Privacy Policy | Piano Tuner', desc: 'Privacy Policy for the Piano Tuner app and tuning robot — microphone used only for on-device pitch detection, Bluetooth only to connect the hardware, telemetry and algorithm-improvement data strictly opt-in.' },
+  en: { title: 'Privacy Policy | Piano Tuner', desc: 'Piano Tuner privacy policy: microphone used only for on-device pitch detection, Bluetooth only to connect the hardware, telemetry strictly opt-in.' },
   jsonLd: (lang, { self }) => ({ '@context': 'https://schema.org', '@type': 'WebPage', url: self, name: lang === 'en' ? 'Privacy Policy' : '隐私政策' }),
 };
 

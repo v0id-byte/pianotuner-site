@@ -1,16 +1,17 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
-import { BracketLink, Eyebrow, Fn, SectionHead } from '../../components/ui';
+import { Arrow, BracketLink, Eyebrow, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal } from '../../lib/motion/hooks';
 
 export const meta = {
   navTheme: 'dark',
-  zh: { title: '演示视频 — Piano Tuner', desc: 'Piano Tuner V1.0 调音器原型实测演示：蓝牙连接、采集音频、生成专属调音曲线，再驱动机械执行端拧弦——全程自动。' },
-  en: { title: 'Live Demo — Piano Tuner', desc: 'Piano Tuner V1.0 prototype demo: connects over Bluetooth, captures the audio, builds a custom tuning curve, then drives the actuator to turn the pins — all automatic.' },
+  zh: { title: '演示视频 | Piano Tuner', desc: 'Piano Tuner V1.0 调音器原型实测演示：蓝牙连接、采集音频、生成专属调音曲线，再驱动机械执行端拧弦——全程自动。' },
+  en: { title: 'Live Demo | Piano Tuner', desc: 'Piano Tuner V1.0 prototype demo: connects over Bluetooth, captures the audio, builds a custom tuning curve, then drives the actuator to turn the pins — all automatic.' },
   jsonLd: (lang, { self }) => ({
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
@@ -26,10 +27,12 @@ export const meta = {
 export default function Demo() {
   const { t, lang } = useT();
   const root = useRef(null);
+  const video = useRef(null);
+  const [started, setStarted] = useState(false);
   useTextReveal(root);
   useReveal(root);
   const chips = [
-    { k: t('调音精度', 'PRECISION'), v: <>±2 {t('音分', '¢')}<Fn /></> },
+    { k: t('调音精度', 'PRECISION'), v: <span>±2 {t('音分', '¢')}<Fn /></span> },
     { k: t('音域', 'RANGE'), v: 'A0 – C8' },
     { k: t('琴键', 'KEYS'), v: '88' },
     { k: t('版本', 'VERSION'), v: t('V1.0 原型演示', 'V1.0 prototype') },
@@ -52,10 +55,15 @@ export default function Demo() {
       <section className="island-dark p-custom py-section" data-nav-theme="dark" ref={root} style={{ paddingTop: 0 }}>
         <div className="video-frame">
           {/* demo1.mp4 只存在于 origin（ORIGIN_ONLY），本地预览时 404 属预期 */}
-          <video controls preload="metadata" playsInline poster="/og-cover.jpg">
+          <video ref={video} controls preload="metadata" playsInline poster="/og-cover.jpg" onPlay={() => setStarted(true)}>
             <source src="/demo1.mp4" type="video/mp4" />
             {t('您的浏览器不支持视频播放，请使用 Chrome 或 Safari。', 'Your browser does not support video playback. Please use Chrome or Safari.')}
           </video>
+          {!started && (
+            <button type="button" className="video-frame__play" onClick={() => video.current?.play()}>
+              <span className="blink t-ui hl"><span aria-hidden="true">[</span><span>{t('播放演示', 'Play the demo')}</span><Arrow /><span aria-hidden="true">]</span></span>
+            </button>
+          )}
         </div>
         <dl className="specs" style={{ marginTop: 'var(--gap-y-md)' }}>
           <div className="spec"><dt className="spec__k t-ui">{t('关于本演示', 'ABOUT THIS DEMO')}</dt><dd className="spec__v"><span className="spec__sub t-body-sm">{t('蓝牙连接、采集音频、生成专属调音曲线，再驱动机械执行端拧弦——全程自动。', 'It connects over Bluetooth, captures the audio, builds a custom tuning curve, then drives the actuator to turn the pins — all automatic.')}</span></dd></div>
@@ -67,7 +75,7 @@ export default function Demo() {
         <div className="steps" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
           {upgrades.map((u) => (
             <article className="step" key={u.num}>
-              <span className="card__num t-ui">{u.num}</span>
+              <Scramble className="card__num t-ui">{u.num}</Scramble>
               <h3 className="t-h3">{u.title}</h3>
               <p className="card__desc t-body-sm">{u.desc}</p>
             </article>

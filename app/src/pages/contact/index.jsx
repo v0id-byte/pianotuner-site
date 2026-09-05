@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useT } from '../../i18n';
 import Shell from '../../components/Shell';
+import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import SubscribeForm from '../../components/SubscribeForm';
 import { Button, Eyebrow, SectionHead } from '../../components/ui';
@@ -89,19 +90,19 @@ export default function Contact() {
       <section className="island-light p-custom py-section" data-nav-theme="light" ref={root}>
         <div className="contact-grid" ref={deck}>
           <article className="card" data-stack-card>
-            <span className="card__num t-ui">01 · EMAIL</span>
+            <Scramble className="card__num t-ui">01 · EMAIL</Scramble>
             <h3 className="t-h3">{t('电子邮件', 'Email')}</h3>
             <p className="card__desc t-body-sm">{t('常规咨询与技术支持', 'General inquiries & tech support')}</p>
             <a className="blink t-ui literal" href={`mailto:${EMAIL_REPORT}`}>{EMAIL_REPORT}</a>
           </article>
           <article className="card" data-stack-card>
-            <span className="card__num t-ui">02 · WECHAT</span>
+            <Scramble className="card__num t-ui">02 · WECHAT</Scramble>
             <h3 className="t-h3">{t('微信客服', 'WeChat')}</h3>
             <p className="card__desc t-body-sm">{t('微信搜索或扫码添加企业微信', 'Search or scan to add us on WeChat')}</p>
             <img className="qr" src="/images/wechat-qr.webp" alt={t('企业微信二维码', 'WeChat QR code')} width="160" height="160" loading="lazy" />
           </article>
           <article className="card" data-stack-card>
-            <span className="card__num t-ui">03 · BUSINESS</span>
+            <Scramble className="card__num t-ui">03 · BUSINESS</Scramble>
             <h3 className="t-h3">{t('商务合作', 'Business')}</h3>
             <p className="card__desc t-body-sm">{t('B2B 合作与批量采购', 'B2B partnerships & bulk orders')}</p>
             <a className="blink t-ui literal" href={`mailto:${EMAIL_BUSINESS}`}>{EMAIL_BUSINESS}</a>
@@ -112,7 +113,7 @@ export default function Contact() {
           <div className="steps">
             {b2b.map((s) => (
               <article className="step" key={s.num}>
-                <span className="card__num t-ui">{s.num}</span>
+                <Scramble className="card__num t-ui">{s.num}</Scramble>
                 <h3 className="t-h3">{s.title}</h3>
                 <p className="card__desc t-body-sm">{s.desc}</p>
               </article>

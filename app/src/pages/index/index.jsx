@@ -10,21 +10,21 @@ import SubscribeForm from '../../components/SubscribeForm';
 import PrecisionNote from '../../components/PrecisionNote';
 import Scramble from '../../components/Scramble';
 import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
-import { useTextReveal, useReveal, useStackDeck, useStepsPath } from '../../lib/motion/hooks';
+import { useTextReveal, useReveal, useStackDeck, useStepsPath, useFaqAccordion } from '../../lib/motion/hooks';
 import { TESTFLIGHT, LEGAL_ZH } from '../../data/site';
 
 export const meta = {
   navTheme: 'dark',
   ogType: 'product',
   zh: {
-    title: '钢琴调音机器人 | 实验室测试精度 ±2 音分 - Piano Tuner',
-    desc: '钢琴调音机器人 / 自动调音器：套在弦轴上的精密执行器 + iPhone App，自动调准 88 键，实验室测试精度 ±2 音分。为专业调音师打造，省手腕、提效率，端侧生成专属 Railsback 曲线。',
-    ogDesc: '为调音师打造的自动调音器：电机替你逐弦拧到位，省手腕、多接琴、可交给助手。实验室测试精度 ±2 音分，立式/三角钢琴均适用。',
+    title: '钢琴调音机器人 | 实验室测试精度 ±2 音分 | Piano Tuner',
+    desc: '钢琴调音机器人 / 自动调音器：套在弦轴上的精密执行器 + iPhone App，自动调准 88 键，实验室测试精度 ±2 音分。为专业调律师打造，省手腕、提效率。',
+    ogDesc: '为调律师打造的自动调音器：电机替你逐弦拧到位，省手腕、多接琴、可交给助手。实验室测试精度 ±2 音分，立式/三角钢琴均适用。',
     keywords: '钢琴调音,钢琴调音器,自动钢琴调音,智能调音机器人,钢琴调音机器人,钢琴调音费用,钢琴调音价格,钢琴多久调一次,钢琴跑调,立式钢琴调音,三角钢琴调音,钢琴调音APP,钢琴调音上门,Railsback曲线,钢琴音准,piano tuner,automatic piano tuner,piano tuning robot,auto piano tuning,robotic piano tuner,piano tuning machine,自动钢琴调音器',
   },
   en: {
-    title: 'Piano Tuner — Automatic Piano-Tuning Robot',
-    desc: 'Automatic piano tuner and tuning robot: a precision actuator on the tuning pin plus an iPhone app that tunes all 88 keys to a lab-tested ±2 cents. Built for pro tuners — spare your wrists, tune faster, fit a Railsback curve on-device.',
+    title: 'Piano Tuner | Automatic Piano-Tuning Robot',
+    desc: 'Automatic piano-tuning robot: a precision actuator on the tuning pin plus an iPhone app that tunes all 88 keys to within a lab-tested ±2 cents. For pro tuners.',
     ogDesc: 'An automatic tuner built for tuners: the motor turns every pin to pitch — spare your wrists, take on more pianos, hand the work off. Lab-tested ±2 cents; uprights and grands.',
     keywords: 'piano tuner,automatic piano tuner,piano tuning robot,auto piano tuning,robotic piano tuner,piano tuning machine,Railsback curve,piano tuning app',
   },
@@ -70,14 +70,14 @@ function Thesis() {
   return (
     <Section island="light">
       <SectionHead
-        eyebrow={t('FOR TUNERS · 为调音师打造', 'FOR TUNERS')}
+        eyebrow={t('FOR TUNERS · 为调律师打造', 'FOR TUNERS')}
         title={t('拧弦的体力活，交给电机。', 'Let the motor turn the pins.')}
         sub={t('一个套在弦轴上的精密执行器，配 iPhone App。你把关音色，它替你逐弦精准拧到位——整台 88 键，稳定一致。', 'A precision actuator on the tuning pin, paired with an iPhone app. You guide the result; it turns every pin to pitch — all 88 keys, consistently.')}
       />
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
           <article className="card" key={c.num} data-stack-card>
-            <span className="card__num t-ui">{c.num}</span>
+            <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
           </article>
@@ -157,7 +157,7 @@ function Steps() {
         <div className="steps__line" data-step-line aria-hidden="true" />
         {steps.map((s) => (
           <article className="step" key={s.num} data-step>
-            <span className="card__num t-ui">{s.num}</span>
+            <Scramble className="card__num t-ui">{s.num}</Scramble>
             <h3 className="t-h3">{s.title}</h3>
             <p className="card__desc t-body-sm">{s.desc}</p>
             <div className="step__data t-ui">{s.data.map((d) => <span key={d}>{d}</span>)}</div>
@@ -189,7 +189,7 @@ function Engine() {
       <div className="steps steps--six">
         {items.map((it) => (
           <article className="step" key={it.num}>
-            <span className="card__num t-ui">{it.num}</span>
+            <Scramble className="card__num t-ui">{it.num}</Scramble>
             <h3 className="t-h3">{it.title}</h3>
             <p className="card__desc t-body-sm">{it.desc}</p>
           </article>
@@ -236,8 +236,8 @@ function Features() {
   const { t } = useT();
   const items = [
     { num: '01 · DRIVE', title: t('工业级动力系统', 'Industrial drive system'), desc: t('空心杯无刷 FOC 电机配行星减速与闭环编码器，运行安静、出力充裕，无惧顽固弦轴。', 'A coreless FOC motor with planetary reduction and a closed-loop encoder — quiet, with torque to spare for the most stubborn pins.') },
-    { num: '02 · 88 KEYS', title: t('全音域 88 键剥离', 'Full 88-key isolation'), desc: t('系统支持低音区单弦、中音区双弦、高音区三弦独立剥离引导采样，保证原始声学数据的极端纯净。', 'Guides you to isolate and sample monochord, bichord, and trichord zones independently, ensuring ultimate data purity.') },
-    { num: '03 · NODE', title: t('极简执行节点设计', 'Minimalist node design'), desc: t('采用高性价比执行节点，将算力移至手机端侧。极限压缩硬件成本与体积，让专业调音触手可及。', 'Uses a cost-effective execution node, moving computation onto the phone. Drastically reducing hardware cost and size.') },
+    { num: '02 · 88 KEYS', title: t('全音域 88 键剥离', 'Full 88-key isolation'), desc: t('系统支持低音区单弦、中音区双弦、高音区三弦独立剥离引导采样，确保原始声学数据纯净可靠。', 'Guides you to isolate and sample monochord, bichord, and trichord zones independently, keeping the raw acoustic data clean.') },
+    { num: '03 · NODE', title: t('极简执行节点设计', 'Minimalist node design'), desc: t('采用高性价比执行节点，将算力移至手机端侧。大幅降低硬件成本与体积，让专业调音触手可及。', 'Uses a cost-effective execution node and moves computation onto the phone, sharply cutting hardware cost and size.') },
     { num: '04 · PAIRING', title: t('BLE 安全认证', 'Secure BLE pairing'), desc: t('采用加密配对认证，未经授权的设备无法驱动电机，从源头杜绝误连与恶意操控。', "Encrypted pairing authentication means unauthorized devices can't drive the motor — blocking mis-connections and tampering at the source.") },
     { num: '05 · MEMORY', title: t('钢琴档案记忆「免预采集」', 'Piano memory'), desc: t('系统为每台钢琴记忆其不谐性档案，同一台钢琴二次调音可直接跳过重复的不谐性采集，开机即调。', "Each piano's inharmonicity profile is remembered, so a returning piano skips repeat sampling — start tuning right away.") },
     { num: '06 · OVERTWIST', title: t('过拉自校正', 'Overtwist self-correction'), desc: t('回扳时连续采集 5 次测量取中位数再校正，有效抵消弦轴摩擦带来的回弹误差，锁定目标音高。', 'On overtwist, five measurements are taken and the median drives the correction, canceling the rebound from pin friction to lock onto the target pitch.') },
@@ -248,7 +248,7 @@ function Features() {
       <div className="steps steps--six">
         {items.map((it) => (
           <article className="step" key={it.num}>
-            <span className="card__num t-ui">{it.num}</span>
+            <Scramble className="card__num t-ui">{it.num}</Scramble>
             <h3 className="t-h3">{it.title}</h3>
             <p className="card__desc t-body-sm">{it.desc}</p>
           </article>
@@ -264,7 +264,7 @@ function BuiltForYou() {
   useStackDeck(deck);
   const cards = [
     { num: '01 · MIC COACH', title: t('麦克风摆位引导', 'Mic-placement coach'), desc: t('5 星实时评级帮你找到最佳采集位置，零基础也能采到专业级数据。', 'A live 5-star meter guides you to the best spot — pro-grade data, no experience needed.') },
-    { num: '02 · HISTORY', title: t('多琴档案 · 历史趋势', 'Multi-piano history'), desc: t('按琴保存档案与误差趋势：琴主看琴变好，调音师多一份随身客户档案。', 'Per-piano profiles and error trends — owners watch it improve, pros get a pocket CRM.') },
+    { num: '02 · HISTORY', title: t('多琴档案 · 历史趋势', 'Multi-piano history'), desc: t('按琴保存档案与误差趋势：琴主看琴变好，调律师多一份随身客户档案。', 'Per-piano profiles and error trends — owners watch it improve, pros get a pocket CRM.') },
     { num: '03 · OPT-IN', title: t('数据飞轮（可选 · 匿名）', 'Data flywheel (opt-in)'), desc: t('授权后匿名贡献数据助算法进化，默认关闭、随时可关。', 'Opt in to share anonymous data and help the algorithm improve — off by default, always optional.') },
   ];
   const privacy = [
@@ -282,7 +282,7 @@ function BuiltForYou() {
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
           <article className="card" key={c.num} data-stack-card>
-            <span className="card__num t-ui">{c.num}</span>
+            <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
           </article>
@@ -322,7 +322,7 @@ function Railsback() {
             {t('基础调音无需任何订阅即可使用。下方个性化曲线服务为可选升级，不影响设备的日常使用。', "Basic tuning works with no subscription. The personalized curve below is an optional upgrade — it doesn't affect everyday use of the device.")}
           </p>
           <dl className="specs">
-            <div className="spec"><dt className="spec__k t-ui">{t('年度算法服务包', 'ANNUAL ALGORITHM SERVICE')}</dt><dd className="spec__v">±2 {t('音分', '¢')}<Fn /> {t('采样精度', 'sampling')}</dd></div>
+            <div className="spec"><dt className="spec__k t-ui">{t('年度算法服务包', 'ANNUAL ALGORITHM SERVICE')}</dt><dd className="spec__v"><span>±2 {t('音分', '¢')}<Fn /> {t('采样精度', 'sampling')}</span></dd></div>
             <div className="spec"><dt className="spec__k t-ui">{t('拟合位置', 'FITTING')}</dt><dd className="spec__v">{t('端侧实时拟合', 'On-device, real time')}</dd></div>
             <div className="spec"><dt className="spec__k t-ui">{t('音域', 'RANGE')}</dt><dd className="spec__v">{t('88 键全音域极致拉伸', 'Full 88-key stretch')}</dd></div>
           </dl>
@@ -360,7 +360,7 @@ function Architecture() {
           <div className="steps">
             {items.map((s) => (
               <article className="step" key={s.num}>
-                <span className="card__num t-ui">{s.num}</span>
+                <Scramble className="card__num t-ui">{s.num}</Scramble>
                 <h3 className="t-h3">{s.title}</h3>
                 <p className="card__desc t-body-sm">{s.desc}</p>
                 <div className="step__data t-ui">{s.data.map((d) => <span key={d}>{d}</span>)}</div>
@@ -406,6 +406,7 @@ function Comparison() {
           </tbody>
         </table>
       </div>
+      <p className="tablewrap__hint t-ui" aria-hidden="true">{t('← 左右滑动查看完整对比 →', '← SWIPE TO SEE THE FULL COMPARISON →')}</p>
     </Section>
   );
 }
@@ -415,7 +416,7 @@ function Roi() {
   const deck = useRef(null);
   useStackDeck(deck);
   const cards = [
-    { num: '01 · PRO TUNER', title: t('我是专业调音师', 'I am a pro tuner'), desc: t('把最耗时、最费腕的粗调交给机器，你专注精修与服务。', 'Let the machine handle the slow, wrist-heavy rough work — you focus on finish and service.'),
+    { num: '01 · PRO TUNER', title: t('我是专业调律师', 'I am a pro tuner'), desc: t('把最耗时、最费腕的粗调交给机器，你专注精修与服务。', 'Let the machine handle the slow, wrist-heavy rough work — you focus on finish and service.'),
       rows: [[t('产能', 'Capacity'), t('一天多接几台琴', 'More pianos per day')], [t('护腕', 'Wrists'), t('告别反复拧楔劳损', 'No repetitive pin-wrenching')], [t('可委派', 'Delegatable'), t('助理 · 学徒也能上手', 'Junior staff can run it')]],
       foot: t('数字化 PDF 报告 → 让你的服务更值钱', 'Digital PDF reports → make your service worth more') },
     { num: '02 · PIANO OWNER', title: t('我是钢琴拥有者', 'I am a piano owner'), desc: t('不必每次都约师傅——需要时自己就能让钢琴回到最佳状态。', 'No need to book a tuner every time — bring your piano back to its best whenever you want.'),
@@ -428,7 +429,7 @@ function Roi() {
       <div className="stack-deck stack-deck--2" ref={deck}>
         {cards.map((c) => (
           <article className="card" key={c.num} data-stack-card>
-            <span className="card__num t-ui">{c.num}</span>
+            <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
             <dl className="specs specs--tight">
@@ -444,6 +445,8 @@ function Roi() {
 
 function Faq() {
   const { t } = useT();
+  const faq = useRef(null);
+  useFaqAccordion(faq);
   const items = [
     [t('安全性：它会把我的琴弦弄断吗？', 'Safety: will it break my strings?'), t('断弦防护是我们设计时的第一优先级。StringGuard 张力保护系统持续监测扭矩与音高，一旦张力异常即刻断电、反向卸力；连接中断时电机同样立即停止。多重相互独立的保护机制互为兜底，任何一层失效都不会让电机继续加力。', 'String protection is our first design priority. StringGuard continuously monitors torque and pitch, cutting power and backing the load off the moment tension looks wrong; the motor also stops if the link drops. Several independent safeguards back each other up, so no single failure lets the motor keep pulling.')],
     [t('精度：调出来的音准真的比人工准吗？', 'Precision: is it more accurate than a human?'), <>{t('端侧实时计算（iOS 原生硬件加速）的 Railsback 曲线稳定调准至 ±2 音分', 'An on-device Railsback curve (iOS-native acceleration) tunes to ±2 cents')}<Fn />{t('，并按每台琴的弦张力优化拉伸，达到音乐厅级和谐度。', ' and optimizes stretch per piano for concert-hall harmony.')}</>],
@@ -458,7 +461,7 @@ function Faq() {
   return (
     <Section island="light" id="faq">
       <SectionHead eyebrow={t('FAQ · 常见问题', 'FAQ')} title={t('常见问题解答', 'Frequently asked questions')} sub={t('安全、精度、适配，逐一说清。', 'Safety, precision, compatibility — answered.')} />
-      <div className="faq">
+      <div className="faq" ref={faq}>
         {items.map(([q, a], i) => (
           <details className="faq__item" key={i}>
             <summary className="faq__q">
@@ -466,7 +469,7 @@ function Faq() {
               <span className="t-h3 faq__title">{q}</span>
               <span className="faq__plus" aria-hidden="true">+</span>
             </summary>
-            <p className="faq__a t-body">{a}</p>
+            <div className="faq__body"><p className="faq__a t-body">{a}</p></div>
           </details>
         ))}
       </div>
@@ -533,11 +536,11 @@ export default function Home() {
   return (
     <Shell page="index" navTheme="dark">
       <Hero
-        eyebrow={t('AUTOMATIC PIANO TUNER · 为调音师打造', 'AUTOMATIC PIANO TUNER · BUILT FOR TUNERS')}
+        eyebrow={t('AUTOMATIC PIANO TUNER · 为调律师打造', 'AUTOMATIC PIANO TUNER · BUILT FOR TUNERS')}
         l1={t('让每次弹奏', 'Keep every keystroke')}
         l2={t('都精准如初', 'perfectly in tune')}
         sub={t('让整台钢琴，回到出厂般的精准——自动、稳定、可进化。', 'Bring your whole piano back to factory-fresh precision — automatic, steady, ever-evolving.')}
-        proof={t('为专业调音师与钢琴爱好者打造。', 'Built for pro tuners and piano lovers.')}
+        proof={t('为专业调律师与钢琴爱好者打造。', 'Built for pro tuners and piano lovers.')}
         poster="/assets/video/hero-v20m-poster-v2.webp"
         mp4="/assets/video/hero-v20m-v2.mp4"
         primary={<BracketLink href={TESTFLIGHT} external highlight>{t('下载 App 抢先体验', 'Download the app')}</BracketLink>}
@@ -549,6 +552,7 @@ export default function Home() {
       <Product />
       <Gasket />
       <Steps />
+      <Faq />
       <Engine />
       <Software />
       <Gasket />
@@ -559,7 +563,6 @@ export default function Home() {
       <Architecture />
       <Comparison />
       <Roi />
-      <Faq />
       <Gasket />
       <Roadmap />
       <Cta />

@@ -271,3 +271,28 @@
 /* ---------- 导航品牌：不换行，小屏隐藏副标 ---------- */
 .nav__brand { white-space: nowrap; }
 @media (max-width: 599px) { .nav__brand span { display: none; } .nav__asn { display: none; } }
+
+/* ---------- 对比表：手机上首列吸附 + 滑动提示（UX 评审 2026-09-05 P0） ---------- */
+.cmp th[scope="row"], .cmp thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--color-black); padding-right: 16px; }
+.tablewrap__hint { display: none; margin: 12px 0 0; color: var(--color-ash); }
+@media (max-width: 719px) { .tablewrap__hint { display: block; } }
+
+/* ---------- 演示视频：品牌化的静止态播放按钮，点击后交给原生控件 ---------- */
+.video-frame { position: relative; }
+.video-frame__play { position: absolute; inset: 8px 8px 64px; display: grid; place-items: center; background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--color-white); font: inherit; }
+.video-frame__play .blink { font-size: 1rem; }
+
+/* ---------- 「即将上线」占位卡：与真实内容拉开层级 ---------- */
+.card--soon { opacity: 0.6; }
+.card--soon .t-h3 { font-weight: 300; }
+
+/* ---------- FAQ 展开动效：高度由 useFaqAccordion 补间 ---------- */
+.faq__body { overflow: hidden; }
+
+/* ---------- 产品块两栏对齐：右栏规格行撑满左栏高度；Railsback 图垂直居中于文案 ---------- */
+@media (min-width: 900px) {
+  #product .product__side { align-self: stretch; display: flex; }
+  #product .product__side .specs { flex: 1; display: flex; flex-direction: column; }
+  #product .product__side .spec { flex: 1; align-items: center; padding-block: 18px; }
+  #railsback .product__side { align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+}

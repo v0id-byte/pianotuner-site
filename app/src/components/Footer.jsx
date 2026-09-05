@@ -38,7 +38,7 @@ export default function Footer({ page }) {
       </div>
       <div className="footer__legal t-ui">
         <span>© 2026 {lang === 'en' ? LEGAL_EN : LEGAL_ZH}</span>
-        <span>{t('Piano Tuner · 用创新造就美好', 'Piano Tuner · All rights reserved')}</span>
+        <span>{t('Piano Tuner · 用创新造就美好 · 保留所有权利', 'Piano Tuner · All rights reserved')}</span>
       </div>
     </footer>
   );

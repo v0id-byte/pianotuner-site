@@ -50,9 +50,10 @@ export function Eyebrow({ children, plain = false, inverse = false }) {
 
 /** 精度角标：放在 .reveal-text 之外，避免 SplitText 深切链接节点。 */
 export function Fn() {
+  const { t } = useT();
   return (
     <sup className="fn-ref">
-      <a href="#precision-note" aria-label="精度说明 / precision note">*</a>
+      <a href="#precision-note" aria-label={t('精度说明', 'Precision note')}>*</a>
     </sup>
   );
 }

@@ -90,7 +90,7 @@ export default function Nav({ theme = 'dark', page }) {
         <nav className="nav" data-theme={theme} aria-label={t('主导航', 'Primary')}>
           <a className="nav__brand" href={href(lang, 'index')}>
             PIANO TUNER
-            <span aria-hidden="true">{t('钢琴调音机器人', 'MelSpectrum')}</span>
+            <span aria-hidden="true">{t('钢琴调音机器人', 'Piano tuning robot')}</span>
           </a>
           <div className="nav__spacer" />
           <div className="nav__links t-ui">

@@ -16,6 +16,8 @@ export default function Scramble({ children, tag: Tag = 'span', className = '' }
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReduced()) return undefined;
+    // 子集字体没有随机汉字，且 Gate F 文本不进乱码：含任何非 ASCII 字符就保持静态。
+    if (/[^\x20-\x7E]/.test(el.textContent || '')) return undefined;
     let tween = null;
     let running = false;
     const run = () => {

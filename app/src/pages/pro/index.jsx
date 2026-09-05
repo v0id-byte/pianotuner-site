@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import RailsbackFigure from '../../components/RailsbackFigure';
 import PrecisionNote from '../../components/PrecisionNote';
@@ -13,7 +14,7 @@ export const meta = {
   navTheme: 'dark',
   ogType: 'product',
   zh: { title: 'Piano Tuner 专业版 | 旗舰级数字化调律解决方案', desc: 'Piano Tuner 专业版：端侧拉伸优化、专业频率分析、多琴档案与 PDF 钢琴健康报告，为职业调律师与音乐机构打造。Pro 年度订阅。' },
-  en: { title: 'Piano Tuner Pro | Flagship Digital Tuning Solution', desc: 'Piano Tuner Pro: on-device stretch optimization, professional frequency analysis, multi-piano archives and PDF piano health reports — built for professional tuners and institutions. Annual Pro subscription.' },
+  en: { title: 'Piano Tuner Pro | Flagship Digital Tuning Solution', desc: 'Piano Tuner Pro: on-device stretch optimization, pro frequency analysis, multi-piano archives and PDF health reports. Annual subscription for pro tuners.' },
   jsonLd: (lang, { self }) => ({
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -55,7 +56,7 @@ function Features() {
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
           <article className="card" key={c.num} data-stack-card>
-            <span className="card__num t-ui">{c.num}</span>
+            <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
           </article>
@@ -68,7 +69,7 @@ function Features() {
 function Compare() {
   const { t } = useT();
   const rows = [
-    [t('适用场景', 'Best for'), t('家庭练习 / 日常维护', 'Home practice / DIY'), t('职业调律师 / 音乐机构', 'Pro tuners / institutions')],
+    [t('适用场景', 'Best for'), t('家庭练习 / 日常维护', 'Home practice / everyday upkeep'), t('职业调律师 / 音乐机构', 'Pro tuners / institutions')],
     [t('采样精度', 'Precision'), <>±2 {t('音分', '¢')}<Fn /></>, <>±2 {t('音分', '¢')}<Fn /></>],
     [t('调音曲线优化器', 'Curve optimizer'), t('通用曲线（可单独订阅）', 'Universal (add-on)'), t('端侧拉伸优化', 'On-device stretch')],
     [t('电机性能', 'Motor performance'), t('静音稳定模式', 'Silent / stable'), t('Turbo 涡轮性能加速', 'Turbo performance')],
@@ -100,6 +101,7 @@ function Compare() {
           </tbody>
         </table>
       </div>
+      <p className="tablewrap__hint t-ui" aria-hidden="true">{t('← 左右滑动查看完整对比 →', '← SWIPE TO SEE THE FULL COMPARISON →')}</p>
     </Section>
   );
 }
