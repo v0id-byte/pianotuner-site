@@ -14,3 +14,12 @@ _internal/
 # 这是「local == git == origin」铁律的一个**有意例外** —— 部署校验时它会出现在
 # origin 而不在仓库里，那是预期行为，不要"修复"成同步。
 demo1.mp4
+
+# Vite + SSG toolchain (2026-09 rebuild)
+node_modules/
+build-stage/
+.ssr-stage/
+.publish-backup/
+.build-manifest.json
+source-assets/**/*.ttf
+source-assets/**/*.source.*

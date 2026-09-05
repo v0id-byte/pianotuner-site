@@ -1,0 +1,273 @@
+/* ============================================================
+   pianotuner.top 页面模块样式。设计系统本体在 tokens/app/motion.css（从 melspectrum 搬来）。
+   不变量同样适用：内容可见性绝不依赖 JS；零渐变（hero scrim 是功能性压暗，例外）、
+   零阴影、零圆角、单一强调色、1px 虚线发丝边。
+   ============================================================ */
+
+/* ---------- 字体：Inter 变量字体 + Noto Sans SC 子集（只含站上用到的字） ---------- */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/NotoSansSC-subset.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 视频首屏 ---------- */
+.hero--video { background: #0a0805; }
+.hero__poster,
+.hero__video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 62% 38%;
+}
+.hero__video { opacity: 0; transition: opacity 600ms var(--button-bezier); }
+.hero__video.is-live { opacity: 1; }
+.hero--video .hero__media { background-image: none; }
+.hero--video .hero__media::after {
+  background:
+    radial-gradient(110% 80% at 42% 66%, rgba(20, 20, 20, 0.62) 0%, rgba(20, 20, 20, 0.34) 42%, rgba(20, 20, 20, 0.04) 80%),
+    linear-gradient(to bottom, rgba(20, 20, 20, 0.55) 0%, rgba(20, 20, 20, 0.12) 24%, rgba(20, 20, 20, 0.28) 56%, rgba(20, 20, 20, 0.86) 88%, rgba(20, 20, 20, 0.98) 100%);
+}
+.hero--video .hero__grid { z-index: 1; }
+.hero__eyebrow { display: inline-block; color: var(--color-accent); margin-bottom: 20px; }
+@media (max-width: 767px) { .hero__poster, .hero__video { object-position: 34% 40%; } }
+
+/* ---------- eyebrow 反色（accent 岛上） ---------- */
+.eyebrow--inverse { background: var(--color-black); color: var(--color-white); }
+.island-accent .blink--onaccent { color: var(--color-black); }
+.island-accent .blink--onaccent:hover { color: var(--color-white); }
+
+/* ---------- 语言开关：真链接 ---------- */
+.lang-toggle a, .lang-toggle .is-on {
+  padding: 5px 8px; text-decoration: none; color: inherit;
+  transition: background-color 200ms var(--button-bezier), color 200ms var(--button-bezier);
+}
+.lang-toggle .is-on { background: var(--color-accent); color: var(--color-black); }
+.lang-toggle a:hover { background: var(--color-accent); color: var(--color-black); }
+.footer__lang { margin-top: 8px; }
+.footer__lang .lang-toggle { display: inline-flex; }
+
+/* ---------- 语言提示条（只在 effect 里出现） ---------- */
+.lang-hint {
+  position: fixed; top: calc(var(--nav-h) + 16px); right: 8px; z-index: 998;
+  display: flex; gap: 14px; align-items: center;
+  background: var(--color-black); color: var(--color-white);
+  border: 1px dashed var(--color-gunmetal); padding: 8px 12px;
+}
+.lang-hint a { color: var(--color-accent); text-decoration: none; }
+.lang-hint button { cursor: pointer; color: var(--color-ash); }
+
+/* ---------- 规格块：<dl> 语义 + spec 视觉 ---------- */
+.specs dt, .specs dd { margin: 0; }
+.spec__v { display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 4px; }
+.spec__sub { font-weight: 400; color: var(--color-charcoal); letter-spacing: -0.01em; text-align: right; max-width: 34ch; }
+.island-dark .spec__sub { color: var(--color-silver); }
+.island-dark .specs, .island-dark .spec { border-color: var(--color-gunmetal); }
+.island-dark .spec__k { color: var(--color-ash); }
+.specs--tight .spec { padding: 10px 0; }
+.specs--tight .spec__v { font-size: 1rem; }
+.product__body .specs { margin-top: 8px; }
+.product__body .spec__v { align-items: flex-start; text-align: left; }
+.product__body .spec__v .spec__sub { text-align: left; }
+@media (max-width: 599px) {
+  .spec { flex-direction: column; align-items: flex-start; }
+  .spec__v, .spec__sub { align-items: flex-start; text-align: left; }
+}
+
+/* ---------- 产品块变体 ---------- */
+.product__img { margin: 0; border: 1px dashed var(--color-alabaster); padding: 8px; background: var(--color-porcelain); }
+.island-dark .product__img { border-color: var(--color-gunmetal); background: var(--color-black); }
+.product__img img { width: 100%; height: auto; }
+.product__img figcaption { color: var(--color-ash); margin-top: 8px; }
+.product__img--phone { max-width: 420px; }
+@media (min-width: 900px) {
+  .product--media-left .product__side { grid-column: 1 / span 5; grid-row: 1; }
+  .product--media-left .product__body { grid-column: 7 / span 6; grid-row: 1; }
+  .product--media-left .sec-head { display: block; }
+  .product--media-left .sec-head h2, .product--media-left .sec-head p { max-width: none; }
+}
+.product--media-left .steps { grid-template-columns: 1fr; gap: 0; }
+.product--media-left .step { padding-block: 24px; }
+
+/* ---------- 三步（不 pin）：连线 + 编号 ---------- */
+.steps--path { position: relative; }
+.steps__line {
+  position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: var(--color-accent);
+  /* 静止态是画满的：连线由 JS 成功建立 timeline 后才被 gsap.set 收起来 */
+}
+.steps--path .step { border-top-color: transparent; }
+.steps--six { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .steps--six { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.island-light .step { border-top-color: var(--color-alabaster); }
+
+/* ---------- 拍频示意 ---------- */
+.beat { margin: var(--gap-y-md) 0 0; display: grid; gap: 16px; border: 1px dashed var(--color-gunmetal); padding: 16px; }
+.beat__canvas { width: 100%; height: clamp(180px, 26vw, 300px); display: block; }
+.beat__cap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: baseline; }
+.beat__readout { color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.beat__readout .t-ui { color: var(--color-ash); margin-left: 8px; }
+.island-dark .specs__note { color: var(--color-silver); }
+
+/* ---------- Railsback 图 ---------- */
+.rb { margin: 0; display: grid; gap: 14px; }
+.rb__svg { width: 100%; height: auto; border: 1px dashed var(--color-alabaster); padding: 8px; background: var(--color-porcelain); }
+.rb__grid { stroke: var(--color-alabaster); stroke-width: 1; stroke-dasharray: 3 4; }
+.rb__zero { stroke: var(--color-charcoal); stroke-width: 1; }
+.rb__ylab, .rb__xlab, .rb__zlab { font-family: var(--font-mono); font-size: 12px; fill: var(--color-ash); }
+.rb__ylab { text-anchor: end; }
+.rb__xlab { text-anchor: middle; }
+.rb__area { fill: var(--color-accent); opacity: 0.16; }
+.rb__curve { fill: none; stroke: var(--color-black); stroke-width: 2; stroke-dasharray: 1; }
+
+/* ---------- 隐私块 ---------- */
+.privacy { margin-top: var(--gap-y-lg); display: grid; gap: 24px; }
+.privacy .sec-head h3 { grid-column: 1 / -1; }
+@media (min-width: 768px) { .privacy .sec-head h3 { grid-column: 1 / span 7; } }
+
+/* ---------- 对比表：真二维比较用 <table> ---------- */
+.tablewrap { overflow-x: auto; margin-top: var(--gap-y-md); }
+.cmp { width: 100%; border-collapse: collapse; min-width: 640px; }
+.cmp th, .cmp td { text-align: left; vertical-align: top; padding: 16px 20px 16px 0; border-bottom: 1px dashed var(--color-gunmetal); }
+.cmp thead th { color: var(--color-ash); font-weight: 400; border-bottom-color: var(--color-silver); }
+.cmp tbody th { color: var(--color-ash); font-weight: 400; width: 22%; }
+.cmp td { color: var(--color-silver); }
+.cmp td.cmp__hl { color: var(--color-white); font-weight: 300; font-size: 1.125rem; letter-spacing: -0.02em; }
+.cmp thead th.cmp__hl { color: var(--color-accent); }
+
+/* ---------- 卡片补充 ---------- */
+.stack-deck--2 { grid-template-columns: 1fr; }
+@media (min-width: 900px) { .stack-deck--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card__foot { color: var(--color-accent-deep); margin: 8px 0 0; }
+.island-dark .card__foot { color: var(--color-accent); }
+
+/* ---------- FAQ：原生 <details>，编号 + 虚线行 ---------- */
+.faq { margin-top: var(--gap-y-md); border-top: 1px dashed var(--color-alabaster); }
+.faq__item { border-bottom: 1px dashed var(--color-alabaster); }
+.faq__q {
+  list-style: none; cursor: pointer; display: grid; grid-template-columns: 48px 1fr 24px;
+  gap: 16px; align-items: baseline; padding: 20px 0;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__num { color: var(--color-ash); }
+.faq__title { font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); }
+.faq__plus { font-weight: 300; font-size: 1.5rem; line-height: 1; color: var(--color-ash); transition: transform 300ms var(--button-bezier); }
+.faq__item[open] .faq__plus { transform: rotate(45deg); }
+.faq__a { margin: 0 0 24px; padding-left: 64px; color: var(--color-charcoal); max-width: 70ch; }
+@media (max-width: 599px) { .faq__q { grid-template-columns: 36px 1fr 20px; } .faq__a { padding-left: 52px; } }
+.faq__q:hover .faq__title { color: var(--color-accent-deep); }
+
+/* ---------- Roadmap：metric 砖 ---------- */
+.roadmap { grid-template-columns: 1fr; }
+@media (min-width: 900px) { .roadmap { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.roadmap .metric h3 { margin-top: 4px; }
+.metric--active { border-top-color: var(--color-accent); }
+.metric--active .metric__label { color: var(--color-accent); }
+
+/* ---------- CTA 岛：表单 + 链接 ---------- */
+.cta__grid { display: grid; gap: 32px; margin-top: var(--gap-y-md); }
+@media (min-width: 900px) { .cta__grid { grid-template-columns: 7fr 5fr; align-items: start; } }
+.cta__links { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.subscribe { display: grid; gap: 10px; }
+.subscribe__row { display: flex; gap: 0; flex-wrap: wrap; }
+.subscribe__input {
+  flex: 1 1 260px; min-width: 0; font: inherit; padding: 11px 12px;
+  background: var(--color-white); color: var(--color-black);
+  border: 1px solid var(--color-black); border-radius: 0; outline-offset: 2px;
+}
+.subscribe__input::placeholder { color: var(--color-ash); }
+.subscribe__status { min-height: 1.4em; margin: 0; color: var(--color-black); }
+.subscribe--dark .subscribe__input { background: var(--color-black); color: var(--color-white); border-color: var(--color-gunmetal); }
+.subscribe--dark .subscribe__status { color: var(--color-silver); }
+
+/* ---------- 脚注 / IP ---------- */
+.notes { display: grid; gap: 14px; }
+.notes__item {
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; margin: 0;
+  font-family: var(--font-mono); font-size: 11px; line-height: 1.7; letter-spacing: 0.01em;
+  color: var(--color-silver); max-width: 78ch; scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+.notes__mark { color: var(--color-accent); }
+.notes a { color: var(--color-accent); }
+.fn-ref { font-size: 0.7em; line-height: 0; vertical-align: super; }
+.fn-ref a { text-decoration: none; color: var(--color-accent-deep); padding: 0 2px; }
+.island-dark .fn-ref a, .hero .fn-ref a { color: var(--color-accent); }
+
+/* ---------- 跑马灯：三份 clone，两份 aria-hidden ---------- */
+.marquee__copy { display: inline-flex; align-items: center; gap: 40px; }
+
+/* ---------- 静态 hero（非视频页） ---------- */
+.hero--static { min-height: 62svh; }
+.hero--static .hero__media { background-image: url('/images/hero-bg.webp'); background-position: center 45%; }
+.hero--plain { min-height: auto; padding-top: calc(var(--nav-h) + 96px); padding-bottom: var(--py-section-sm); }
+.hero--plain .hero__media { display: none; }
+
+/* ---------- 法律页 ---------- */
+.legal { display: grid; gap: 0; max-width: 78ch; margin-top: var(--gap-y-md); border-top: 1px dashed var(--color-alabaster); }
+.legal__sec { padding: 28px 0; border-bottom: 1px dashed var(--color-alabaster); display: grid; grid-template-columns: 56px 1fr; gap: 16px; }
+.legal__sec h2 { margin: 0 0 12px; }
+.legal__sec p, .legal__sec li { color: var(--color-charcoal); margin: 0 0 10px; }
+.legal__sec ul { padding-left: 18px; margin: 0 0 10px; }
+@media (max-width: 599px) { .legal__sec { grid-template-columns: 1fr; } }
+
+/* ---------- 团队 monogram（about）与占位方块 ---------- */
+.mono-block {
+  display: grid; place-items: center; background: var(--color-black); color: var(--color-accent);
+  font-weight: 300; letter-spacing: 0.02em; aspect-ratio: 16 / 9; font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+}
+.person__top { display: flex; align-items: center; gap: 18px; }
+.person__mono {
+  width: 64px; height: 64px; flex: none; display: grid; place-items: center;
+  background: var(--color-black); color: var(--color-accent); font-weight: 300; font-size: 1.5rem; letter-spacing: 0.02em;
+}
+
+/* ---------- 联系页 ---------- */
+.contact-grid { display: grid; gap: 20px; margin-top: var(--gap-y-md); }
+@media (min-width: 900px) { .contact-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.qr { width: 160px; height: 160px; border: 1px dashed var(--color-alabaster); padding: 6px; background: var(--color-white); }
+.form { display: grid; gap: 14px; max-width: 560px; }
+.form label { display: grid; gap: 6px; }
+.form input, .form select, .form textarea {
+  font: inherit; padding: 11px 12px; background: var(--color-porcelain); color: var(--color-black);
+  border: 1px dashed var(--color-alabaster); border-radius: 0; width: 100%;
+}
+.form input:focus, .form select:focus, .form textarea:focus { border-style: solid; border-color: var(--color-black); }
+.form textarea { min-height: 140px; resize: vertical; }
+
+/* ---------- 视频页 ---------- */
+.video-frame { border: 1px dashed var(--color-gunmetal); padding: 8px; background: var(--color-black); margin-top: var(--gap-y-md); }
+.video-frame video { width: 100%; height: auto; display: block; }
+
+/* ---------- 通用微调 ---------- */
+.sec-head + .stack-deck, .sec-head + .steps, .sec-head + .specs { margin-top: var(--gap-y-md); }
+.t-body a { color: inherit; }
+.island-light .card__num { color: var(--color-ash); }
+.island-light .step__data { color: var(--color-accent-deep); }
+.notice { max-width: 64ch; display: grid; gap: 20px; }
+.notice__kv { border-top: 1px dashed var(--color-alabaster); }
+
+/* ---------- PageHero 补充 ---------- */
+.t-h2--hero { font-size: clamp(2.25rem, 1.5rem + 3.4vw, 5rem); }
+.hero--static .hero__media::after {
+  background: linear-gradient(to bottom, rgba(20,20,20,0.70) 0%, rgba(20,20,20,0.45) 40%, rgba(20,20,20,0.86) 100%);
+}
+.hero--plain { min-height: auto; padding-top: calc(var(--nav-h) + 120px); padding-bottom: var(--py-section-sm); }
+.hero--plain .hero__media { display: none; }
+.hero--plain .hero__grid { opacity: 0.6; }
+.team-grid { display: grid; gap: 20px; margin-top: var(--gap-y-md); }
+@media (min-width: 768px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.person { border: 1px dashed var(--color-alabaster); padding: 28px 24px; display: flex; flex-direction: column; gap: 16px; background: var(--color-porcelain); }
+.person__bio { color: var(--color-charcoal); margin: 0; }
+.island-dark .cta__mail { color: var(--color-white); }
+.island-dark .subscribe__label { color: var(--color-ash); }
+
+/* ---------- 导航品牌：不换行，小屏隐藏副标 ---------- */
+.nav__brand { white-space: nowrap; }
+@media (max-width: 599px) { .nav__brand span { display: none; } .nav__asn { display: none; } }

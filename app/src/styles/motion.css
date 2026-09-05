@@ -1,0 +1,179 @@
+/* ============================================================
+   动效层样式。
+   不变量：内容的可见性绝不依赖动效初始化。
+   所有元素的「静止态 = 可见态」，隐藏只由 JS 成功建立 timeline 后
+   写入的 inline style 完成；因此 GSAP 加载失败或某个 section 的
+   hook 抛错时，该处退化为普通静态文字，而不是永久隐身。
+   ============================================================ */
+
+/* SplitText 拆出的行：wrapper 内含文字行 + 一块实色擦除条 */
+.line-wrapper {
+  position: relative;
+  width: fit-content;
+  overflow: hidden;
+  margin-top: -0.1em;
+  min-height: 1.1em;
+  padding-bottom: 0.15em;
+}
+.line-wrapper:first-of-type { margin-top: 0; }
+
+.line-box {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: var(--color-accent);
+  /* 静止态用 opacity 表达，绝不能用 transform：GSAP 会把 CSS 里已有的
+     translateX(-102%) 解析成 x 基线（px），与我们设的 xPercent 叠加后
+     互相抵消，色条会停在 0 位永久盖住标题。 */
+  opacity: 0;
+}
+.island-accent .line-box { background: var(--color-black); }
+
+.split-line { position: relative; z-index: 10; width: fit-content; }
+
+/* 动效已接管的 section：交出 CSS transition 所有权，避免与 GSAP 抢同一属性 */
+[data-motion-ready='true'] .anim-up,
+[data-motion-ready='true'] .split-line { transition: none; }
+
+/* 跑马灯轨道由 GSAP 控制 transform；静止态自然停在起点 */
+.marquee__track { will-change: transform; }
+
+/* 被 pin 的堆叠卡在桌面端需要自己的层叠上下文 */
+[data-stack-card] { position: relative; background-clip: padding-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 整个 motion system 进入静态构图模式：这里兜底，JS 侧同样全部关闭 */
+  .line-box { display: none !important; }
+  .split-line,
+  .anim-up { opacity: 1 !important; transform: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* The Stack 被滚动推进选中的那一步 */
+.step { transition: opacity 300ms var(--button-bezier); }
+/* 必须限定在 .steps 自身上：markReady 会被多个 hook 写到不同层级（section、
+   容器、轨道），用后代选择器会让 section#tech 的标记误命中所有 .step，
+   导致 <1024px（无 pin、状态机不推进）时 02/03 永久停在 42% 不可读。 */
+.steps[data-motion-ready='true'] .step { opacity: 0.42; }
+.steps[data-motion-ready='true'] .step--active { opacity: 1; }
+
+/* ============================================================
+   不对称 hover —— spur 的签名手法，源码实测：
+     进入 = gsap.set（0ms，瞬间）
+     离开 = gsap.to（文字 250ms / 高亮条 500ms，均 power2.out）
+   读起来像继电器：吸合瞬时、释放有阻尼。纯 CSS 即可复刻——
+   非 hover 态带 transition（负责离开），hover 态 transition:none（负责进入）。
+   power2.out ≈ cubic-bezier(.215,.61,.355,1)
+   ============================================================ */
+:root { --ease-out2: cubic-bezier(.215, .61, .355, 1); }
+
+.hl { position: relative; isolation: isolate; display: inline-flex; }
+.hl::before {
+  content: '';
+  position: absolute;
+  inset: -6px -10px;
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 500ms var(--ease-out2);   /* 离开：500ms 缓出 */
+}
+.hl:hover::before,
+.hl:focus-visible::before {
+  opacity: 1;
+  transition: none;                              /* 进入：瞬间 */
+}
+.hl > * {
+  transition: transform 250ms var(--ease-out2), color 250ms var(--ease-out2);
+}
+.hl:hover > *,
+.hl:focus-visible > * {
+  transform: translateX(10px);
+  transition: none;
+}
+/* 青绿底上必须是黑字 */
+.hl:hover, .hl:focus-visible,
+.hl:hover > *, .hl:focus-visible > * { color: var(--color-black) !important; }
+
+/* 导航与页脚链接用同一套语法，位移小一些 */
+.nav__link, .footer__col a { position: relative; isolation: isolate; }
+.nav__link::before, .footer__col a::before {
+  content: '';
+  position: absolute;
+  inset: -2px -6px;
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 500ms var(--ease-out2);
+}
+.nav__link:hover::before, .nav__link:focus-visible::before,
+.footer__col a:hover::before, .footer__col a:focus-visible::before {
+  opacity: 1;
+  transition: none;
+}
+.footer__col a { transition: transform 250ms var(--ease-out2), color 250ms var(--ease-out2); }
+.footer__col a:hover, .footer__col a:focus-visible {
+  transform: translateX(8px);
+  color: var(--color-black);
+  transition: none;
+}
+.nav__link:hover, .nav__link:focus-visible { color: var(--color-black); transition: none; }
+
+/* CTA 下划线段位移：底边常驻线 + 一段 20% 宽高亮段滑到右端 */
+.blink--underline { position: relative; border-bottom: 2px solid currentColor; padding-bottom: 8px; }
+.blink--underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 2px; width: 20%;
+  background: var(--color-accent);
+  transition: transform 500ms var(--button-bezier);
+}
+.blink--underline:hover::after { transform: translateX(400%); }
+
+/* 规格行整行高亮 */
+.spec { position: relative; isolation: isolate; }
+.spec::before {
+  content: '';
+  position: absolute;
+  inset: 0 -10px;
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 500ms var(--ease-out2);
+}
+.spec:hover::before { opacity: 1; transition: none; }
+.spec > * { transition: transform 250ms var(--ease-out2), color 250ms var(--ease-out2); }
+.spec:hover > * { transform: translateX(10px); color: var(--color-black); transition: none; }
+
+/* 触屏设备没有真正的 hover，全部关掉避免「点一下卡住高亮」 */
+@media (hover: none) {
+  .hl::before, .nav__link::before, .footer__col a::before, .spec::before { display: none; }
+  .hl > *, .footer__col a, .spec > * { transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl::before, .hl > *,
+  .nav__link::before, .footer__col a, .footer__col a::before,
+  .spec::before, .spec > *, .blink--underline::after { transition: none !important; }
+}
+
+/* 跑马灯：悬停时整条减速（见 useMarquee），单项再做不对称高亮，
+   让它从「只能看」变成「可以停下来读」 */
+.marquee__item { position: relative; isolation: isolate; padding: 0 2px; }
+.marquee__item::before {
+  content: '';
+  position: absolute;
+  inset: 2px -4px 6px;
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 500ms var(--ease-out2);
+}
+@media (hover: hover) {
+  .marquee__item:hover::before { opacity: 1; transition: none; }
+  .marquee__item:hover { color: var(--color-black); transition: none; }
+}
+.marquee__item { transition: color 250ms var(--ease-out2); }
+@media (prefers-reduced-motion: reduce) {
+  .marquee__item, .marquee__item::before { transition: none !important; }
+}

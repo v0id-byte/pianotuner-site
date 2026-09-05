@@ -1,408 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN" data-t-zh="联系我们 | Piano Tuner" data-t-en="Contact Us | Piano Tuner">
+<!doctype html>
+<html lang="zh-CN" data-lang="zh" data-page="contact" data-alt-url="/en/contact.html" data-ssr="1">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联系我们 | Piano Tuner</title>
-    <link rel="canonical" href="https://www.pianotuner.top/contact.html">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="stylesheet" href="assets/fonts.css">
-    <style>
-        :root { --primary-color: #e6a15c; --bg-color: #050505; --surface-color: #121212; --text-main: #ffffff; --text-muted: #888888; --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-stack); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
-        a { text-decoration: none; color: inherit; }
-        body.lang-zh .en { display: none !important; }
-        body.lang-en .zh { display: none !important; }
-        header { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
-        .logo-text span { color: var(--primary-color); }
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .lang-switch { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; }
-        .btn-primary { background: var(--primary-color); color: #000; padding: 10px 24px; border-radius: 30px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(230, 161, 92, 0.4); }
-        .section-padding { padding: 120px 5% 80px 5%; max-width: 1100px; margin: 0 auto; }
-        .page-hero { text-align: center; padding: 40px 0 60px; }
-        .page-hero h1 { font-size: 48px; font-weight: 900; letter-spacing: -1px; margin-bottom: 20px; }
-        .page-hero h1 span { color: var(--primary-color); }
-        .page-hero p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .contact-card { background: var(--surface-color); padding: 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.03); text-align: center; transition: all 0.3s ease; }
-        .contact-card:hover { border-color: rgba(230, 161, 92, 0.3); transform: translateY(-4px); }
-        .contact-icon { width: 72px; height: 72px; background: rgba(230, 161, 92, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
-        .contact-icon svg { width: 32px; height: 32px; stroke: var(--primary-color); fill: none; stroke-width: 2; }
-        .contact-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
-        .contact-card p { color: var(--text-muted); font-size: 15px; margin-bottom: 16px; }
-        .contact-card a { display: inline-block; color: var(--primary-color); font-weight: 700; font-size: 16px; transition: opacity 0.3s; word-break: break-all; }
-        .contact-card a:hover { opacity: 0.8; }
-        .wechat-qr { background: rgba(0,0,0,0.3); border: 1px dashed rgba(230, 161, 92, 0.3); border-radius: 12px; padding: 40px; margin-top: 16px; color: var(--text-muted); font-size: 14px; }
-        .wechat-qr p { margin-bottom: 8px; }
-        .b2b-section { background: linear-gradient(145deg, rgba(230, 161, 92, 0.08) 0%, rgba(5, 5, 5, 1) 100%); border: 2px solid var(--primary-color); border-radius: 24px; padding: 60px; margin-bottom: 60px; }
-        .b2b-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; text-align: center; }
-        .b2b-section h2 span { color: var(--primary-color); }
-        .b2b-section > p { text-align: center; color: var(--text-muted); font-size: 16px; margin-bottom: 40px; }
-        .b2b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        @media (max-width: 768px) { .b2b-grid { grid-template-columns: 1fr; } }
-        .b2b-item { background: rgba(0,0,0,0.3); padding: 30px; border-radius: 16px; text-align: center; }
-        .b2b-item h4 { font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
-        .b2b-item p { color: var(--text-muted); font-size: 14px; }
-        .email-section { text-align: center; padding: 60px; background: var(--surface-color); border-radius: 24px; }
-        .email-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 30px; }
-        .email-row { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-bottom: 30px; }
-        .email-item { text-align: center; }
-        .email-item .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
-        .email-item a { color: var(--primary-color); font-weight: 700; font-size: 18px; transition: opacity 0.3s; }
-        .email-item a:hover { opacity: 0.8; }
-        .form-section { background: var(--surface-color); border-radius: 24px; padding: 60px; margin-top: 60px; }
-        .form-section h2 { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 40px; }
-        .form-group { margin-bottom: 24px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 16px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text-main); font-family: var(--font-stack); font-size: 15px; transition: border-color 0.3s; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary-color); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
-        .btn-submit { width: 100%; padding: 18px; background: var(--primary-color); color: #000; border: none; border-radius: 30px; font-family: var(--font-stack); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 30px rgba(230, 161, 92, 0.5); }
-        footer { text-align: center; padding: 40px; color: #444; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); font-weight: 600; margin-top: 80px; }
-        @media (max-width: 768px) { .page-hero h1 { font-size: 32px; } .b2b-section { padding: 40px 20px; } .email-section { padding: 40px 20px; } .form-section { padding: 40px 20px; } .email-row { gap: 30px; } .nav-toggle { display: flex; } header .nav-right .btn-primary { display: none; } .section-padding { padding: 100px 5% 60px 5%; } .form-group input, .form-group textarea, .form-group select { max-width: 100%; min-width: 0; } }
-
-        /* Spotlight Card Effect */
-        .card-spotlight {
-            position: relative;
-            overflow: hidden;
-            cursor: default;
-        }
-
-        .card-spotlight::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(
-                circle 180px at var(--mx, 50%) var(--my, 50%),
-                rgba(230, 161, 92, 0.38),
-                transparent 100%
-            );
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: inherit;
-        }
-
-        .card-spotlight:hover::before {
-            opacity: 1;
-        }
-
-        .card-spotlight > * {
-            position: relative;
-            z-index: 2;
-        }
-        /* —— Damped scroll reveal —— */
-        .reveal { opacity: 1; }
-        .reveal-ready .reveal { opacity: 0; transform: translateY(34px); }
-        .reveal-ready .reveal.active { opacity: 1; transform: none; transition: opacity 1.05s cubic-bezier(.22,1,.36,1), transform 1.05s cubic-bezier(.22,1,.36,1); }
-        @media (prefers-reduced-motion: reduce){ .reveal{ transition:none!important; transform:none!important; opacity:1!important } }
-    .i-inline { width: 1.1em; height: 1.1em; vertical-align: -0.18em; display: inline-block; margin-right: 0.3em; }
-        /* —— 移动端导航（汉堡菜单）—— */
-        .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 9px; background: transparent; border: none; cursor: pointer; }
-        .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s ease, opacity .2s ease; }
-        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .nav-toggle.open span:nth-child(2) { opacity: 0; }
-        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .mobile-menu { display: none; position: fixed; top: 62px; left: 0; right: 0; z-index: 1500; flex-direction: column; padding: 8px 6% 28px; background: rgba(5,5,5,0.97); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); max-height: calc(100vh - 62px); overflow-y: auto; }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu .m-link { padding: 15px 4px; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: .3px; border-bottom: 1px solid rgba(255,255,255,0.06); text-decoration: none; }
-        .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .mobile-menu-cta a { text-align: center; padding: 15px; font-size: 15px; border-radius: 30px; font-weight: 800; text-decoration: none; }
-        @media (max-width: 900px) {
-            html { overflow-x: hidden; scroll-padding-top: 76px; }
-            img { max-width: 100%; height: auto; }
-            .nav-toggle { display: flex; }
-        }
-</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>联系我们 | Piano Tuner</title>
+<meta name="description" content="Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#141414" />
+<link rel="canonical" href="https://www.pianotuner.top/contact.html" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/contact.html" />
+<link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/contact.html" />
+<link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/contact.html" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="preload" href="/fonts/Inter-var.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/NotoSansSC-subset.woff2" as="font" type="font/woff2" crossorigin />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Piano Tuner · MelSpectrum" />
+<meta property="og:title" content="联系我们 | Piano Tuner" />
+<meta property="og:description" content="Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。" />
+<meta property="og:url" content="https://www.pianotuner.top/contact.html" />
+<meta property="og:image" content="https://www.pianotuner.top/og-cover.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="联系我们 | Piano Tuner" />
+<meta name="twitter:description" content="Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。" />
+<meta name="twitter:image" content="https://www.pianotuner.top/og-cover.jpg" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","url":"https://www.pianotuner.top/contact.html","name":"联系 Piano Tuner"}</script>
+<script>(function(){try{
+var d=document.documentElement,cur=d.dataset.lang,alt=d.dataset.altUrl;
+var q=location.search;if(!alt||/[?&]nolang\b/.test(q))return;
+var s=null;try{s=localStorage.getItem('pt_lang')}catch(e){}
+if((s==='en'||s==='zh')&&s!==cur){location.replace(alt+q+location.hash);return;}
+if(!s&&cur==='zh'&&!/^zh/i.test(navigator.language||''))d.dataset.langHint='en';
+}catch(e){}})();</script>
+  <script type="module" crossorigin src="/assets/index-qQY2lHq-.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-C8iz6xTT.css">
 </head>
-<body class="lang-zh">
-    <script>(function(){try{var s=localStorage.getItem('pt_lang');var l=s||((((navigator.language||navigator.userLanguage||'')+'').toLowerCase().indexOf('zh')===0)?'zh':'en');var b=document.body,h=document.documentElement;b.classList.remove('lang-zh','lang-en');b.classList.add('lang-'+l);h.lang=(l==='zh'?'zh-CN':'en');var t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);}catch(e){}})();</script>
-    <header>
-        <div class="logo-container">
-            <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="height: 48px; width: auto; display: block;"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8d4a5"/><stop offset="50%" stop-color="#e6a15c"/><stop offset="100%" stop-color="#b87333"/></linearGradient></defs><g><path d="M 232 80 A 120 120 0 1 1 134 165" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" /><path d="M 134 165 L 107 130 M 134 165 L 172 155" fill="none" stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><rect x="202" y="170" width="16" height="60" rx="8" fill="url(#logoGrad)" /><rect x="242" y="130" width="16" height="130" rx="8" fill="url(#logoGrad)" /><rect x="282" y="160" width="16" height="80" rx="8" fill="url(#logoGrad)" /></g></svg>
-                <div class="logo-text">PIANO<span>TUNER</span></div>
-            </a>
-        </div>
-        <div class="nav-right">
-            <button class="lang-switch" onclick="toggleLanguage()"><span class="zh">EN</span><span class="en">中文</span></button>
-            <a href="buy.html" class="btn-primary"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
-            <button class="nav-toggle" aria-label="菜单 / Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
-        </div>
-    </header>
-
-    <nav class="mobile-menu" id="mobileMenu">
-        <a class="m-link" href="index.html" onclick="closeMenu()"><span class="zh">首页</span><span class="en">Home</span></a>
-        <a class="m-link" href="index.html#how-it-works" onclick="closeMenu()"><span class="zh">工作原理</span><span class="en">How it works</span></a>
-        <a class="m-link" href="index.html#features" onclick="closeMenu()"><span class="zh">核心优势</span><span class="en">Features</span></a>
-        <a class="m-link" href="pro.html" onclick="closeMenu()"><span class="zh">专业版</span><span class="en">Pro</span></a>
-        <a class="m-link" href="support.html" onclick="closeMenu()"><span class="zh">帮助与支持</span><span class="en">Support</span></a>
-        <a class="m-link" href="index.html#faq" onclick="closeMenu()"><span class="zh">常见问题</span><span class="en">FAQ</span></a>
-        <div class="mobile-menu-cta">
-            <a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" style="background:var(--primary-color,#e6a15c);color:#000;"><span class="zh">下载 App 抢先体验</span><span class="en">Download the App</span></a>
-            <a href="buy.html" style="background:transparent;border:1px solid var(--primary-color,#e6a15c);color:var(--primary-color,#e6a15c);"><span class="zh">即将开放预售</span><span class="en">Coming Soon</span></a>
-        </div>
-    </nav>
-
-    <main class="section-padding">
-        <div class="page-hero reveal">
-            <h1><span class="zh">联系我们</span><span class="en">Contact Us</span></h1>
-            <p><span class="zh">有问题或合作意向？欢迎来信。</span><span class="en">Questions or partnerships? We'd love to hear from you.</span></p>
-        </div>
-
-        <div class="contact-grid reveal">
-            <div class="contact-card card-spotlight">
-                <div class="contact-icon">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                </div>
-                <h3><span class="zh">电子邮件</span><span class="en">Email</span></h3>
-                <p><span class="zh">常规咨询与技术支持</span><span class="en">General inquiries & tech support</span></p>
-                <a href="mailto:report@pianotuner.top">report@pianotuner.top</a>
-            </div>
-
-            <div class="contact-card card-spotlight">
-                <div class="contact-icon">
-                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                </div>
-                <h3><span class="zh">微信客服</span><span class="en">WeChat</span></h3>
-                <p><span class="zh">微信搜索或扫码添加</span><span class="en">Search or scan to add</span></p>
-                <div class="wechat-qr">
-                    <img src="images/wechat-qr.webp" alt="企业微信二维码" style="max-width: 180px; border-radius: 8px; display: block; margin: 0 auto;">
-                    <p style="margin-top: 12px; font-size: 13px;"><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3a6 6 0 0 1 6 6c0 4.5-6 12-6 12S8 13.5 8 9a6 6 0 0 1 6-6z"/><circle cx="14" cy="9" r="2.2"/></svg>扫码添加企业微信</span><span class="en">Scan to add WeChat</span></p>
-                </div>
-            </div>
-
-            <div class="contact-card card-spotlight">
-                <div class="contact-icon">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </div>
-                <h3><span class="zh">商务合作</span><span class="en">Business</span></h3>
-                <p><span class="zh">B2B 合作与批量采购</span><span class="en">B2B partnerships & bulk orders</span></p>
-                <a href="mailto:business@pianotuner.top">business@pianotuner.top</a>
-            </div>
-        </div>
-
-        <div class="b2b-section reveal">
-            <h2><span class="zh">企业级合作</span><span class="en">Enterprise Partnership</span></h2>
-            <p><span class="zh">面向琴行、钢琴厂与专业调律师。</span><span class="en">For piano stores, manufacturers, and professional tuners.</span></p>
-            <div class="b2b-grid">
-                <div class="b2b-item card-spotlight">
-                    <h4><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5V21.5h18V11.5"/><path d="M3.5 6.5h21l-1.4 5H4.9z"/><path d="M11 21.5V15.5h6v6"/></svg>琴行合作</span><span class="en"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5V21.5h18V11.5"/><path d="M3.5 6.5h21l-1.4 5H4.9z"/><path d="M11 21.5V15.5h6v6"/></svg>Piano Stores</span></h4>
-                    <p><span class="zh">为琴行客户提供设备租赁、联合销售分成、门店演示等合作模式</span><span class="en">Equipment leasing, joint sales, in-store demos for piano retailers</span></p>
-                </div>
-                <div class="b2b-item card-spotlight">
-                    <h4><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V11l6 4V11l6 4V6.5h4V22z"/><path d="M4 22h20"/></svg>钢琴厂合作</span><span class="en"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V11l6 4V11l6 4V6.5h4V22z"/><path d="M4 22h20"/></svg>Manufacturers</span></h4>
-                    <p><span class="zh">OEM/ODM 定制、批量采购、预装调律服务整合</span><span class="en">OEM/ODM customization, bulk orders, factory tuning integration</span></p>
-                </div>
-                <div class="b2b-item card-spotlight">
-                    <h4><span class="zh"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5" width="19" height="18" rx="2.5"/><path d="M9.3 5v18M14 5v18M18.7 5v18"/><path d="M11.6 5v7.6M16.4 5v7.6" stroke-width="3.4"/></svg>调律师合作</span><span class="en"><svg class="i-inline" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5" width="19" height="18" rx="2.5"/><path d="M9.3 5v18M14 5v18M18.7 5v18"/><path d="M11.6 5v7.6M16.4 5v7.6" stroke-width="3.4"/></svg>Tuners</span></h4>
-                    <p><span class="zh">调律师专属折扣、批量采购优惠、技术培训支持</span><span class="en">Exclusive tuner discounts, bulk pricing, technical training</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="email-section reveal">
-            <h2><span class="zh">发送邮件</span><span class="en">Send Email</span></h2>
-            <div class="email-row">
-                <div class="email-item">
-                    <div class="label"><span class="zh">常规咨询</span><span class="en">General</span></div>
-                    <a href="mailto:report@pianotuner.top">report@pianotuner.top</a>
-                </div>
-                <div class="email-item">
-                    <div class="label"><span class="zh">商务合作</span><span class="en">Business</span></div>
-                    <a href="mailto:business@pianotuner.top">business@pianotuner.top</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-section reveal">
-            <h2><span class="zh">开售通知 · 抢先登记</span><span class="en">Pre-order Alerts</span></h2>
-            <p style="text-align:center; color:#9a9a9a; font-size:14px; margin-top:-24px; margin-bottom:32px;">
-                <span class="zh">留下邮箱，新一轮早鸟预售开启时第一时间通知你。</span><span class="en">Leave your email and we'll notify you the moment the next early-bird round opens.</span>
-            </p>
-            <form class="notify-form" onsubmit="ptSubscribe(event,'contact-page')" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:520px; margin:0 auto;">
-                <input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email" style="flex:1; min-width:220px; padding:15px 18px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.3); color:var(--text-main); font-size:15px; font-family:var(--font-stack);">
-                <button type="submit" style="padding:15px 30px; border:none; border-radius:30px; background:var(--primary-color); color:#000; font-weight:800; font-size:15px; cursor:pointer; font-family:var(--font-stack); text-transform:uppercase; letter-spacing:1px;"><span class="zh">通知我</span><span class="en">Notify me</span></button>
-            </form>
-            <p class="notify-status" role="status" aria-live="polite" style="display:none; font-size:14px; font-weight:700; text-align:center; margin-top:18px; min-height:1em;"></p>
-        </div>
-
-        <div class="form-section reveal">
-            <h2><span class="zh">给我们留言</span><span class="en">Send a Message</span></h2>
-            <p style="text-align:center; color:#9a9a9a; font-size:14px; margin-top:-24px; margin-bottom:32px;">
-                <span class="zh">我们将在 1–2 个工作日内回复。</span><span class="en">We reply within 1–2 business days.</span>
-            </p>
-            <form id="contactForm" onsubmit="handleSubmit(event)" novalidate>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="contact-name"><span class="zh">姓名</span><span class="en">Name</span></label>
-                        <input id="contact-name" type="text" name="name" required autocomplete="name" placeholder="Your name / 您的姓名">
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-email"><span class="zh">邮箱</span><span class="en">Email</span></label>
-                        <input id="contact-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-type"><span class="zh">合作类型</span><span class="en">Inquiry Type</span></label>
-                    <select id="contact-type" name="type" required>
-                        <option value="" data-zh="请选择..." data-en="Please select...">请选择...</option>
-                        <option value="general" data-zh="常规咨询" data-en="General Inquiry">常规咨询</option>
-                        <option value="piano-store" data-zh="琴行合作" data-en="Piano Store Partnership">琴行合作</option>
-                        <option value="manufacturer" data-zh="钢琴厂合作" data-en="Manufacturer Partnership">钢琴厂合作</option>
-                        <option value="tuner" data-zh="调律师合作" data-en="Tuner Partnership">调律师合作</option>
-                        <option value="bulk" data-zh="批量采购" data-en="Bulk Order">批量采购</option>
-                        <option value="oem" data-zh="OEM/定制" data-en="OEM/Custom">OEM/定制</option>
-                        <option value="other" data-zh="其他" data-en="Other">其他</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="contact-message"><span class="zh">留言内容</span><span class="en">Message</span></label>
-                    <textarea id="contact-message" name="message" required placeholder="Tell us more... / 告诉我们更多..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit"><span class="zh">发送消息</span><span class="en">Send Message</span></button>
-                <p id="formStatus" role="status" aria-live="polite" style="display:none; margin-top:20px; text-align:center; font-size:15px; font-weight:700;"></p>
-            </form>
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-links">
-            <a href="index.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">首页</span><span class="en">Home</span></a>
-            <span style="color: #555;">|</span>
-            <a href="pro.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">Pro 版</span><span class="en">Pro</span></a>
-            <span style="color: #555;">|</span>
-            <a href="support.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">帮助</span><span class="en">Support</span></a>
-            <span style="color: #555;">|</span>
-            <a href="contact.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">联系我们</span><span class="en">Contact</span></a>
-            <span style="color: #555;">|</span>
-            <a href="privacy.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">隐私政策</span><span class="en">Privacy Policy</span></a>
-            <span style="color: #555;">|</span>
-            <a href="terms.html" style="color: #9a9a9a; margin: 0 8px;"><span class="zh">服务条款</span><span class="en">Terms of Service</span></a>
-        </div>
-        <p style="color: #9a9a9a; font-size: 12px; margin: 8px 0 0 0;">
-            <span class="zh">&copy; 2026 融谱智能科技（深圳）有限公司 | Piano Tuner. 用创新造就美好.</span><span class="en">&copy; 2026 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand | Piano Tuner. Innovating for a better melody.</span> All Rights Reserved.
-        </p>
-    </footer>
-
-    <script>
-        function applySelectLang() {
-            const isEn = document.body.classList.contains('lang-en');
-            document.querySelectorAll('#contact-type option').forEach(function(opt) {
-                opt.textContent = isEn ? opt.dataset.en : opt.dataset.zh;
-            });
-        }
-
-        function toggleMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
-        function closeMenu(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('mobileMenu');if(!b||!m)return;m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-        function toggleLanguage() {
-            const body = document.body;
-            if (body.classList.contains('lang-zh')) {
-                body.classList.remove('lang-zh');
-                body.classList.add('lang-en');
-                document.title = "Contact Us | Piano Tuner";
-            } else {
-                body.classList.remove('lang-en');
-                body.classList.add('lang-zh');
-                document.title = "联系我们 | Piano Tuner";
-            }
-            applySelectLang();
-        }
-        applySelectLang();
-
-        function handleSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            const isEn = document.body.classList.contains('lang-en');
-            const status = document.getElementById('formStatus');
-
-            function showStatus(msg, color) {
-                status.textContent = msg;
-                status.style.color = color;
-                status.style.display = 'block';
-            }
-
-            // Validation with visible error state
-            if (!form.name.value.trim() || !form.email.value.trim() || !form.type.value || !form.message.value.trim()) {
-                showStatus(isEn ? 'Please fill in all required fields.' : '请填写所有必填项。', '#ff6b6b');
-                return;
-            }
-            if (!form.email.checkValidity()) {
-                showStatus(isEn ? 'Please enter a valid email address.' : '请输入有效的邮箱地址。', '#ff6b6b');
-                return;
-            }
-
-            const emailMap = {
-                'general': 'report@pianotuner.top',
-                'piano-store': 'business@pianotuner.top',
-                'manufacturer': 'business@pianotuner.top',
-                'tuner': 'business@pianotuner.top',
-                'bulk': 'business@pianotuner.top',
-                'oem': 'business@pianotuner.top',
-                'other': 'report@pianotuner.top'
-            };
-            const type = form.type.value;
-            const subject = encodeURIComponent('Piano Tuner Contact: ' + form.type.options[form.type.selectedIndex].text);
-            const body = encodeURIComponent('Name: ' + form.name.value + '\nEmail: ' + form.email.value + '\n\nMessage:\n' + form.message.value);
-
-            showStatus(
-                isEn
-                    ? 'Opening your email app… If nothing happens, write to ' + emailMap[type] + '. We reply within 1–2 business days.'
-                    : '正在打开您的邮件应用…若未自动跳转，请发送至 ' + emailMap[type] + '。我们将在 1–2 个工作日内回复。',
-                'var(--primary-color)'
-            );
-            window.location.href = 'mailto:' + emailMap[type] + '?subject=' + subject + '&body=' + body;
-        }
-
-        // Spotlight Card Effect
-        function initSpotlight() {
-            document.querySelectorAll('.card-spotlight').forEach(function(card) {
-                card.addEventListener('mousemove', function(e) {
-                    var rect = card.getBoundingClientRect();
-                    var x = ((e.clientX - rect.left) / rect.width) * 100;
-                    var y = ((e.clientY - rect.top) / rect.height) * 100;
-                    card.style.setProperty('--mx', x + '%');
-                    card.style.setProperty('--my', y + '%');
-                });
-            });
-        }
-        initSpotlight();
-
-        // Damped scroll reveal
-        (function(){if('IntersectionObserver' in window){try{document.documentElement.classList.add('reveal-ready');}catch(e){}}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -12% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});})();
-
-        function ptSubscribe(e, source){
-            e.preventDefault();
-            var form = e.target;
-            var input = form.querySelector('input[type=email]');
-            var status = (form.parentNode && form.parentNode.querySelector('.notify-status')) || form.nextElementSibling;
-            var isEn = document.body.classList.contains('lang-en');
-            var email = (input && input.value || '').trim();
-            if(!email || email.indexOf('@') < 1 || email.indexOf('.') < 0){
-                ptStatus(status, isEn ? 'Please enter a valid email.' : '请输入有效的邮箱地址。', '#ff6b6b'); return;
-            }
-            var btn = form.querySelector('button'); if(btn) btn.disabled = true;
-            fetch('/api/pianotuner/subscribe', {
-                method:'POST', headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({email: email, source: source || '', lang: isEn ? 'en' : 'zh'})
-            }).then(function(r){ return r.ok; }).then(function(ok){
-                if(ok){ ptStatus(status, isEn ? "Thanks! We'll email you when pre-orders open." : '已登记！开售时我们会第一时间邮件通知你。', '#52c41a'); form.reset(); }
-                else { ptStatus(status, isEn ? 'Please try again, or email us directly.' : '提交失败，请重试或直接邮件联系我们。', '#ff6b6b'); if(btn) btn.disabled = false; }
-            }).catch(function(){
-                ptStatus(status, isEn ? 'Network error — please try again.' : '网络错误，请稍后重试。', '#ff6b6b'); if(btn) btn.disabled = false;
-            });
-        }
-        function ptStatus(el, msg, color){ if(!el) return; el.textContent = msg; el.style.color = color; el.style.display = 'block'; }
-    </script>
-    <script>document.addEventListener('DOMContentLoaded',function(){var o=window.toggleLanguage;window.toggleLanguage=function(){if(typeof o==='function'){o.apply(this,arguments);}try{var l=document.body.classList.contains('lang-zh')?'zh':'en';localStorage.setItem('pt_lang',l);var h=document.documentElement,t=h.getAttribute('data-t-'+l),d=h.getAttribute('data-d-'+l),m=document.querySelector('meta[name="description"]');if(t)document.title=t;if(d&&m)m.setAttribute('content',d);h.lang=(l==='zh'?'zh-CN':'en');}catch(e){}};});</script>
+<body>
+<div id="root"><a class="skip-link t-ui" href="#main">跳到主要内容</a><div class="nav-frame"><nav class="nav" data-theme="dark" aria-label="主导航"><a class="nav__brand" href="/">PIANO TUNER<span aria-hidden="true">钢琴调音机器人</span></a><div class="nav__spacer"></div><div class="nav__links t-ui"><a class="nav__link" href="/pro.html">专业版</a><a class="nav__link" href="/demo.html">实测演示</a><a class="nav__link" href="/support.html">帮助</a><a class="nav__link" href="/about.html">关于</a><a class="nav__link" href="/contact.html" aria-current="page">联系</a></div><a class="nav__asn t-ui" href="/buy.html" title="预售与候补名单">候补名单</a><div class="lang-toggle t-ui"><span aria-current="true" class="is-on">中</span><a href="/en/contact.html" hrefLang="en">EN</a></div><div class="nav__links"><a class="btn btn--accent t-ui" href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" rel="noopener noreferrer"><span>TestFlight 体验</span><i aria-hidden="true"></i></a></div><button type="button" class="nav__burger" aria-label="打开菜单" aria-expanded="false" aria-controls="mobile-menu"><i></i><i></i><i></i></button></nav></div><div id="mobile-menu"><dialog class="menu" aria-label="主菜单"><div class="menu__inner"><div class="menu__top"><span class="t-ui">MENU</span><button type="button" class="menu__close t-ui">关闭<!-- --> ✕</button></div><a href="/">首页</a><a href="/pro.html">专业版</a><a href="/demo.html">实测演示</a><a href="/support.html">帮助</a><a href="/about.html">关于</a><a href="/contact.html" aria-current="page">联系</a><a href="/buy.html">预售与候补名单</a><div class="menu__foot"><div class="lang-toggle t-ui"><span aria-current="true" class="is-on">中</span><a href="/en/contact.html" hrefLang="en">EN</a></div><a class="btn btn--accent t-ui" href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" rel="noopener noreferrer"><span>TestFlight 体验 App</span><i aria-hidden="true"></i></a></div></div></dialog></div><main id="main"><section id="top" class="hero hero--plain island-dark p-custom" data-nav-theme="dark"><div class="hero__media" aria-hidden="true"></div><svg class="hero__grid" viewBox="0 0 1512 1010" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g stroke="#8d8d8d" stroke-opacity="0.28" stroke-width="0.673286"><line x1="68" y1="0" x2="68" y2="1010"></line><line x1="136" y1="0" x2="136" y2="1010"></line><line x1="204" y1="0" x2="204" y2="1010"></line><line x1="272" y1="0" x2="272" y2="1010"></line><line x1="340" y1="0" x2="340" y2="1010"></line><line x1="408" y1="0" x2="408" y2="1010"></line><line x1="476" y1="0" x2="476" y2="1010"></line><line x1="544" y1="0" x2="544" y2="1010"></line><line x1="612" y1="0" x2="612" y2="1010"></line><line x1="680" y1="0" x2="680" y2="1010"></line><line x1="748" y1="0" x2="748" y2="1010"></line><line x1="816" y1="0" x2="816" y2="1010"></line><line x1="884" y1="0" x2="884" y2="1010"></line><line x1="952" y1="0" x2="952" y2="1010"></line><line x1="1020" y1="0" x2="1020" y2="1010"></line><line x1="1088" y1="0" x2="1088" y2="1010"></line><line x1="1156" y1="0" x2="1156" y2="1010"></line><line x1="1224" y1="0" x2="1224" y2="1010"></line><line x1="1292" y1="0" x2="1292" y2="1010"></line><line x1="1360" y1="0" x2="1360" y2="1010"></line><line x1="1428" y1="0" x2="1428" y2="1010"></line><line x1="1496" y1="0" x2="1496" y2="1010"></line><line x1="0" y1="68" x2="1512" y2="68"></line><line x1="0" y1="136" x2="1512" y2="136"></line><line x1="0" y1="204" x2="1512" y2="204"></line><line x1="0" y1="272" x2="1512" y2="272"></line><line x1="0" y1="340" x2="1512" y2="340"></line><line x1="0" y1="408" x2="1512" y2="408"></line><line x1="0" y1="476" x2="1512" y2="476"></line><line x1="0" y1="544" x2="1512" y2="544"></line><line x1="0" y1="612" x2="1512" y2="612"></line><line x1="0" y1="680" x2="1512" y2="680"></line><line x1="0" y1="748" x2="1512" y2="748"></line><line x1="0" y1="816" x2="1512" y2="816"></line><line x1="0" y1="884" x2="1512" y2="884"></line><line x1="0" y1="952" x2="1512" y2="952"></line></g></svg><div class="hero__inner"><span class="t-ui hero__eyebrow anim-up">CONTACT · 联系我们</span><h1 class="t-h2 t-h2--hero hero__title reveal-text"><span class="l1">有问题或合作意向？</span><span class="l2">欢迎来信。</span></h1></div></section><section class="island-light p-custom py-section" data-nav-theme="light"><div class="contact-grid"><article class="card" data-stack-card="true"><span class="card__num t-ui">01 · EMAIL</span><h3 class="t-h3">电子邮件</h3><p class="card__desc t-body-sm">常规咨询与技术支持</p><a class="blink t-ui literal" href="mailto:report@pianotuner.top">report@pianotuner.top</a></article><article class="card" data-stack-card="true"><span class="card__num t-ui">02 · WECHAT</span><h3 class="t-h3">微信客服</h3><p class="card__desc t-body-sm">微信搜索或扫码添加企业微信</p><img class="qr" src="/images/wechat-qr.webp" alt="企业微信二维码" width="160" height="160" loading="lazy"/></article><article class="card" data-stack-card="true"><span class="card__num t-ui">03 · BUSINESS</span><h3 class="t-h3">商务合作</h3><p class="card__desc t-body-sm">B2B 合作与批量采购</p><a class="blink t-ui literal" href="mailto:business@pianotuner.top">business@pianotuner.top</a></article></div><div style="margin-top:var(--gap-y-lg)"><div class="sec-head grid-custom"><div class="sec-head__eyebrow"><span class="t-ui eyebrow">ENTERPRISE · 企业级合作</span></div><h2 class="t-h2 reveal-text">企业级合作</h2><p class="t-body">面向琴行、钢琴厂与专业调律师。</p></div><div class="steps"><article class="step"><span class="card__num t-ui">01 · STORES</span><h3 class="t-h3">琴行合作</h3><p class="card__desc t-body-sm">为琴行客户提供设备租赁、联合销售分成、门店演示等合作模式。</p></article><article class="step"><span class="card__num t-ui">02 · MANUFACTURERS</span><h3 class="t-h3">钢琴厂合作</h3><p class="card__desc t-body-sm">OEM/ODM 定制、批量采购、预装调律服务整合。</p></article><article class="step"><span class="card__num t-ui">03 · TUNERS</span><h3 class="t-h3">调律师合作</h3><p class="card__desc t-body-sm">调律师专属折扣、批量采购优惠、技术培训支持。</p></article></div></div></section><div class="gasket" aria-hidden="true"></div><section class="island-dark p-custom py-section" data-nav-theme="dark"><div class="product"><div class="product__body"><span class="t-ui eyebrow">PRE-ORDER ALERTS · 开售通知</span><h2 class="t-h2">开售通知 · 抢先登记</h2><p class="t-body" style="color:var(--color-silver);max-width:48ch">留下邮箱，新一轮早鸟预售开启时第一时间通知你。</p><form class="subscribe subscribe--dark" noValidate=""><label class="t-ui subscribe__label" for="sub-contact-page">邮箱</label><div class="subscribe__row"><input id="sub-contact-page" class="subscribe__input" type="email" required="" placeholder="you@example.com" autoComplete="email" name="email"/><button type="submit" class="btn btn--accent t-ui"><span>通知我开售</span><i aria-hidden="true"></i></button></div><p class="t-body-sm subscribe__status" role="status" aria-live="polite"></p></form></div><div class="product__side"><span class="t-ui eyebrow">MESSAGE · 给我们留言</span><h2 class="t-h2" style="margin-top:16px">给我们留言</h2><p class="t-body-sm" style="color:var(--color-silver);margin:12px 0 20px">我们将在 1–2 个工作日内回复。提交后会打开你的邮件客户端。</p><form class="form" noValidate=""><label><span class="t-ui">姓名</span><input type="text" required="" autoComplete="name" name="name"/></label><label><span class="t-ui">邮箱</span><input type="email" required="" autoComplete="email" name="email"/></label><label><span class="t-ui">合作类型</span><select name="type" required=""><option value="" disabled="" selected="">请选择…</option><option value="general">常规咨询</option><option value="store">琴行合作</option><option value="manufacturer">钢琴厂合作</option><option value="tuner">调律师合作</option><option value="bulk">批量采购</option><option value="oem">OEM / 定制</option><option value="other">其他</option></select></label><label><span class="t-ui">留言内容</span><textarea name="message" required=""></textarea></label><div><button type="submit" class="btn btn--dark t-ui"><span>发送消息</span><i aria-hidden="true"></i></button></div><p class="t-body-sm" role="alert" style="min-height:1.4em;margin:0;color:var(--color-charcoal)"></p></form></div></div></section></main><footer class="island-dark p-custom py-section-sm footer" data-nav-theme="dark"><div class="footer__cols"><div class="footer__col"><h3 class="t-ui">产品</h3><a href="/">首页</a><a href="/pro.html">专业版</a><a href="/demo.html">实测演示</a><a href="/buy.html">预售与候补名单</a><a href="https://testflight.apple.com/join/hV2YV4eE" target="_blank" rel="noopener noreferrer">TESTFLIGHT ↗</a></div><div class="footer__col"><h3 class="t-ui">支持</h3><a href="/support.html">帮助与支持中心</a><a href="/#faq">常见问题</a><a href="/contact.html">联系我们</a></div><div class="footer__col"><h3 class="t-ui">公司</h3><a href="/about.html">关于我们</a><a href="https://melspectrum.com" target="_blank" rel="noopener noreferrer">MELSPECTRUM.COM ↗</a><a href="/privacy.html">隐私政策</a><a href="/terms.html">服务条款</a></div><div class="footer__col"><h3 class="t-ui">联系</h3><a class="literal" href="mailto:report@pianotuner.top">report@pianotuner.top</a><a class="literal" href="mailto:business@pianotuner.top">business@pianotuner.top</a><div class="footer__lang"><div class="lang-toggle t-ui"><span aria-current="true" class="is-on">中</span><a href="/en/contact.html" hrefLang="en">EN</a></div></div></div></div><div class="footer__legal t-ui"><span>© 2026 <!-- -->融谱智能科技（深圳）有限公司</span><span>Piano Tuner · 用创新造就美好</span></div></footer><div class="progress" aria-hidden="true"><div class="progress__label t-ui" style="color:var(--color-accent)">⬡ PIANO TUNER · iOS TESTFLIGHT</div><div class="progress__bar" style="background:var(--color-accent)"></div></div></div>
 </body>
 </html>

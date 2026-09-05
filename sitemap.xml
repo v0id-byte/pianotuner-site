@@ -1,57 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.pianotuner.top/</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/" />
+    <lastmod>2026-09-05</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.pianotuner.top/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/about.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.pianotuner.top/pro.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/pro.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/pro.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/pro.html" />
+    <lastmod>2026-09-05</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.pianotuner.top/about.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://www.pianotuner.top/demo.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/demo.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/demo.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/demo.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/contact.html" />
+    <lastmod>2026-09-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pianotuner.top/support.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/support.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/support.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/support.html" />
+    <lastmod>2026-09-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.pianotuner.top/contact.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.pianotuner.top/demo.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.pianotuner.top/buy.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/buy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/buy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/buy.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.pianotuner.top/privacy.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/privacy.html" />
+    <lastmod>2026-09-05</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.pianotuner.top/terms.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/terms.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/about.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/pro.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/pro.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/pro.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/pro.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/demo.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/demo.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/demo.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/demo.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/contact.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/support.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/support.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/support.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/support.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/buy.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/buy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/buy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/buy.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/privacy.html" />
+    <lastmod>2026-09-05</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.pianotuner.top/en/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.pianotuner.top/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pianotuner.top/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pianotuner.top/terms.html" />
+    <lastmod>2026-09-05</lastmod>
     <priority>0.3</priority>
   </url>
 </urlset>

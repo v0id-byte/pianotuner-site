@@ -1,202 +1,96 @@
-# pianotuner.top — 站点约定
+# pianotuner.top — 站点约定（2026-09-05 起：Vite + React SSG）
 
-静态多页站，12 个 HTML，无构建、无框架。中英双语同时进 DOM，用 `body.lang-zh` / `.lang-en` 切换。
-
----
-
-## 视频滚动锁定（Video scroll-lock）—— 本站默认模式
-
-**规则：只要不是太长的视频（单场景实拍或渲染视频，约 3–8 秒），首屏/展示区一律用「滚动锁定播放」，不要用「边滚边划过」。**
-
-行为（仿 Apple 产品页）：
-
-1. 滚到该区块时，**页面停住不动**（pin）
-2. 滚轮/触控板的位移驱动视频从第一帧走到最后一帧
-3. **播完之后**，页面才恢复正常向下滚动
-
-不要做成「页面照常滚动、视频顺带播一点」——那样看不完整，也没有停顿感。
-
-### 实现
-
-`assets/motion.js` 里的 `hero-video` effect 就是参考实现：
-
-```js
-ScrollTrigger.create({
-  trigger: hero,
-  start: 'top top',
-  end: '+=' + lock,        // 锁定距离，见下
-  pin: true,
-  pinSpacing: true,
-  scrub: 0.3,
-  anticipatePin: 1,
-  invalidateOnRefresh: true,
-  onUpdate: function (self) {
-    var tgt = self.progress * dur;
-    if (Math.abs(video.currentTime - tgt) > 0.01) video.currentTime = tgt;
-  }
-});
-```
-
-**锁定距离**由片长推出，并且要夹住上下限，否则短片锁得太随意、长片让人以为页面卡死：
-
-```js
-var lock = Math.round(dur * 420);                       // ~420px 滚动 / 每秒素材
-lock = Math.max(600, Math.min(lock, window.innerHeight * 2.4));
-```
-
-### 必须一起满足的条件
-
-| 项 | 要求 |
-|---|---|
-| **编码** | 短 GOP，**不要默认 `-g 1`**。24fps 用 `-g 12`（0.5s 关键帧间隔）。实测：`-g 1` 比 `-g 12` 大 **3.1 倍**（2.78MB vs 0.89MB）。只有实测出现 seek 卡顿才继续降 GOP |
-| **必须** | `-movflags +faststart`、`muted`、`playsinline`、配 poster |
-| **音轨** | 一律 `-an`。宣传片 BGM 是 CC BY **非商用**，对外必须去音轨 |
-| **移动端** | **不 pin，也不加载视频**。`display:none` 拦不住请求——视频必须**不带 `src`** 出厂，只在桌面分支用 JS 注入 `data-src-*`；否则浏览器照样取 metadata |
-| **reduced-motion** | 不 pin、不加载，只显示 poster |
-| **无 JS / 库加载失败** | poster `<img>` 本身就是完整的首屏，不依赖任何脚本 |
-| **页面还有别的 pin** | 见下方「晚建 pin 会打乱后面所有 trigger」——必须 `ScrollTrigger.sort()` 再 `refresh()` |
-
-### ⚠️ 晚建的 pin 会打乱它后面所有 trigger（2026-08-30 踩过）
-
-滚动锁定的 pin **只能在视频报出 `duration` 之后才建**（锁定距离由片长推出），也就是说它是 `loadedmetadata` 回调里**异步**创建的。而此时页面上后面的 pin（本站是 `#how-it-works`）**早就量完并缓存了自己的 start/end**，那份缓存里**没有 hero 的 pin spacer**。
-
-后果：后面每个 trigger 都短了整整一个锁定距离（1440×900 下是 2100px），`#how-it-works` 提前 2100px 就 pin 住，把工作原理区直接拍在上一屏（银色 showcase）身上——表现为「下一页突然出现，再滑一下又突然消失」。
-
-**`ScrollTrigger.refresh()` 单独调用修不好**，因为它沿用陈旧的**创建顺序**。必须两步，且有先后：
-
-```js
-ScrollTrigger.sort();     // 按文档位置重排
-ScrollTrigger.refresh();  // 带着 spacer 重算 offset
-```
-
-建完 hero pin 之后要调一次；`PTMotion.refresh()`（字体就绪 / resize / 切语言的统一入口）里也做了同样两步，否则每次重排又会退回错误顺序。
-
-验收：`#how-it-works` 的 trigger `start` 必须等于它的 `getBoundingClientRect().top + scrollY - 64`，且**重载 / 切语言 / resize 三种情况都要各验一次**。
-
-> 2026-09-01 更新：`#how-it-works` **已经不再 pin 了**（见下）。全站现在只剩 hero 一个 pin，这个串档问题的触发面因此小了很多——但 `sort()` + `refresh()` 两步必须保留：只要将来再加第二个 pin，同样的坑立刻回来。
-
-### 3 步区不 pin：动效跟着区块「进场」走
-
-「将复杂的声学物理，化为极简的 3 步」**不要 pin**。它原来 pin 住时页面会停下来等连线画完，紧挨着上面的 hero pin，观感就是「突然卡住」。
-
-改成用区块自己的行程做 scrub：
-
-```js
-start: 'top bottom',    // 区块顶边从视口底部进场 -> 开始画
-end:   'top top+=64',   // 区块顶边贴到固定头部 -> 正好画完
-scrub: 0.5
-```
-
-全程不锁页面，所以没有任何可以「卡住」的地方。**移动端仍然什么都不建**——`.step-box` / `.step-line` 由页面自带的 IntersectionObserver（`.stg-item`）接管，别和它抢。
-
-### ⚠️ 换视频必须换文件名（2026-09-01 踩过）
-
-**不要原地覆盖同名的 hero 视频。** 滚动锁定会发大量 Range 请求，浏览器和 Cloudflare 都**按字节区间缓存**。一旦同一个 URL 的内容变了（本次 1572114 → 1863853 字节），手上还留着旧文件部分区间的客户端会把**旧区间和新区间拼在一起**，得到一个解不出来的流——表现就是首屏卡在 poster、「视频不播放」。
-
-规矩：
-
-- 换视频/poster 一律**带版本后缀**（`hero-v20m-v2.mp4`），让每个客户端拿到一个它从没缓存过的 URL。这样立刻生效，不用等 `max-age=14400` 过期
-- **旧文件名先留着别删**，继续指向当前内容。万一有人手上是旧 HTML，他拿到的是能播的视频而不是 404；等缓存轮换完再清理
-- 排查顺序：先用 `ffprobe` 比 profile/level/pix_fmt/faststart 排除编码问题，再用**带 cache-buster 的 URL** 复现。本次编码是清白的（新旧都是 H.264 High/yuv420p/faststart，新版 level 3.1 反而比旧版 5.0 更宽容）
-
-### 本地验证视频必须用支持 Range 的服务器
-
-`python3 -m http.server` **对 Range 请求返回 200 而不是 206**，视频因此**完全无法 seek**，会伪装成「编解码器不支持」的假象（本项目已经误判过一次）。用 `.claude/launch.json` 里配的那个带 Range 的 dev server，或任何支持 206 的服务器。生产（Cloudflare→origin）实测返回 206，没问题。
+9 个真实页 × 2 语言，构建期预渲染成静态 HTML（中文 `/x.html`，英文 `/en/x.html`），浏览器再 hydrate 接管动效。
+设计系统整套搬自 melspectrum.com（`app/src/styles/{tokens,app,motion}.css`），但 **melspectrum 不是黄金实现**：
+它自己的矛盾（`useSteps` pin+scrub 0.3、`refreshSoon` 无 `sort()`、跑马灯裸 `LAB-TESTED ±2 ¢`、`publish` 用 `readdirSync` 全拷）一律不继承。
+搬它的视觉系统和成熟 motion primitive；保留 pianotuner 实测形成的产品 invariant（视频滚动锁定、三步不 pin、精度脚注）。
 
 ---
 
-## 动效层约定
+## 目录角色（`scripts/paths.mjs` 是唯一契约）
 
-- 自托管 **GSAP + ScrollTrigger + SplitText**（`assets/vendor/gsap/`）。**不走公共 CDN** —— 主力用户在中国大陆，cdnjs/jsdelivr 不稳。版本与许可记在 `THIRD-PARTY.md`。
-- **内容默认可读。** 动画初态（隐藏/位移/裁切）只能写在 `.motion-ready`（GSAP 已加载并注册成功后才加）或 `.reveal-ready`（reveal controller 初始化成功后才加）之下。
-  **绝不能写 `[data-motion] { opacity: 0 }` 这种顶层规则** —— 一旦 `motion.js` 404 或解析失败，内容就永久消失。
-  验收必须包含：手动 404 掉 `motion.js` 本身、404 掉 vendor、禁用 JS，三种情况页面都要完整可读。
-- 新效果通过 `PTMotion.register({name, build, rebuild, revert})` 注册，异常被隔离，单个效果炸掉不会带塌其他。
-- **双语会改变断行**：SplitText 只能 split **当前可见**的语言 span（隐藏元素 `display:none` 没有布局，量不出行）。字体加载完成 / resize / 切语言后都要重建。
-- 切语言的重建**不能只依赖 `requestAnimationFrame`** —— 后台标签页 rAF 会被暂停。用 rAF + `setTimeout` 竞速。
-- **移动端不 pin。** 地址栏伸缩会改 viewport 高度，pin spacer 按旧高度算，会跳动、留巨大空隙、返回时定位错乱。用 `gsap.matchMedia()` 分支。
-- 已有的 `.reveal` / `.stg-item` IntersectionObserver 系统保留，**不要和它抢同一批元素**（`.step-container` 的子元素已被它接管）。
+```
+app/            源码（Vite root）：index.html 模板、public/（原样拷贝的静态资产）、src/
+source-assets/  原始素材（NotoSansSC.ttf 等）——永不投产，verify 见到 .ttf 即失败
+scripts/        构建工具链：subset-fonts / prerender / verify-build / publish-build / deploy / text-diff / vite-plugin-mpa-dev
+build-stage/    vite + 预渲染产物（gitignore）；.build-manifest.json 只存在这里（STAGE_ONLY）
+仓库根          GENERATED 部署树 = 24 个 html + en/ assets/ images/ fonts/ robots.txt sitemap.xml favicon.svg og-cover.jpg
+REPO_ONLY       CLAUDE.md THIRD-PARTY.md CLAIMS-VERSION package.json vite.config.js …（发布/部署脚本结构上碰不到）
+ORIGIN_ONLY     只在 origin 的东西（demo1.mp4、admin/、payment_codes/、firmware/…）：部署只做 symlink 接入 + 前后 sha256 不变断言
+```
 
----
+**「local == git == origin」只对 `DEPLOY`（= GENERATED）成立**，不是整个 docroot 逐字节相等。`demo1.mp4`（14MB）按决定 origin-only，`demo.html` 引用它、本地 preview 404 属预期。
+
+## 构建（Node 24，别的版本直接拒绝）
+
+```bash
+export PATH=/opt/homebrew/opt/node@24/bin:$PATH   # 本机默认 node 是坏掉的 v25（simdjson dylib 丢失）
+npm run stage     # subset-fonts → vite build → vite build --ssr → prerender → verify:stage
+npm run build     # = stage + publish:build（allowlist 提升到仓库根，失败回滚）
+npm run preview   # vite preview build-stage，端口 4173 —— sirv 支持 Range 206，hero 视频只在这里验
+npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs，经 transformIndexHtml）
+```
+
+- `vite.config.js`：`root:'app'`、**`base:'/'`（否则 `/en/*` 找不到 `/assets`）**、**`appType:'mpa'`（preview 与 nginx `try_files` 一样 404）**、`manifest:false`。
+- 一个模板、一个 bundle、18 个预渲染页：`scripts/prerender.mjs` 先把 `build-stage/index.html` 读进内存（它既是模板又是输出），每页渲染两次比对（非确定性即失败），**SSR 环境不加 jsdom**——render 期读 `window` 直接在构建期抛错，这就是测试。
+- `entry-server.jsx` 不包 `MotionProvider`；GSAP 会进 SSR module graph（hooks 顶层 registerPlugin，已验证 Node 导入安全），Lenis 在 effect 里动态 import 不进。
+- `entry-client.jsx` 按 `<html data-ssr>` 决定 `hydrateRoot` / `createRoot`，不猜 DOM。
+- `.claude/launch.json` 里 `pt-preview` / `pt-dev` 直接指向 node@24 二进制（`npx` 会解析到坏掉的 v25）。
+
+## i18n 与 URL
+
+- 语言是构建期常量：`<LangProvider lang>` 只提供 `{lang, t}`，`t(zh, en)` API 与 melspectrum 一致。每页只渲染一种语言，运行时永不切换（`key={lang}` 重挂载 hack 不存在）。
+- `app/src/i18n/urls.js` 是唯一知道 `/en/` 的地方：`href(lang, page, hash)` / `counterpart` / `canonical`。**站内链接一律绝对且经 `href()`**，verify 规则强制。首页 canonical 是 `/` 与 `/en/`，不是 `index.html`；主机固定 `www.`（apex 与 www 都 200 无 301）。
+- 语言开关是真 `<a hreflang>`，点击写 `localStorage.pt_lang`。**自动跳转只认显式存储偏好**（head 内联脚本，`?nolang` 逃生），`navigator.language` 只触发一条可关闭的提示条（`LangHint`，只在 effect 里渲染，不进 SSR）。
+- `.t-ui` 大写/字距规则挂 `:root[data-lang]`（en 大写 + .08em，zh 不大写 + .04em）——语义统一，不做 CSS 属性统一。`μ`、邮箱等字面量加 `.literal` 豁免。
+- `useNavTheme(line, initialTheme)`：`'bottom'` 哨兵在 effect 内解析，`initialTheme` 来自页面 meta，SSR 首帧导航配色就对。
+
+## 视频滚动锁定（本站签名，`app/src/lib/motion/useHeroVideoLock.js`）
+
+1. 滚到 hero 页面 pin 住；2. 滚轮位移驱动 `video.currentTime`；3. 播完才放开。锁定距离 `clamp(dur*420, 600, innerHeight*2.4)`。
+
+- 只在 `(min-width:768px) and (prefers-reduced-motion: no-preference)` 分支里注入 `src`；`<video>` 出厂**不带 `src`**（`display:none` 拦不住请求）。verify 断言 hero video 无 `src` 且 `data-src-mp4` 指向真实文件。
+- **不设 `scrub`**：这个 trigger 没绑 tween，数值 scrub 对 `self.progress` 无作用；平滑全部交给 Lenis。
+- pin 在 `loadedmetadata` 后「晚建」：建完必须 `ScrollTrigger.sort(); refresh()`，否则后面所有 trigger 短一个锁定距离（2026-08-30 线上事故）。**pin 销毁是镜像问题，teardown 也要 sort+refresh**；`loadedmetadata` 监听显式移除；`dataset.ptLoaded` 守卫 StrictMode 双挂载。`lib/motion/index.js` 的 `refreshSoon()` 也是 sort-then-refresh（melspectrum 的没有 sort，别原样覆盖回来）。
+- 换视频/poster **必须换文件名**：滚动锁定发大量 Range 请求，Cloudflare 与浏览器按字节区间缓存，同 URL 换内容会拼出解不出的流（2026-09-01）。视频在 `app/public/assets/video/`，Vite 原样拷贝不加 hash；verify 规则：同名视频 sha256 变了就失败。旧文件名留着指向当前内容。
+- 编码：`-g 12`（24fps）、`-movflags +faststart`、`-an`（BGM 是 CC BY 非商用）、`muted playsinline` + poster。
+
+## 动效体系（`app/src/lib/motion/hooks.js`）
+
+- **E0：静止态必须是可见态。** CSS 里绝不写 `opacity:0` 基态；隐藏只由 JS 成功建立 timeline 后 `gsap.set` 写 inline。`data-motion-ready` 按 section 局部标记，不在 `<html>` 上。验收：404 掉入口 JS、禁用 JS、reduced-motion 三种情况全部可读。
+- 一个属性只能有一个 motion owner：Lenis 管滚动插值（lerp 0.12）、ScrollTrigger 管进度、GSAP 管 transform/opacity、CSS 只管 hover/focus。**禁 `gsap.killTweensOf(el)`**（元素级 API 会杀掉别的 owner 的补间，2026-09-04 melspectrum 线上事故）。
+- 逐行擦除条 `useTextReveal`：SplitText `autoSplit` + `onSplit` 返回 timeline（官方推荐），字体就绪后才拆。`.reveal-text` 所在子树 React **不得重渲染**（SplitText 改了 DOM）。**含 `<sup><a href="#precision-note">` 的文字不要加 `.reveal-text`**（角标用 `<Fn />` 放在 reveal 元素外）。擦除条静止态用 `opacity`，绝不用 `transform`。
+- 三档滚动显现：`.anim-up--lead` 56px/1.0s、`.anim-up--metric` 带 scale、`.anim-up` 10px/0.75s。
+- **三步区不 pin**（2026-09-01 实测：紧挨 hero pin 再卡一次很难受）：`useStepsPath` 用区块自己的行程 scrub（`top bottom → top top+=64`），手机不建。melspectrum 的 `useSteps` pin **不移植**。
+- 跑马灯方向恒定只调速度（负 timeScale 会卡死）；三份 clone 两份 `aria-hidden`；**跑马灯不放任何精度数字**（承载不了角标与脚注）。
+- `Scramble` 只用于拉丁/数字且**不是 Gate F 管的数字**（TESTFLIGHT / RAILSBACK / 版本号可以，`±2` 不可以）。
+- reduced-motion = 整个体系进入静态构图：Lenis 不启动、所有 hook 早退、`motion.css` 兜底。
+- rAF 与 setTimeout 竞速（`afterPaint`）：后台标签页 / 隐藏面板会暂停 rAF。**Claude 浏览器面板隐藏时 rAF 被节流**，测动效前先量一次（600ms 内少于 10 帧就别下「动效没生效」的结论）。
 
 ## 字体
 
-**不要引 Google Fonts。** `fonts.googleapis.com` 在中国大陆不可达，主力用户是国内调音师——旧版每页都在等一个永远连不上的域名。
+不引 Google Fonts。Inter 变量字体复用 `@fontsource` 的拉丁子集（不要用 pyftsubset 切变量 TTF，会压平字重轴）；Noto Sans SC 由 `scripts/subset-fonts.mjs` 每次构建从 `app/src` 收割码点（剥注释）子集化，>200KB 警告、>320KB 失败回退系统字体。当前约 239KB（法律页文案多）。
 
-现在：Inter（Latin 子集，自托管，OFL）+ **中文走系统字体**（PingFang SC / 微软雅黑）。
-完整 CJK webfont 动辄数 MB，与首屏目标冲突；真要自托管 Noto Sans SC 必须 subset + `unicode-range` + 限字重 + `font-display:swap`，并计入传输预算。
+## 内容：Gate F 是构建期闸门，不靠人记得
 
----
+`website-public-claims.md` 只在 vault（`00-公司/官网/`），仓库只留 `CLAIMS-VERSION`。`scripts/verify-build.mjs` 的 `FORBIDDEN_STRINGS` 是它的投影（±1/±0.5/±0.01/±4、电机/编码器/驱动/MCU 型号、减速比、扭矩、专利号、Quick Check、省钱叙事、买断口径、Qin Liuhaoran、占位备案号、CDN…），扫 html/js/css/txt/xml——死代码里的旧 claims 也不许进 bundle。
 
-## 内容：所有对外数字先过 Gate F
+**精度条件规则只对最终 HTML 做**：含 `±2` 的页面必须有且仅有一个 `id="precision-note"`、每处 `±2` 紧跟 `<sup class="fn-ref"><a href="#precision-note">`、脚注含「实验室测试结果」与「最终性能以量产版本的验证结果为准」。`<PrecisionNote />` 的措辞逐字来自 claims §2，不得改。无法承载角标的位置（title/meta/JSON-LD）写「实验室测试精度 ±2 音分 / lab-tested ±2 cents」。JSON-LD 逐块解析，**无 offers/availability**（无真实预售）。底部进度条是 `⬡ PIANO TUNER · iOS TESTFLIGHT`——全局 chrome 无处承载角标，所以不放数字。
 
-**`website-public-claims.md` 是官网允许出现的数字与状态的唯一出处，它在知识图谱 vault 里（`00-公司/官网/`），不在本仓库。**
+其它红线：法定主体 **融谱智能科技（深圳）有限公司**，英文 `…, operating under the MelSpectrum brand`，无英文法定名；团队只列真实自然人，AI Agent 不得当团队成员；CTO 姓名按现页保持（claims §5 HOLD）；专利只写「已进入发明专利申请程序」；拆解/逆向条款只在 terms；Pro 是年度订阅 ¥499/年，不写买断。
 
-本仓库是 **public GitHub 仓库**，生产服务器又会直接吐静态文件（`robots.txt` 返回 200），所以 claims 正文绝不能进来——里面有 prohibited 条目、专利号、内部目标和 vault 路径。仓库里只留一行 `CLAIMS-VERSION`；`.gitignore` 已封。
+改文案 **zh/en 一起改**，改完跑 `node scripts/text-diff.mjs <page>` 对照 `pre-vite-static` 标签逐句看增删。
 
-四态：`verified` / `target` / `prohibited` / `deprecated`。
+## 部署（`scripts/deploy.mjs`，默认 dry-run，`--apply` 才执行）
 
-判定规则：
+origin = `root@192.255.139.83`，docroot `/var/www/html-pianotuner` **现在是 symlink → `/var/www/releases/pianotuner-<ts>/`**，旧目录是 `releases/pianotuner-legacy`。树莓派 `rpi@mc.void1211.com:1211:/var/www/html/` 是不承接流量的陈旧镜像，别往那里发。
 
-> **可证明性决定去留，而不是是否泄密决定去留。**
-> 没有对应测试记录、测试条件与来源的数字，即使不涉密，也不得保留。
+流程：预检（工作树干净、verify:root、ssh）→ tar 备份到 `/root/backups/` 并 `tar -tzf` 验证 → df 预检 → 上传整个 DEPLOY 到新 release（先 hashed 资产后 HTML）→ release 内逐文件 sha256 == 本地 → legacy 里所有不在 DEPLOY、也不在 410 名单里的顶层项 symlink 接入 → `nginx -t` → `mv -T` 原子切换 symlink → ORIGIN_ONLY 指纹前后一致 → 保留最近 3 个 release → 在线验收（18 URL 200 且 body == origin（只允许 email-protection / email-decode / Insights 差异）、6 存根跳转、sitemap/robots、`/api/pianotuner/subscribe` 可达、hero 视频两段 Range 206 字节一致、旧存档页 410）→ 打印 git 命令。任一步失败：release 目录清理，docroot 不动；切换后验收失败给出一行回退命令。
 
-几条长期红线：
+**全链无 rsync、只走显式清单。** origin nginx 对 `*.json` 一律 404，所以运行时不得 fetch 任何 .json（Railsback 数据烘成 `data/railsback.js`）。CSP `script-src 'self' 'unsafe-inline'`、`font-src 'self'`，Vite 产物兼容，依赖升级后复查。
 
-- 精度写「**目标** ±2 音分」+「最终性能以量产版本验证结果为准」。±1 / ±0.5 / ±0.01 一律不外宣
-- 不出现电机型号、扭矩、减速比、编码器型号、传动回差
-- 专利只写「已进入发明专利申请程序」，**不写申请号、不描述保护范围**；「禁止拆解/逆向」属于合同与商业秘密，**只放 `terms.html`**，不能挂在专利状态后面当作其延伸
-- 法定主体是 **融谱智能科技（深圳）有限公司**，品牌是 MelSpectrum。**公司没有官方英文法定名**，英文写 `融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand`
-- 结构化数据不许伪造交易状态：没有真实可下单的预售，就不要声明 `availability`
-- 对外材料**不得把 AI Agent 当真人团队成员呈现**
-- 新增文案里的数字同样要过 Gate F —— 里程碑「发生了什么」可以公开，不等于其技术细节（角度、腔体尺寸、固件包大小）可以公开
-
-改完必须**中英两份都改**（每条文案都有 `.zh` / `.en` 双份，极易只改一半）。
-
----
-
-## 渲染（官网用图/视频）
-
-- 管线在 `~/pianotuner_cad_export/`。**当前机型是 v20m**，零件是仓库根目录的 `v20m_*.stl`（2026-08-01）；`stl/` 里是 **v13/v14 老件，和实物对不上，不要用**。
-- GPU 渲染在 **train-direct**（Tesla 32GB，OptiX）。Blender 5.1.2 在 `~/blender/`，工作目录 `~/ptrender/`。
-- 渲染前可以停 `llama-proxy` / `llama-router` 腾显存（约 30GB）；**只 stop 不 disable**，渲染完记得起回来。
-- 场景单位是**毫米**，模型跨度约 315mm：灯光功率要按 `P ≈ rel · 4π d²` 反推，不要用「随尺寸平方缩放」的经验式，会过曝约 50 倍（踩过）。
-- 官网色调基准 = 现有 hero：暗胡桃木 + 拉丝铝，平均亮度约 **luma 86/255**，主色 `#504030` / `#605040`，铝件高光约占 10%。渲完用直方图对一下再上站。
-- 木纹贴图用真实 PBR（Poly Haven CC0，`tex/wood_*`），程序化木纹会「糊」。
-
----
-
-## 部署：local == git == origin，三方同步
-
-单次改动必须**同时**推服务器和推仓库，不许只做一边。
-
-两级验收，不要混为一谈：
-
-- **A. local ↔ origin 文件系统 —— 必须 0 差异**（在服务器上算 SHA-256，不经 Cloudflare）。这里**不允许**出现 Cloudflare 差异
-- **B. Cloudflare 响应 ↔ origin —— 只允许已知 edge transform**：`/cdn-cgi/l/email-protection`、`email-decode.min.js`、Insights beacon
-
-即：
-
-```
-local == git == origin filesystem
-Cloudflare response = origin + 已知 edge transforms
-```
-
-**origin = `root@192.255.139.83:/var/www/html-pianotuner/`（云端 VPS，端口 22，前置 Cloudflare）。树莓派 `rpi@mc.void1211.com:1211:/var/www/html/` 是不承接流量的陈旧镜像 —— 部署到那里会「成功」但线上毫无变化（2026-08-29 已踩过一次）。判定 origin 只能拿 Cloudflare 实际响应体的 sha256 去比候选主机上的文件，不要拿两台候选主机互比：它们可能只是都停在同一份旧内容上。**
-
-流程：`tar` 备份 `/var/www/html-pianotuner/` → `scp` → `chown -R www-data:www-data` → A/B 两级验收 → 同一轮 `git add/commit/push` → 复验各页 200、`/api/pianotuner/subscribe` 通、`sitemap.xml` 可达。
-**部署清单必须显式排除任何 claims 文件。**
-
-### 已知的、有意的例外
-
-| 文件 | 状态 | 说明 |
-|---|---|---|
-| `demo1.mp4` | **只在 origin，不进 git**（已 gitignore） | 14MB 演示视频，按决定不入库。A 级校验会看到 origin 多这一个文件 —— **这是预期行为，不要"修复"** |
-| `website-public-claims.md` | 只在 vault | 见上方 Gate F |
-| `.claude/` | 只在本地 | dev server 配置 + 后台任务 worktree |
-
----
+两级验收口径：A. release 文件系统 ↔ 本地 0 差异；B. Cloudflare 响应 ↔ origin 只允许已知 edge transform。
 
 ## grep 时注意
 
-`.claude/worktrees/` 下可能有后台任务开的 **旧代码 checkout**，递归 grep 会扫到它并全部报红。检查站点内容请用顶层 `*.html`，或显式 `--exclude-dir`（注意 zsh 不会对未加引号的变量做词分割）。
+`.claude/worktrees/`、`node_modules/`、`build-stage/` 会把递归 grep 弄脏；查站点内容用 `app/src`，查产物用顶层 `*.html` + `en/*.html`。

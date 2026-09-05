@@ -1,0 +1,183 @@
+/* ============================================================
+   MelSpectrum design tokens
+   Discipline: ONE accent, zero gradients, zero shadows, zero radii
+   on interactive elements, 1px dashed hairlines for card edges.
+   ============================================================ */
+:root {
+  /* neutrals — deliberately not pure black / pure white */
+  --color-black:     #141414;
+  --color-white:     #fafafa;
+  --color-gunmetal:  #414141;
+  --color-charcoal:  #5a5a5a;
+  --color-ash:       #8d8d8d;
+  --color-silver:    #b3b3b3;
+  --color-alabaster: #d9d9d9;
+  --color-platinum:  #ececec;
+  --color-porcelain: #f5f4f2;
+
+  /* the single accent */
+  --color-accent:      #2DD4BF;
+  --color-accent-deep: #14B8A6;
+
+  --button-bezier: cubic-bezier(1, 0, 0.01, 1);
+
+  /* type */
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont,
+               'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+  --type-ui-size: 12px;
+
+  /* fluid rhythm */
+  --py-section:    clamp(5rem, 3.9121rem + 5.1195vw, 13.75rem);  /*  80 -> 220 */
+  --py-section-sm: clamp(2.5rem, 1.7747rem + 3.413vw, 10rem);    /*  40 -> 160 */
+  --gap-y-lg:      clamp(3.75rem, 2.6621rem + 5.1195vw, 13.75rem);
+  --gap-y-md:      clamp(2.5rem, 1.7747rem + 3.413vw, 10rem);
+
+  --gutter: 24px;
+  --grid-gap: 20px;
+  --nav-h: 64px;
+
+  color-scheme: light;
+}
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* 锚点跳转补偿固定导航。Lenis 的 anchors.offset 只在平滑滚动路径生效，
+     reduced-motion 下 Lenis 根本不启动、回落原生跳转，没有它标题会被压在
+     导航底下——受影响的正是最需要它的那批用户（含 skip-link #main）。 */
+  scroll-padding-top: calc(var(--nav-h) + 24px);
+}
+body {
+  margin: 0;
+  background: var(--color-platinum);
+  color: var(--color-black);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: none; padding: 0; }
+::selection { background: var(--color-accent); color: var(--color-black); }
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+/* forced-colors（Windows 高对比度等）：系统会覆盖作者指定的颜色，因此任何
+   仅靠 background-color 表达的状态都会失效。凡是「选中/激活」这类语义，
+   必须改用系统颜色关键字或额外的非颜色线索（边框、下划线）。 */
+@media (forced-colors: active) {
+  :focus-visible { outline: 2px solid CanvasText; }
+  .btn, .card, .metric { border: 1px solid CanvasText; }
+
+  /* 语言开关：选中态原本只有青绿底色，强制配色下两个按钮会完全无法区分。
+     改用系统 Highlight 配色，并叠一圈内描边作为非颜色线索。 */
+  .lang-toggle button[aria-pressed='true'] {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
+  .lang-toggle button[aria-pressed='false'] {
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  /* 导航与页脚链接在强制配色下既无下划线也无边框，只能靠上下文辨认 */
+  .nav__link,
+  .footer__col a { text-decoration: underline; }
+
+  /* 主按钮的实心底色会被系统覆盖，补边框保证仍是一个可辨认的按钮 */
+  .btn--accent, .btn--dark { border: 1px solid CanvasText; }
+
+  /* eyebrow 高亮块同理：靠底色区分的标签需要边框兜底 */
+  .eyebrow { border: 1px solid CanvasText; }
+}
+
+/* ---------- grid ---------- */
+.grid-custom {
+  display: grid;
+  gap: var(--grid-gap);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (min-width: 768px) {
+  .grid-custom { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+}
+/* No max-width container: content runs to within 24px of the viewport edge. */
+.p-custom { padding-inline: var(--gutter); }
+.py-section { padding-block: var(--py-section); }
+.py-section-sm { padding-block: var(--py-section-sm); }
+
+/* ---------- islands ---------- */
+.island-dark  { background: var(--color-black); color: var(--color-white); }
+.island-light { background: var(--color-platinum); color: var(--color-black); }
+.island-accent{ background: var(--color-accent); color: var(--color-black); }
+/* 60px gasket between a light section and a dark one */
+.gasket { position: relative; height: 60px; width: 100%; background: var(--color-black); }
+
+/* ---------- type scale ---------- */
+.t-display {
+  font-weight: 300;
+  /* capped: an uncapped max() reaches ~263px at 3840px wide */
+  font-size: clamp(3rem, 1.6945rem + 6.1433vw, 15rem);
+  line-height: 1;
+  letter-spacing: -0.033em;
+  text-wrap: pretty;
+  margin: 0;
+}
+@media (min-width: 94.5rem) { .t-display { letter-spacing: -0.052em; } }
+
+.t-h2 {
+  font-weight: 300;
+  font-size: clamp(2rem, 1.4198rem + 2.7304vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  text-wrap: pretty;
+  margin: 0;
+}
+.t-h3 {
+  font-weight: 300;
+  font-size: clamp(1.5rem, 1.3rem + 0.85vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.t-metric {
+  font-weight: 300;
+  font-size: clamp(2.5rem, 1.9rem + 2.6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.t-body { font-size: 1rem; line-height: 1.5; letter-spacing: -0.01em; }
+.t-body-sm { font-size: 0.875rem; line-height: 1.45; letter-spacing: -0.01em; }
+
+/* UI chrome — semantic, not mechanical: uppercase is a no-op for CJK and
+   Latin uppercase tracking must not be applied to Chinese. */
+.t-ui {
+  font-family: var(--font-mono);
+  font-size: var(--type-ui-size);
+  line-height: 1.5;
+  font-weight: 400;
+}
+:root[data-lang='en'] .t-ui { text-transform: uppercase; letter-spacing: 0.08em; }
+:root[data-lang='zh'] .t-ui { text-transform: none; letter-spacing: 0.04em; }
+
+.eyebrow {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-black);
+  padding: 4px 6px;
+}
+.eyebrow--plain { background: none; color: var(--color-ash); padding: 4px 0; }
+
+.rule { border: 0; border-top: 1px dashed var(--color-gunmetal); margin: 0; }
+.island-light .rule { border-top-color: var(--color-alabaster); }
