@@ -115,7 +115,7 @@ function Product() {
             <BracketLink href={href(lang, 'pro')}>{t('了解专业版', 'Explore Pro')}</BracketLink>
           </div>
           <figure className="product__img">
-            <img src="/images/silver-land.webp" alt={t('Piano Tuner 执行器与手机 App', 'Piano Tuner actuator and phone app')} width="1600" height="900" loading="lazy" decoding="async" />
+            <img src="/images/product-v20m-still-v1.webp" alt={t('Piano Tuner v20m 执行器渲染图，胡桃木桌面上的拉丝铝机身', 'Piano Tuner v20m actuator render, brushed aluminium body on a walnut surface')} width="1600" height="900" loading="lazy" decoding="async" />
             <figcaption className="t-ui">RENDER · V20M</figcaption>
           </figure>
         </div>
