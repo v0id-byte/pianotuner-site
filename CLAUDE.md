@@ -63,7 +63,9 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
 - 三档滚动显现：`.anim-up--lead` 56px/1.0s、`.anim-up--metric` 带 scale、`.anim-up` 10px/0.75s。
 - **三步区不 pin**（2026-09-01 实测：紧挨 hero pin 再卡一次很难受）：`useStepsPath` 用区块自己的行程 scrub（`top bottom → top top+=64`），手机不建。melspectrum 的 `useSteps` pin **不移植**。
 - 跑马灯方向恒定只调速度（负 timeScale 会卡死）；三份 clone 两份 `aria-hidden`；**跑马灯不放任何精度数字**（承载不了角标与脚注）。
-- `Scramble` 只用于拉丁/数字且**不是 Gate F 管的数字**（TESTFLIGHT / RAILSBACK / 版本号可以，`±2` 不可以）。
+- `Scramble` 只用于拉丁/数字且**不是 Gate F 管的数字**（TESTFLIGHT / RAILSBACK / 版本号可以，`±2` 不可以）。组件遇到任何非 ASCII 文本自动保持静态，所以全站 `.card__num`（`01 · WRISTS` 等）统一走它：进场一次 + ≥1024px 悬停重触发。
+- FAQ 是原生 `<details>`，`useFaqAccordion` 只在有动效时接管 summary 点击、补间 `.faq__body` 高度；无 JS / reduced-motion 原生开合不变，开合后 `refreshSoon()`。
+- 对比表 `.cmp` 首列 `position: sticky`（手机横滑时行名不丢），≤719px 显示 `.tablewrap__hint`。
 - reduced-motion = 整个体系进入静态构图：Lenis 不启动、所有 hook 早退、`motion.css` 兜底。
 - rAF 与 setTimeout 竞速（`afterPaint`）：后台标签页 / 隐藏面板会暂停 rAF。**Claude 浏览器面板隐藏时 rAF 被节流**，测动效前先量一次（600ms 内少于 10 帧就别下「动效没生效」的结论）。
 
