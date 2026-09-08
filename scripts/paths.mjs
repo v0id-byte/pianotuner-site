@@ -28,6 +28,8 @@ export const GENERATED = [
   'robots.txt',
   'sitemap.xml',
   'favicon.svg',
+  'favicon-brand-202609.svg',
+  'apple-touch-icon-202609.png',
   'og-cover.jpg',
 ];
 export const STAGE_ONLY = ['.build-manifest.json'];

@@ -89,7 +89,8 @@ export default function Nav({ theme = 'dark', page }) {
       <div className="nav-frame">
         <nav className="nav" data-theme={theme} aria-label={t('主导航', 'Primary')}>
           <a className="nav__brand" href={href(lang, 'index')}>
-            PIANO TUNER
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="nav__mark" width="20" height="20" aria-hidden="true" focusable="false"><g fill="currentColor" color="currentColor"><g fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><path d="M16 12.75 Q17.955 6.425 16 1.25"/><path d="M18.541 13.974 Q24.705 11.559 27.532 6.804"/><path d="M19.169 16.723 Q24.9 20.037 30.38 19.282"/><path d="M17.41 18.928 Q18.393 25.475 22.4 29.289"/><path d="M14.59 18.928 Q10.084 23.779 9.6 29.289"/><path d="M12.831 16.723 Q6.23 16.225 1.62 19.282"/><path d="M13.459 13.974 Q9.733 8.502 4.468 6.804"/></g></g></svg>
+            <span className="nav__name">PIANO TUNER</span>
             <span aria-hidden="true">{t('钢琴调音机器人', 'Piano tuning robot')}</span>
           </a>
           <div className="nav__spacer" />
