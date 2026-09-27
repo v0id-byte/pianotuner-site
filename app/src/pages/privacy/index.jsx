@@ -1,6 +1,6 @@
 import { useT } from '../../i18n';
 import LegalPage from '../../components/LegalPage';
-import { EMAIL_SUPPORT } from '../../data/site';
+import { EMAIL_SUPPORT, UMAMI_WEBSITE_ID } from '../../data/site';
 
 export const meta = {
   navTheme: 'dark',
@@ -36,9 +36,17 @@ export default function Privacy() {
       <li>{t('（仅在您授权时）用匿名声学数据改进调律算法。', '(Only if you opt in) Improve our tuning algorithm using anonymized acoustic data.')}</li>
     </ul> },
     { title: t('云端服务', 'Cloud service'), body: <P>{t('个性化调律曲线在您的设备本机计算，基础调音全程不依赖网络。云端服务（api.pianotuner.top）只用于这些可选功能：多台钢琴的档案同步、健康报告生成，以及固件更新。为此上传的测量数据关联到钢琴档案 / ID，而非您的个人身份。除此处所述用途外，我们不会将其用于其他目的。', 'Your personalized tuning curve is computed on your device, and basic tuning works with no network connection at all. Our cloud service (api.pianotuner.top) is used only for optional features: syncing profiles across multiple pianos, generating health reports, and firmware updates. Measurement data uploaded for those purposes is associated with a piano profile / ID, not your personal identity. We do not use it for purposes other than those described here.')}</P> },
+    { title: UMAMI_WEBSITE_ID ? t('本网站：候补名单与访问统计', 'This website: waitlist and visit statistics') : t('本网站：候补名单', 'This website: waitlist'), body: <>
+      <H>{t('候补名单', 'WAITLIST')}</H>
+      <P>{t('当您在本网站加入候补名单时，我们会收到您的邮箱、提交所在页面、页面语言、您选填的身份（如有）、提交时间，以及提交请求的 IP 地址（用于防止滥用）。这些信息只用于发送确认邮件、开售通知与重要产品进展，不会用于广告。确认邮件经腾讯企业邮箱发送；每条新登记也会以邮件形式通知我们的团队（目前使用境外邮箱服务 Gmail 接收）。信息保存至您要求退出，或候补名单计划结束后删除；如需退出或删除，写信给我们即可。', 'When you join the waitlist on this website, we receive your email, the page and language of submission, the role you optionally select, the time, and the IP address of the request (to prevent abuse). We use this only to send a confirmation, the sales-open notice and important product updates — never for advertising. Confirmation emails are sent through Tencent Exmail, and each new sign-up is also forwarded to our team by email (currently received through Gmail, a service outside China). We keep this information until you ask to be removed or the waitlist programme ends; to opt out or have it deleted, just email us.')}</P>
+      {UMAMI_WEBSITE_ID ? <>
+        <H>{t('访问统计', 'VISIT STATISTICS')}</H>
+        <P>{t('我们使用部署在自有服务器上的开源统计工具 Umami 了解页面访问量与按钮点击等汇总数据。它不使用 Cookie，不做跨站追踪，数据不与任何第三方共享。', 'We use Umami, an open-source analytics tool running on our own server, to see aggregate page views and button clicks. It sets no cookies, does no cross-site tracking, and the data is not shared with any third party.')}</P>
+      </> : null}
+    </> },
     { title: t('信息共享', 'Sharing'), body: <>
       <P>{t('我们不出售您的个人数据，也不进行第三方广告追踪。', 'We do not sell your personal data, and we do not use third-party advertising trackers.')}</P>
-      <P>{t('我们仅在以下情形共享信息：为运行上述云端服务所必需的技术服务商（在我们的指示下处理数据）；或法律法规要求时。除此之外，我们不会向任何第三方披露您的数据。', 'We share information only where necessary: with technical service providers required to operate the cloud service described above (processing data under our instructions), or when required by law. We do not otherwise disclose your data to any third party.')}</P>
+      <P>{t('我们仅在以下情形共享信息：为运行上述云端服务与发送候补名单邮件所必需的技术服务商（在我们的指示下处理数据）；或法律法规要求时。除此之外，我们不会向任何第三方披露您的数据。', 'We share information only where necessary: with technical service providers required to operate the cloud service and send waitlist emails described above (processing data under our instructions), or when required by law. We do not otherwise disclose your data to any third party.')}</P>
     </> },
     { title: t('存储与安全', 'Storage & security'), body: <P>{t('调律曲线的计算与钢琴档案、本地设置都保存在您的设备上。为上述可选功能发送至云端的数据通过加密传输，并仅在为您提供调律功能所需的范围内保留。我们采取合理的技术与组织措施保护数据，但请注意，任何通过互联网传输或存储的方式都无法做到绝对安全。', 'Curve computation, piano profiles and local settings all stay on your device. Data sent to the cloud for the optional features above is transmitted over encrypted connections and retained only to the extent needed to provide the tuning features. We apply reasonable technical and organizational safeguards, but please note that no method of transmission or storage over the internet is perfectly secure.')}</P> },
     { title: t('您的选择与权利', 'Your choices & rights'), body: <>
@@ -54,8 +62,8 @@ export default function Privacy() {
       page="privacy"
       kicker={t('LEGAL · 法律条款', 'LEGAL')}
       title={t('隐私政策', 'Privacy policy')}
-      updated={t('最后更新：2026 年 8 月 29 日', 'Last updated: August 29, 2026')}
-      intro={t('本隐私政策说明融谱智能科技（深圳）有限公司（品牌 MelSpectrum / Piano Tuner，以下简称「我们」）在您使用 Piano Tuner 调音机器人及配套 iOS 应用（以下统称「本产品」）时，如何收集、使用和保护信息。我们坚持数据最小化原则：绝大多数处理都在您的设备本地完成，仅在为您提供功能所必需时才将数据上传至云端。', 'This Privacy Policy explains how 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand (Piano Tuner; "we", "us") collects, uses, and protects information when you use the Piano Tuner tuning robot and its companion iOS app (together, the "Product"). We follow a data-minimization principle: most processing happens locally on your device, and we upload data to the cloud only when it is necessary to deliver a feature you use.')}
+      updated={t('最后更新：2026 年 9 月 27 日', 'Last updated: September 27, 2026')}
+      intro={t('本隐私政策说明融谱智能科技（深圳）有限公司（品牌 MelSpectrum / Piano Tuner，以下简称「我们」）在您使用 Piano Tuner 调音机器人及配套 iOS 应用（以下统称「本产品」）以及访问本网站时，如何收集、使用和保护信息。我们坚持数据最小化原则：绝大多数处理都在您的设备本地完成，仅在为您提供功能所必需时才将数据上传至云端。', 'This Privacy Policy explains how 融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand (Piano Tuner; "we", "us") collects, uses, and protects information when you use the Piano Tuner tuning robot and its companion iOS app (together, the "Product") and when you visit this website. We follow a data-minimization principle: most processing happens locally on your device, and we upload data to the cloud only when it is necessary to deliver a feature you use.')}
       sections={sections}
     />
   );

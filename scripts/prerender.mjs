@@ -46,9 +46,10 @@ for (const lang of LANGS) {
   }
 }
 
-// sitemap：9 页 × 2 语言，互相 alternate
+// sitemap：全部真实页 × 2 语言，互相 alternate
 const today = new Date().toISOString().slice(0, 10);
-const prio = { index: '1.0', pro: '0.9', about: '0.8', support: '0.7', contact: '0.7', demo: '0.6', buy: '0.6', privacy: '0.3', terms: '0.3' };
+const prio = { index: '1.0', pro: '0.9', about: '0.8', support: '0.7', contact: '0.7', demo: '0.6', buy: '0.6', privacy: '0.3', terms: '0.3',
+  'piano-tuning-frequency': '0.7', 'stretch-tuning-railsback': '0.7', 'etd-vs-aural-tuning': '0.7' };
 const entries = urls.map(({ lang, id }) => {
   const loc = SITE.origin + pathFor(lang, id);
   const alt = LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l === 'en' ? 'en' : 'zh-CN'}" href="${SITE.origin + pathFor(l, id)}" />`).join('\n');

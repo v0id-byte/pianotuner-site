@@ -3,6 +3,7 @@
 import { PAGES_BY_ID } from './registry.js';
 import { canonical, href, htmlLang, counterpart } from '../i18n/urls.js';
 import { SITE } from '../../../scripts/paths.mjs';
+import { UMAMI_WEBSITE_ID } from '../data/site.js';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
@@ -48,7 +49,8 @@ export function renderHead(pageId, lang) {
     `<link rel="icon" type="image/svg+xml" href="/favicon-brand-202609.svg" />`,
     `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-202609.png" />`,
     `<link rel="preload" href="/fonts/Inter-var.woff2" as="font" type="font/woff2" crossorigin />`,
-    meta.cjkFont === false ? '' : `<link rel="preload" href="/fonts/NotoSansSC-subset.woff2" as="font" type="font/woff2" crossorigin />`,
+    // 英文页只零星含中文（法定主体名），按需加载即可，不抢首屏带宽。
+    meta.cjkFont === false || lang === 'en' ? '' : `<link rel="preload" href="/fonts/NotoSansSC-subset.woff2" as="font" type="font/woff2" crossorigin />`,
     `<meta property="og:type" content="${meta.ogType || 'website'}" />`,
     `<meta property="og:site_name" content="Piano Tuner · MelSpectrum" />`,
     `<meta property="og:title" content="${esc(m.title)}" />`,
@@ -67,6 +69,8 @@ export function renderHead(pageId, lang) {
     `<meta name="twitter:image" content="${og}" />`,
     ld ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : '',
     `<script>${LANG_SCRIPT}</script>`,
+    // 自托管 Umami，同源（CSP 'self' 即可），无 cookie；data-domains 让本地 preview 不上报。
+    UMAMI_WEBSITE_ID ? `<script defer src="/u.js" data-website-id="${UMAMI_WEBSITE_ID}" data-domains="www.pianotuner.top,pianotuner.top"></script>` : '',
   ];
   return lines.filter(Boolean).join('\n');
 }
@@ -84,7 +88,7 @@ export function renderRedirectStub(fromId, toId, lang) {
 <meta http-equiv="refresh" content="0;url=${to}" />
 <meta name="robots" content="noindex, follow" />
 <link rel="canonical" href="${abs}" />
-<title>${zh ? '页面已合并 → 预售与候补名单' : 'Page merged → Pre-order & waitlist'}</title>
+<title>${zh ? '页面已合并 → 加入候补名单' : 'Page merged → Join the waitlist'}</title>
 <style>body{margin:0;background:#141414;color:#fafafa;font:16px/1.5 Inter,-apple-system,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;display:grid;place-items:center;min-height:100vh}a{color:#2DD4BF}</style>
 </head>
 <body>

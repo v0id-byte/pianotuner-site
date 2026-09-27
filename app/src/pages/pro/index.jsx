@@ -8,23 +8,25 @@ import RailsbackFigure from '../../components/RailsbackFigure';
 import PrecisionNote from '../../components/PrecisionNote';
 import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
-import { EMAIL_REPORT, LEGAL_ZH } from '../../data/site';
+import { EMAIL_REPORT } from '../../data/site';
+import { graph, breadcrumb, ORG_ID } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
   ogType: 'product',
   zh: { title: 'Piano Tuner 专业版 | 旗舰级数字化调律解决方案', desc: 'Piano Tuner 专业版：端侧拉伸优化、专业频率分析、多琴档案与 PDF 钢琴健康报告，为职业调律师与音乐机构打造。Pro 年度订阅。' },
   en: { title: 'Piano Tuner Pro | Flagship Digital Tuning Solution', desc: 'Piano Tuner Pro: on-device stretch optimization, pro frequency analysis, multi-piano archives and PDF health reports. Annual subscription for pro tuners.' },
-  jsonLd: (lang, { self }) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'Piano Tuner Pro',
-    url: self,
-    image: 'https://www.pianotuner.top/og-cover.jpg',
-    description: lang === 'en' ? 'Professional tier of the Piano Tuner app and hardware: Turbo mode, PDF health reports, cloud archive, historical temperaments.' : 'Piano Tuner 专业版：Turbo 模式、PDF 健康报告、云端档案、历史律制。',
-    brand: { '@type': 'Brand', name: 'MelSpectrum' },
-    manufacturer: { '@type': 'Organization', name: LEGAL_ZH, url: 'https://melspectrum.com' },
-  }),
+  jsonLd: (lang, { self }) => graph(
+    {
+      '@type': 'WebPage',
+      url: self,
+      name: lang === 'en' ? 'Piano Tuner Pro' : 'Piano Tuner 专业版',
+      description: lang === 'en' ? 'Professional tier of the Piano Tuner app and hardware: Turbo mode, PDF health reports, cloud archive, historical temperaments.' : 'Piano Tuner 专业版：Turbo 模式、PDF 健康报告、云端档案、历史律制。',
+      inLanguage: lang === 'en' ? 'en' : 'zh-CN',
+      publisher: { '@id': ORG_ID },
+    },
+    breadcrumb(lang, 'pro', lang === 'en' ? 'Pro' : '专业版'),
+  ),
 };
 
 function Section({ id, island, children, className = '' }) {
@@ -118,7 +120,7 @@ export default function Pro() {
         l2={t('赋予数字灵魂', 'for professional tuners')}
         sub={t('高精度声学、Turbo 电机、云端业务管理，一台调音器全包。', 'High-res acoustics, Turbo motor, cloud management — one tuner.')}
         actions={<>
-          <BracketLink href={href(lang, 'buy')} highlight>{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} highlight>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
           <BracketLink href="#features">{t('六大独占特性', 'Six Pro features')}</BracketLink>
         </>}
       />

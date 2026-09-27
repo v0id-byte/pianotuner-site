@@ -7,23 +7,17 @@ import PageHero from '../../components/PageHero';
 import { BracketLink, Button, Eyebrow, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
 import { useCountUp } from '../../lib/motion/useCountUp';
-import { EMAIL_REPORT, MELSPECTRUM, LEGAL_ZH } from '../../data/site';
+import { EMAIL_PRIMARY, MELSPECTRUM } from '../../data/site';
+import { graph, organization, breadcrumb } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
   zh: { title: '关于我们 | Piano Tuner', desc: '融谱智能科技（深圳）有限公司，品牌 MelSpectrum。为专业调律师打造的自动调音器：硬件 · 软件 · 端侧 AI，三位一体。' },
   en: { title: 'About Us | Piano Tuner', desc: '融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand. An automatic piano tuner built for pros: hardware, software and on-device AI in one.' },
-  jsonLd: (lang, { self }) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: LEGAL_ZH,
-    alternateName: 'MelSpectrum',
-    url: MELSPECTRUM,
-    sameAs: [self],
-    brand: { '@type': 'Brand', name: 'Piano Tuner' },
-    email: EMAIL_REPORT,
-    foundingDate: '2026',
-  }),
+  jsonLd: (lang) => graph(
+    { ...organization(), foundingDate: '2026', brand: { '@type': 'Brand', name: 'Piano Tuner' } },
+    breadcrumb(lang, 'about', lang === 'en' ? 'About' : '关于我们'),
+  ),
 };
 
 function Section({ id, island, children }) {
@@ -127,7 +121,7 @@ export default function About() {
         l2={t('听见完美', 'perfectly tuned')}
         sub={t('为专业调律师打造的自动调音器。硬件 · 软件 · 端侧 AI，三位一体。', 'An automatic tuner, built for pros. Hardware · Software · On-device AI — in one.')}
         actions={<>
-          <BracketLink href={href(lang, 'buy')} highlight>{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} highlight>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
           <BracketLink href="#product">{t('了解更多', 'Learn more')}</BracketLink>
         </>}
       />
@@ -152,10 +146,10 @@ export default function About() {
         <div style={{ marginTop: 'var(--gap-y-md)' }}>
           <span className="t-ui" style={{ color: 'var(--color-ash)' }}>MAIL</span>
           <div style={{ marginTop: 12 }}>
-            <a className="cta__mail anim-up--lead literal" href={`mailto:${EMAIL_REPORT}`}>{EMAIL_REPORT}</a>
+            <a className="cta__mail anim-up--lead literal" href={`mailto:${EMAIL_PRIMARY}`}>{EMAIL_PRIMARY}</a>
           </div>
           <div className="cta__links" style={{ marginTop: 32 }}>
-            <Button href={href(lang, 'buy')}>{t('预售与候补名单', 'Pre-order & waitlist')}</Button>
+            <Button href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</Button>
             <BracketLink href={MELSPECTRUM} external>{t('公司官网 melspectrum.com', 'Company site melspectrum.com')}</BracketLink>
           </div>
         </div>

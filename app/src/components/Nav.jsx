@@ -70,7 +70,7 @@ function MobileMenu({ open, onClose, openerRef, page }) {
         {LINKS.map((l) => (
           <a key={l.id} href={href(lang, l.id)} aria-current={page === l.id ? 'page' : undefined}>{t(l.zh, l.en)}</a>
         ))}
-        <a href={href(lang, 'buy')}>{t('预售与候补名单', 'Pre-order & waitlist')}</a>
+        <a href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</a>
         <div className="menu__foot">
           <LangToggle page={page} />
           <Button href={TESTFLIGHT} external>{t('TestFlight 体验 App', 'Get the app on TestFlight')}</Button>
@@ -101,7 +101,7 @@ export default function Nav({ theme = 'dark', page }) {
               </a>
             ))}
           </div>
-          <a className="nav__asn t-ui" href={href(lang, 'buy')} title={t('预售与候补名单', 'Pre-order & waitlist')}>
+          <a className="nav__asn t-ui" href={href(lang, 'buy')} title={t('加入候补名单', 'Join the waitlist')}>
             {t('候补名单', 'WAITLIST')}
           </a>
           <LangToggle page={page} />

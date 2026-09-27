@@ -294,7 +294,8 @@
 /* ---------------- footer ---------------- */
 .footer { display: grid; gap: var(--gap-y-md); }
 .footer__cols { display: grid; gap: 32px; }
-@media (min-width: 768px) { .footer__cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .footer__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .footer__cols { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .footer__col { display: flex; flex-direction: column; gap: 12px; }
 .footer__col h3 { margin: 0; color: var(--color-ash); font-weight: 400; }
 .footer__col a {

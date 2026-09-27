@@ -185,6 +185,14 @@
 }
 .subscribe__input::placeholder { color: var(--color-ash); }
 .subscribe__status { min-height: 1.4em; margin: 0; color: var(--color-black); }
+.subscribe__note { margin: 0; opacity: .75; }
+.subscribe__status a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.subscribe__roles { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.subscribe__roles legend { float: left; margin-right: 8px; padding: 0; color: inherit; opacity: .8; }
+.subscribe__roles label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.subscribe__roles input { accent-color: var(--color-black); margin: 0; }
+.subscribe--dark .subscribe__roles { color: var(--color-silver); }
+.subscribe--dark .subscribe__roles input { accent-color: var(--color-white); }
 .subscribe--dark .subscribe__input { background: var(--color-black); color: var(--color-white); border-color: var(--color-gunmetal); }
 .subscribe--dark .subscribe__status { color: var(--color-silver); }
 
@@ -297,3 +305,15 @@
   #product .product__side .spec { flex: 1; align-items: center; padding-block: 18px; }
   #railsback .product__side { align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
 }
+
+/* 联系页首选邮箱：比卡片更醒目 */
+.contact-primary { display: grid; gap: 12px; margin-bottom: var(--gap-y-md); }
+.contact-primary .cta__mail { word-break: break-all; }
+
+/* 调律指南：参考文献与角标 */
+.guide__refs { max-width: 78ch; margin-top: var(--gap-y-md); }
+.guide__refs h2 { margin: 0 0 12px; font-weight: 400; }
+.guide__refs ol { margin: 0; padding-left: 20px; color: var(--color-charcoal); display: grid; gap: 8px; }
+.guide__refs a { color: inherit; word-break: break-all; }
+.legal__sec sup a { color: var(--color-charcoal); text-decoration: none; font-size: .75em; margin-left: 2px; }
+.legal__sec p a:not([href^="#"]) { color: inherit; text-decoration: underline; text-underline-offset: 3px; }

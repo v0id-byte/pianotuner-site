@@ -106,6 +106,7 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
       if (!ref || ref.startsWith('en/') && !ref.endsWith('.html')) continue;
       const top = ref.split('/')[0];
       if (ORIGIN_ONLY.includes(top) || ORIGIN_ONLY.includes(ref)) continue;
+      if (ref === 'u.js') continue; // 自托管 Umami tracker，由 origin nginx 反代，不在 DEPLOY 里
       if (!existsSync(p(ref)) && !existsSync(p(ref, 'index.html'))) note(`${e.rel}: 悬空引用 /${ref}`);
     }
     // 4. 站内链接绝对化
@@ -141,6 +142,9 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
         const ld = JSON.parse(m[1]);
         const s = JSON.stringify(ld);
         if (/"offers"|"availability"/.test(s)) note(`${e.rel}: JSON-LD 不得声明 offers/availability（无真实预售）`);
+        // Google 产品摘要：Product 必须带 offers / review / aggregateRating 之一，三者我们都不能如实提供
+        // （2026-09-27 GSC 报错）。开售、有真实价格时再同时放开这条与上一条。
+        if (/"@type":"Product"/.test(s) && !/"offers"|"review"|"aggregateRating"/.test(s)) note(`${e.rel}: JSON-LD 含 Product 但无 offers/review/aggregateRating（GSC 严重问题）`);
       } catch { note(`${e.rel}: JSON-LD 不是合法 JSON`); }
     }
     // 8. 运行时不引用 .json（nginx deny）

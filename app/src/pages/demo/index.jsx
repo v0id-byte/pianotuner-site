@@ -83,7 +83,7 @@ export default function Demo() {
         </div>
         <div className="product__actions" style={{ marginTop: 'var(--gap-y-md)' }}>
           <BracketLink href={href(lang, 'index')}>{t('了解产品', 'Explore the product')}</BracketLink>
-          <BracketLink href={href(lang, 'buy')}>{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
         </div>
       </section>
       <div className="gasket" aria-hidden="true" />

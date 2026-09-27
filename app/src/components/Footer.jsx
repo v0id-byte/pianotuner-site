@@ -1,7 +1,8 @@
 import { useT } from '../i18n';
 import { href } from '../i18n/urls';
 import { LangToggle } from './Nav';
-import { TESTFLIGHT, MELSPECTRUM, EMAIL_REPORT, EMAIL_BUSINESS, LEGAL_ZH, LEGAL_EN } from '../data/site';
+import { TESTFLIGHT, MELSPECTRUM, EMAIL_PRIMARY, EMAIL_BUSINESS, LEGAL_ZH, LEGAL_EN } from '../data/site';
+import { GUIDES } from '../data/guides';
 
 export default function Footer({ page }) {
   const { t, lang } = useT();
@@ -13,7 +14,7 @@ export default function Footer({ page }) {
           <a href={href(lang, 'index')}>{t('首页', 'Home')}</a>
           <a href={href(lang, 'pro')}>{t('专业版', 'Pro')}</a>
           <a href={href(lang, 'demo')}>{t('实测演示', 'Demo')}</a>
-          <a href={href(lang, 'buy')}>{t('预售与候补名单', 'Pre-order & waitlist')}</a>
+          <a href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</a>
           <a href={TESTFLIGHT} target="_blank" rel="noopener noreferrer">TESTFLIGHT ↗</a>
         </div>
         <div className="footer__col">
@@ -21,6 +22,10 @@ export default function Footer({ page }) {
           <a href={href(lang, 'support')}>{t('帮助与支持中心', 'Support center')}</a>
           <a href={href(lang, 'index', 'faq')}>{t('常见问题', 'FAQ')}</a>
           <a href={href(lang, 'contact')}>{t('联系我们', 'Contact')}</a>
+        </div>
+        <div className="footer__col">
+          <h3 className="t-ui">{t('调律指南', 'GUIDES')}</h3>
+          {GUIDES.map((g) => <a key={g.id} href={href(lang, g.id)}>{t(g.zh, g.en)}</a>)}
         </div>
         <div className="footer__col">
           <h3 className="t-ui">{t('公司', 'COMPANY')}</h3>
@@ -31,7 +36,7 @@ export default function Footer({ page }) {
         </div>
         <div className="footer__col">
           <h3 className="t-ui">{t('联系', 'CONTACT')}</h3>
-          <a className="literal" href={`mailto:${EMAIL_REPORT}`}>{EMAIL_REPORT}</a>
+          <a className="literal" href={`mailto:${EMAIL_PRIMARY}`}>{EMAIL_PRIMARY}</a>
           <a className="literal" href={`mailto:${EMAIL_BUSINESS}`}>{EMAIL_BUSINESS}</a>
           <div className="footer__lang"><LangToggle page={page} /></div>
         </div>

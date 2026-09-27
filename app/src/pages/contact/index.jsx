@@ -6,28 +6,27 @@ import PageHero from '../../components/PageHero';
 import SubscribeForm from '../../components/SubscribeForm';
 import { Button, Eyebrow, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
-import { EMAIL_REPORT, EMAIL_BUSINESS } from '../../data/site';
+import { EMAIL_PRIMARY, EMAIL_BUSINESS } from '../../data/site';
+import { graph, breadcrumb, organization } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
   zh: { title: '联系我们 | Piano Tuner', desc: 'Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。' },
   en: { title: 'Contact Us | Piano Tuner', desc: 'Contact Piano Tuner: general inquiries and support, WeChat, business partnerships (piano stores, manufacturers, tuners). We reply within 1–2 business days.' },
-  jsonLd: (lang, { self }) => ({
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    url: self,
-    name: lang === 'en' ? 'Contact Piano Tuner' : '联系 Piano Tuner',
-  }),
+  jsonLd: (lang, { self }) => graph(
+    { '@type': 'ContactPage', url: self, name: lang === 'en' ? 'Contact Piano Tuner' : '联系 Piano Tuner', mainEntity: organization() },
+    breadcrumb(lang, 'contact', lang === 'en' ? 'Contact' : '联系我们'),
+  ),
 };
 
 const TYPES = [
-  ['general', '常规咨询', 'General inquiry', EMAIL_REPORT],
+  ['general', '常规咨询', 'General inquiry', EMAIL_PRIMARY],
   ['store', '琴行合作', 'Piano store partnership', EMAIL_BUSINESS],
   ['manufacturer', '钢琴厂合作', 'Manufacturer partnership', EMAIL_BUSINESS],
   ['tuner', '调律师合作', 'Tuner partnership', EMAIL_BUSINESS],
   ['bulk', '批量采购', 'Bulk order', EMAIL_BUSINESS],
   ['oem', 'OEM / 定制', 'OEM / custom', EMAIL_BUSINESS],
-  ['other', '其他', 'Other', EMAIL_REPORT],
+  ['other', '其他', 'Other', EMAIL_PRIMARY],
 ];
 
 /** 留言表单没有后端：校验后拼 mailto 交给用户自己的邮件客户端（与旧站行为一致）。 */
@@ -88,12 +87,17 @@ export default function Contact() {
         l2={t('欢迎来信。', "We'd love to hear from you.")}
       />
       <section className="island-light p-custom py-section" data-nav-theme="light" ref={root}>
+        <div className="contact-primary">
+          <span className="t-ui" style={{ color: 'var(--color-ash)' }}>{t('首选联系方式 · 邮件', 'PREFERRED · EMAIL')}</span>
+          <a className="cta__mail literal" href={`mailto:${EMAIL_PRIMARY}`} data-umami-event="contact-email">{EMAIL_PRIMARY}</a>
+          <p className="t-body-sm" style={{ color: 'var(--color-charcoal)', margin: 0 }}>{t('咨询、合作都可以直接写信，我们会在 1–2 个工作日内回复。', 'Questions or partnerships — just email us. We reply within 1–2 business days.')}</p>
+        </div>
         <div className="contact-grid" ref={deck}>
           <article className="card" data-stack-card>
             <Scramble className="card__num t-ui">01 · EMAIL</Scramble>
             <h3 className="t-h3">{t('电子邮件', 'Email')}</h3>
             <p className="card__desc t-body-sm">{t('常规咨询与技术支持', 'General inquiries & tech support')}</p>
-            <a className="blink t-ui literal" href={`mailto:${EMAIL_REPORT}`}>{EMAIL_REPORT}</a>
+            <a className="blink t-ui literal" href={`mailto:${EMAIL_PRIMARY}`}>{EMAIL_PRIMARY}</a>
           </article>
           <article className="card" data-stack-card>
             <Scramble className="card__num t-ui">02 · WECHAT</Scramble>
@@ -125,8 +129,8 @@ export default function Contact() {
       <section className="island-dark p-custom py-section" data-nav-theme="dark">
         <div className="product">
           <div className="product__body">
-            <Eyebrow>{t('PRE-ORDER ALERTS · 开售通知', 'PRE-ORDER ALERTS')}</Eyebrow>
-            <h2 className="t-h2">{t('开售通知 · 抢先登记', 'Pre-order alerts')}</h2>
+            <Eyebrow>{t('WAITLIST · 候补名单', 'WAITLIST')}</Eyebrow>
+            <h2 className="t-h2">{t('加入候补名单', 'Join the waitlist')}</h2>
             <p className="t-body" style={{ color: 'var(--color-silver)', maxWidth: '48ch' }}>{t('留下邮箱，新一轮早鸟预售开启时第一时间通知你。', "Leave your email and we'll notify you the moment the next early-bird round opens.")}</p>
             <SubscribeForm source="contact-page" dark />
           </div>

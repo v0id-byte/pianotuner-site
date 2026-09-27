@@ -11,7 +11,8 @@ import PrecisionNote from '../../components/PrecisionNote';
 import Scramble from '../../components/Scramble';
 import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck, useStepsPath, useFaqAccordion } from '../../lib/motion/hooks';
-import { TESTFLIGHT, LEGAL_ZH } from '../../data/site';
+import { TESTFLIGHT } from '../../data/site';
+import { graph, organization, ORG_ID } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
@@ -28,19 +29,20 @@ export const meta = {
     ogDesc: 'An automatic tuner built for tuners: the motor turns every pin to pitch — spare your wrists, take on more pianos, hand the work off. Lab-tested ±2 cents; uprights and grands.',
     keywords: 'piano tuner,automatic piano tuner,piano tuning robot,auto piano tuning,robotic piano tuner,piano tuning machine,Railsback curve,piano tuning app',
   },
-  jsonLd: (lang, { self }) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'Piano Tuner',
-    url: self,
-    image: 'https://www.pianotuner.top/og-cover.jpg',
-    description: lang === 'en'
-      ? 'Automatic piano-tuning robot: lab-tested ±2-cent accuracy, all 88 keys, uprights and grands.'
-      : '自动钢琴调音机器人，实验室测试精度 ±2 音分，支持 88 键全音域，适合立式和三角钢琴',
-    brand: { '@type': 'Brand', name: 'MelSpectrum' },
-    manufacturer: { '@type': 'Organization', name: LEGAL_ZH, url: 'https://melspectrum.com' },
-    // 无真实可下单的预售 → 不声明 offers / availability
-  }),
+  jsonLd: (lang, { self }) => graph(
+    {
+      '@type': 'WebSite',
+      '@id': `${self}#website`,
+      url: self,
+      name: 'Piano Tuner',
+      inLanguage: lang === 'en' ? 'en' : 'zh-CN',
+      description: lang === 'en'
+        ? 'Automatic piano-tuning robot: lab-tested ±2-cent accuracy, all 88 keys, uprights and grands.'
+        : '自动钢琴调音机器人，实验室测试精度 ±2 音分，支持 88 键全音域，适合立式和三角钢琴',
+      publisher: { '@id': ORG_ID },
+    },
+    organization(),
+  ),
 };
 
 function Section({ id, island, children, className = '', navTheme }) {
@@ -502,6 +504,26 @@ function Roadmap() {
   );
 }
 
+function WaitlistBand() {
+  const { t } = useT();
+  const root = useRef(null);
+  useReveal(root);
+  return (
+    <section id="waitlist" className="island-accent p-custom py-section-sm" data-nav-theme="light" ref={root}>
+      <div className="cta__grid">
+        <div>
+          <Eyebrow inverse>{t('WAITLIST · 候补名单', 'WAITLIST')}</Eyebrow>
+          <h2 className="t-h3" style={{ marginTop: 12 }}>{t('想在开售时第一个知道？', 'Want to hear the moment it opens?')}</h2>
+          <p className="t-body-sm" style={{ maxWidth: '48ch' }}>
+            {t('新一轮早鸟预售计划于 2026 年第四季度开启，价格将随预售开启一同公布。留下邮箱，开售第一时间通知你。', 'The next early-bird round is planned for Q4 2026, with pricing announced when it opens. Leave your email to hear first.')}
+          </p>
+        </div>
+        <SubscribeForm source="index-mid" />
+      </div>
+    </section>
+  );
+}
+
 function Cta() {
   const { t, lang } = useT();
   const root = useRef(null);
@@ -513,14 +535,14 @@ function Cta() {
         <div className="sec-head__eyebrow"><Eyebrow inverse>{t('GET STARTED · 现在就能上手', 'GET STARTED')}</Eyebrow></div>
         <h2 className="t-h2 reveal-text" style={{ gridColumn: '1 / -1' }}>{t('让你的钢琴，回到巅峰状态', 'Bring your piano back to its peak')}</h2>
         <p className="t-body" style={{ gridColumn: '1 / -1', maxWidth: '56ch' }}>
-          {t('App 已在 TestFlight 开放——现在就能把 iPhone 当作专业调音表与实时频谱分析仪；硬件预售即将开始。第一时间收到开售通知，或现在就下载 App 试用。', 'The app is live on TestFlight — use your iPhone as a pro tuning meter and real-time spectrum analyzer today; hardware pre-orders open soon. Be first to know when it ships, or try the app now.')}
+          {t('App 已在 TestFlight 开放——现在就能把 iPhone 当作专业调音表与实时频谱分析仪；硬件新一轮早鸟预售计划于 2026 年第四季度开启。加入候补名单第一时间收到开售通知，或现在就下载 App 试用。', 'The app is live on TestFlight — use your iPhone as a pro tuning meter and real-time spectrum analyzer today; the next hardware early-bird round is planned for Q4 2026. Join the waitlist to hear first, or try the app now.')}
         </p>
       </div>
       <div className="cta__grid">
         <SubscribeForm source="index-bottom" />
         <div className="cta__links">
           <Button href={TESTFLIGHT} external variant="dark">{t('下载 App 抢先体验', 'Download the app')}</Button>
-          <BracketLink href={href(lang, 'buy')} className="blink--onaccent">{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} className="blink--onaccent">{t('候补名单说明', 'About the waitlist')}</BracketLink>
           <BracketLink href={href(lang, 'pro')} className="blink--onaccent">{t('了解专业版', 'Explore Pro')}</BracketLink>
         </div>
       </div>
@@ -543,8 +565,8 @@ export default function Home() {
         proof={t('为专业调律师与钢琴爱好者打造。', 'Built for pro tuners and piano lovers.')}
         poster="/assets/video/hero-v20m-poster-v2.webp"
         mp4="/assets/video/hero-v20m-v2.mp4"
-        primary={<BracketLink href={TESTFLIGHT} external highlight>{t('下载 App 抢先体验', 'Download the app')}</BracketLink>}
-        secondary={<BracketLink href={href(lang, 'buy')}>{t('预售与候补名单', 'Pre-order & waitlist')}</BracketLink>}
+        primary={<BracketLink href={href(lang, 'buy', 'waitlist')} highlight data-umami-event="cta-waitlist" data-umami-event-at="hero">{t('加入候补名单', 'Join the waitlist')}</BracketLink>}
+        secondary={<BracketLink href={TESTFLIGHT} external data-umami-event="cta-testflight" data-umami-event-at="hero">{t('下载 App 抢先体验', 'Download the app')}</BracketLink>}
       />
       <Gasket />
       <Thesis />
@@ -552,6 +574,7 @@ export default function Home() {
       <Product />
       <Gasket />
       <Steps />
+      <WaitlistBand />
       <Faq />
       <Engine />
       <Software />

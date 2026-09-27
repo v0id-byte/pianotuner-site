@@ -9,10 +9,10 @@ export function Arrow() {
 }
 
 /** [ LABEL → ] — 全站默认 CTA。 */
-export function BracketLink({ href, children, external = false, highlight = false, className = '' }) {
+export function BracketLink({ href, children, external = false, highlight = false, className = '', ...rest }) {
   const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   return (
-    <a className={`blink t-ui${highlight ? ' hl' : ''}${className ? ` ${className}` : ''}`} href={href} {...ext}>
+    <a className={`blink t-ui${highlight ? ' hl' : ''}${className ? ` ${className}` : ''}`} href={href} {...ext} {...rest}>
       <span aria-hidden="true">[</span>
       <span>{children}</span>
       <Arrow />
@@ -21,7 +21,7 @@ export function BracketLink({ href, children, external = false, highlight = fals
   );
 }
 
-export function Button({ href, children, variant = 'accent', external = false, type, onClick, className = '' }) {
+export function Button({ href, children, variant = 'accent', external = false, type, onClick, className = '', ...rest }) {
   const cls = `btn btn--${variant} t-ui${className ? ` ${className}` : ''}`;
   if (!href) {
     return (
@@ -33,7 +33,7 @@ export function Button({ href, children, variant = 'accent', external = false, t
   }
   const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   return (
-    <a className={cls} href={href} {...ext}>
+    <a className={cls} href={href} {...ext} {...rest}>
       <span>{children}</span>
       <i aria-hidden="true" />
     </a>

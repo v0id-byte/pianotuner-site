@@ -9,7 +9,11 @@
 //   ORIGIN_ONLY exist on the origin webroot only (legacy backend data, big media); deploy asserts
 //               their sha256 is unchanged before/after, and never writes them
 //   FORBIDDEN   no build script may write to or delete from these
-export const PAGES = ['index', 'about', 'pro', 'demo', 'contact', 'support', 'buy', 'privacy', 'terms'];
+export const PAGES = [
+  'index', 'about', 'pro', 'demo', 'contact', 'support', 'buy', 'privacy', 'terms',
+  // 调律指南（与 app/src/data/guides.js 一致）
+  'piano-tuning-frequency', 'stretch-tuning-railsback', 'etd-vs-aural-tuning',
+];
 export const REDIRECTS = { buy_pro: 'buy', buy_railsback: 'buy', beta_preorder: 'buy' };
 export const LANGS = ['zh', 'en'];
 
