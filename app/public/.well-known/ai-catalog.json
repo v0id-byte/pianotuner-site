@@ -1,0 +1,66 @@
+{
+  "specVersion": "0.1",
+  "host": {
+    "name": "Piano Tuner",
+    "domain": "pianotuner.top",
+    "description": "钢琴调音机器人的产品站点：产品介绍、Railsback 曲线资料、支持与订阅。Product site for an automatic piano tuning robot.",
+    "languages": ["zh-CN", "en"]
+  },
+  "entries": [
+    {
+      "id": "urn:air:pianotuner.top:docs:product",
+      "displayName": "产品页（中文） / Product pages (Chinese)",
+      "description": "钢琴调音机器人的产品说明、工作方式、常见问题、支持与法律条款。实验室测试精度 ±2 音分。",
+      "type": "text/html",
+      "url": "https://www.pianotuner.top/",
+      "representativeQueries": [
+        "钢琴调音机器人怎么用",
+        "自动调音器的精度是多少",
+        "Piano Tuner 支持哪些钢琴",
+        "调音机器人多少钱",
+        "如何联系 Piano Tuner 团队"
+      ]
+    },
+    {
+      "id": "urn:air:pianotuner.top:docs:product-en",
+      "displayName": "Product pages (English)",
+      "description": "Product overview, how it works, FAQ, support and legal terms for the piano tuning robot. Lab-tested accuracy ±2 cents.",
+      "type": "text/html",
+      "url": "https://www.pianotuner.top/en/",
+      "representativeQueries": [
+        "how does the piano tuning robot work",
+        "automatic piano tuner accuracy",
+        "piano tuner robot price",
+        "which pianos are supported",
+        "contact the Piano Tuner team"
+      ]
+    },
+    {
+      "id": "urn:air:pianotuner.top:api:subscribe",
+      "displayName": "邮件订阅接口 / Email subscription endpoint",
+      "description": "接收上市与测试通知的邮件订阅接口。POST application/json，字段 email。这是本站唯一对外开放的写入接口。",
+      "type": "application/json",
+      "url": "https://www.pianotuner.top/api/pianotuner/subscribe",
+      "representativeQueries": [
+        "订阅 Piano Tuner 的上市通知",
+        "subscribe to Piano Tuner launch updates"
+      ]
+    },
+    {
+      "id": "urn:air:pianotuner.top:api:health",
+      "displayName": "服务健康检查 / Service health check",
+      "description": "后端可用性检查，返回 service 与 status 两个字段。",
+      "type": "application/json",
+      "url": "https://www.pianotuner.top/api/health",
+      "representativeQueries": ["Piano Tuner API 是否可用"]
+    },
+    {
+      "id": "urn:air:pianotuner.top:sitemap",
+      "displayName": "站点地图 / Sitemap",
+      "description": "全部 18 个页面（中英双语各 9 页）的索引。",
+      "type": "application/xml",
+      "url": "https://www.pianotuner.top/sitemap.xml",
+      "representativeQueries": ["Piano Tuner 网站有哪些页面"]
+    }
+  ]
+}

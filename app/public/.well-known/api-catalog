@@ -1,0 +1,16 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.pianotuner.top/api/pianotuner/subscribe",
+      "service-doc": [
+        { "href": "https://www.pianotuner.top/support.html", "type": "text/html", "title": "支持与联系 / Support" }
+      ],
+      "status": [
+        { "href": "https://www.pianotuner.top/api/health", "type": "application/json" }
+      ],
+      "describedby": [
+        { "href": "https://www.pianotuner.top/privacy.html", "type": "text/html", "title": "隐私政策 / Privacy policy" }
+      ]
+    }
+  ]
+}

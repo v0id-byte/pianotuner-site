@@ -31,6 +31,7 @@ export const GENERATED = [
   'favicon-brand-202609.svg',
   'apple-touch-icon-202609.png',
   'og-cover.jpg',
+  '.well-known',
 ];
 export const STAGE_ONLY = ['.build-manifest.json'];
 export const REPO_ONLY = [
