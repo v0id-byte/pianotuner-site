@@ -122,7 +122,10 @@
       const bad = [];
       sels.forEach((s) => document.querySelectorAll(s).forEach((el) => {
         const st = el.getAttribute('style') || '';
-        if (/transform|translate|opacity/.test(st)) bad.push({ sel: s, style: st.slice(0, 80) });
+        // 只算「非恒等」残留：opacity:1 / translate(0,0) 不挡 hover
+        const tr = el.style.transform, op = el.style.opacity;
+        const nonIdentity = (tr && !/^(none|translate\(0(px)?, 0(px)?\)|translate3d\(0px, 0px, 0px\)|matrix\(1, 0, 0, 1, 0, 0\))$/.test(tr)) || (op && +op < 1);
+        if (nonIdentity) bad.push({ sel: s, style: st.slice(0, 80) });
       }));
       return { count: bad.length, bad: bad.slice(0, 20) };
     },
@@ -185,6 +188,29 @@
       });
       f.remove();
       return { firstScreen: els ? els.length : 0, flashCount: flashes.length, flashes };
+    },
+
+    async triggerTest(sel = '[data-reveal="pending"]') {
+      const el = [...document.querySelectorAll(sel)].find((e) => e.dataset.reveal === 'pending' && e.getBoundingClientRect().top > innerHeight);
+      if (!el) return { note: 'no pending element below the fold' };
+      const lenis = window.__lenis;
+      const to = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
+      const docY = el.getBoundingClientRect().top + window.scrollY;
+      to(docY - innerHeight * 0.92); await sleep(400);
+      const at92 = { state: el.dataset.reveal, opacity: +getComputedStyle(el).opacity };
+      to(docY - innerHeight * 0.87);
+      const t0 = performance.now();
+      let tStart = null, tVisible = null;
+      await new Promise((resolve) => {
+        const tick = () => {
+          const now = performance.now();
+          if (tStart === null && +getComputedStyle(el).opacity > 0.01) tStart = now - t0;
+          if (tVisible === null && el.dataset.reveal !== 'pending') tVisible = now - t0;
+          if ((tStart !== null && tVisible !== null) || now - t0 > 3000) resolve(); else requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+      return { el: `${el.tagName}.${el.className}`.slice(0, 50), at92, startMs: tStart && Math.round(tStart), visibleMs: tVisible && Math.round(tVisible) };
     },
 
     gateF() {

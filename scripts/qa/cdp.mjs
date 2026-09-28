@@ -115,10 +115,22 @@ try {
     console.log(JSON.stringify(await evaluate(c, 'window.__flash'), null, 1));
   } else if (cmd === 'audit') {
     const [url, expr] = args;
+    const errors = [];
+    c.listeners.push((m) => {
+      if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception?.description?.split('\n')[0] || m.params.exceptionDetails.text);
+      if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errors.push(m.params.args.map((a) => a.value || a.description).join(' ').slice(0, 160));
+    });
     await setup(c, { mobile, reduced: flags.has('--reduced') });
     await go(c, url, 1500);
+    const at = [...flags].find((f) => f.startsWith('--reload-at='));
+    if (at) {
+      const f = parseFloat(at.split('=')[1]);
+      await evaluate(c, `scrollTo(0, Math.round((document.documentElement.scrollHeight - innerHeight) * ${f}))`); await sleep(400);
+      const loaded = c.once('Page.loadEventFired', 30000); await c.send('Page.reload'); await loaded; await sleep(2500);
+    }
     await injectQA(c);
-    console.log(JSON.stringify(await evaluate(c, `(async()=>(${expr}))()`), null, 1));
+    const value = await evaluate(c, `(async()=>(${expr}))()`);
+    console.log(JSON.stringify({ value, errors }, null, 1));
   } else if (cmd === 'keys') {
     const [url] = args;
     const key = async (k, code, extra = {}) => {
