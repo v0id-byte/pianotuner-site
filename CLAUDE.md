@@ -55,19 +55,55 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
 - 换视频/poster **必须换文件名**：滚动锁定发大量 Range 请求，Cloudflare 与浏览器按字节区间缓存，同 URL 换内容会拼出解不出的流（2026-09-01）。视频在 `app/public/assets/video/`，Vite 原样拷贝不加 hash；verify 规则：同名视频 sha256 变了就失败。旧文件名留着指向当前内容。
 - 编码：`-g 12`（24fps）、`-movflags +faststart`、`-an`（BGM 是 CC BY 非商用）、`muted playsinline` + poster。
 
-## 动效体系（`app/src/lib/motion/hooks.js`）
+## 动效体系（`app/src/lib/motion/hooks.js` + `tokens.js`，2026-09-28 重构）
 
 - **E0：静止态必须是可见态。** CSS 里绝不写 `opacity:0` 基态；隐藏只由 JS 成功建立 timeline 后 `gsap.set` 写 inline。`data-motion-ready` 按 section 局部标记，不在 `<html>` 上。验收：404 掉入口 JS、禁用 JS、reduced-motion 三种情况全部可读。
-- 一个属性只能有一个 motion owner：Lenis 管滚动插值（lerp 0.12）、ScrollTrigger 管进度、GSAP 管 transform/opacity、CSS 只管 hover/focus。**禁 `gsap.killTweensOf(el)`**（元素级 API 会杀掉别的 owner 的补间，2026-09-04 melspectrum 线上事故）。
+- **首屏零闪烁**：hook 绑定时已在首屏（顶边高于 88%）的元素**不藏**，直接 `done`；首屏标题走「cover」擦除（色条与藏字同一帧落位，随后滑出），经 View Transition 抵达的首屏标题不播。
+- 一个属性只能有一个 motion owner：Lenis 管滚动插值（lerp 0.12）、ScrollTrigger 管进度、GSAP 管 transform/opacity、CSS 只管 hover/focus。**禁 `gsap.killTweensOf(el)`**（元素级 API 会杀掉别的 owner 的补间，2026-09-04 melspectrum 线上事故）。成文例外（CSS 所有）：移动菜单 `<dialog>` 入场、跨页 View Transition。布局动画例外（有意为之）：FAQ 高度、SVG 路径描绘。
+- **运动 token**：`lib/motion/tokens.js` 的 `EASE`（out `.22,1,.36,1` 入场 / inOut `.65,0,.35,1` 跨屏移动 / wipe `1,0,0,1` / exit / scrub=`none`）、`DUR`（xs .15 · s .25 · m .5 · l .8 · xl 1.1 · wipe .9）、`START = 'top 88%'`、`CASCADE`（each 70ms、封顶 420ms、组间休止 120ms）。**与 `tokens.css` 的 `--ease-*` / `--dur-*` 是同一组数，改一处必须同步另一处。** 入场永不用 ease-in；scrub 永远线性（`scrub: true`，输入平滑归 Lenis，不叠数值 scrub）。
+- **显现生命周期**（`bindCascade`）：`data-reveal` = `pending → visible → done`。`pt:revealed` 在 **visible**（opacity 过阈值 = fade×0.6）派发，不是动画结束；`done` 时 `clearProps: 'opacity,transform'`（否则 inline transform 会压掉 `.spec:hover` 等 hover 位移）。每个元素自己的触发线（`START`），**组内级联由 DOM 决定**（`data-reveal-group` 或 `.steps/.stack-deck/.specs/.contact-grid/.net__metrics/.team-grid`，否则归 section），同组共享排队时钟——慢滚与快速甩屏节奏一致。先建空 `gsap.context` 再绑定（起点已越过的触发器会在 `create()` 内同步调 `onEnter`）。资源显式登记，cleanup 逐个 kill；StrictMode 双挂载后 ScrollTrigger 数量必须与生产一致。
+- 档位（透明度先于位移完成）：lead y48 · fade .5 / rise 1.1 · delay .12；metric y18 scale .94 · .5/.8；base y12 · .5/.8；stack y14 · .5/.8。
+- 通用区块 `components/Section.jsx`（岛 / topic / 显现 hooks / 可选 countUp），不要再在页面里复制本地 `Section`。
 - 逐行擦除条 `useTextReveal`：SplitText `autoSplit` + `onSplit` 返回 timeline（官方推荐），字体就绪后才拆。`.reveal-text` 所在子树 React **不得重渲染**（SplitText 改了 DOM）。**含 `<sup><a href="#precision-note">` 的文字不要加 `.reveal-text`**（角标用 `<Fn />` 放在 reveal 元素外）。擦除条静止态用 `opacity`，绝不用 `transform`。
-- 三档滚动显现：`.anim-up--lead` 56px/1.0s、`.anim-up--metric` 带 scale、`.anim-up` 10px/0.75s。
-- **三步区不 pin**（2026-09-01 实测：紧挨 hero pin 再卡一次很难受）：`useStepsPath` 用区块自己的行程 scrub（`top bottom → top top+=64`），手机不建。melspectrum 的 `useSteps` pin **不移植**。
+- **三步区不 pin**（2026-09-01 实测：紧挨 hero pin 再卡一次很难受）：`useStepsPath` 以 `.steps` 自己的行程 scrub（`START → top 40%`），生命周期跟随 scrub 进度（onUpdate/onRefresh）；手机改走组内级联。melspectrum 的 `useSteps` pin **不移植**。
 - 跑马灯方向恒定只调速度（负 timeScale 会卡死）；三份 clone 两份 `aria-hidden`；**跑马灯不放任何精度数字**（承载不了角标与脚注）。
-- `Scramble` 只用于拉丁/数字且**不是 Gate F 管的数字**（TESTFLIGHT / RAILSBACK / 版本号可以，`±2` 不可以）。组件遇到任何非 ASCII 文本自动保持静态，所以全站 `.card__num`（`01 · WRISTS` 等）统一走它：进场一次 + ≥1024px 悬停重触发。
-- FAQ 是原生 `<details>`，`useFaqAccordion` 只在有动效时接管 summary 点击、补间 `.faq__body` 高度；无 JS / reduced-motion 原生开合不变，开合后 `refreshSoon()`。
+- `Scramble` 只用于拉丁/数字且**不是 Gate F 管的数字**（TESTFLIGHT / RAILSBACK / 版本号可以，`±2` 不可以）。组件遇到任何非 ASCII 文本自动保持静态，所以全站 `.card__num`（`01 · WRISTS` 等）统一走它：进场**等宿主 `pt:revealed`**（IO 只做兜底，`playOnce` 幂等锁）+ ≥1024px 悬停重触发。
+- FAQ 是原生 `<details>`，`useFaqAccordion` 只在有动效时接管 summary 点击：**每项一条可逆 timeline**（play / reverse，连点只换方向），展开 ease-out、收起 1.4×；`data-state` 即时驱动 + 号；无 JS / reduced-motion 原生开合不变，开合后 `refreshSoon()`。
+- 悬停反馈（仅 `hover:hover and pointer:fine`）：卡片 / 步骤 / 指标顶边 1px 主题色细线，进入 `--dur-m` 缓出、离开 `--dur-s`。按钮填充用 `scaleX`，不补间 width。
+- **跨页过渡**：`@view-transition { navigation: auto }` 只在 `no-preference` 下；`.nav-frame` 命名 `pt-nav`（同一时刻必须唯一）。`head.js` 的 `pagereveal` 内联脚本写 `html[data-vt]`（arrive → done，取自 `ViewTransition.finished`），**只用来少播首屏入场，可见性永不依赖它**。Firefox 等不支持时照常硬导航。
+- **`/#hash` 落点**：首屏视频 pin 晚建会把目标推下一个锁定距离（曾差 2100px）。`MotionProvider.fixHashLanding()` 在 pin 建好后的第一次 refresh 重新对准一次——仅限 `navigate` 类型导航且用户尚未滚动/触摸/按键；刷新与前进后退交给浏览器恢复。`pageshow.persisted` 时 `refreshSoon()`。
+- 动效层级与预算：T1 叙事（hero 擦除、区块显现、三步、跨页过渡）> T2 信息（级联、Scramble、FAQ、count-up）> T3 反馈（hover、按钮、焦点、菜单）；T3 不得抢 T1。同一视口至多 1 个主动效 + 2 个次动效。
 - 对比表 `.cmp` 首列 `position: sticky`（手机横滑时行名不丢），≤719px 显示 `.tablewrap__hint`。
-- reduced-motion = 整个体系进入静态构图：Lenis 不启动、所有 hook 早退、`motion.css` 兜底。
-- rAF 与 setTimeout 竞速（`afterPaint`）：后台标签页 / 隐藏面板会暂停 rAF。**Claude 浏览器面板隐藏时 rAF 被节流**，测动效前先量一次（600ms 内少于 10 帧就别下「动效没生效」的结论）。
+- reduced-motion = 整个体系进入静态构图：Lenis 不启动、所有 hook 早退（无 `data-reveal`、ScrollTrigger 0 个，仅剩 ScrollTrigger 自身的 0 时长 delayedCall）、`motion.css` 兜底、无 view-transition-name。
+- rAF 与 setTimeout 竞速（`afterPaint`）：后台标签页 / 隐藏面板会暂停 rAF。**Claude 浏览器面板隐藏时 rAF 被节流**（`innerWidth` 读出 0 就是隐藏了），测动效用 `scripts/qa/cdp.mjs`（无头 Chrome）或先量帧率：预热 1s 后采样 1s，**<45 帧直接判 SKIP**，不下结论。
+- **验收工具（REPO_ONLY）**：`scripts/qa/cdp.mjs`（shoot 整页截图 / flash 首帧闪烁 / audit 注入 `motion-audit.js` 求值 / snap hover 截图 / keys 键盘 / nav hash·BFCache·连点 / vt 跨页过渡 / nojs 404·禁用 JS）+ `scripts/qa/diff.py`（像素回归三联图）。Chrome 冷启动慢，`PTQA_TMP` 指到可写目录。
+- 动效清单（owner 一眼可查）：
+
+  | 组件 | owner | 触发 | 属性 | 时长 |
+  |---|---|---|---|---|
+  | hero 视频锁定 | ScrollTrigger pin | 进入 hero | pin + `currentTime` | 锁定距离 |
+  | 标题擦除 | GSAP | 首屏 cover / START | box xPercent、行 opacity | .9 / .5 |
+  | 区块显现 | GSAP（bindCascade） | START，组内排队 | opacity、y、scale | .5 / .8–1.1 |
+  | 三步 | GSAP scrub | `.steps` START→40% | 步 opacity、连线 scaleX | scroll |
+  | Railsback / 拍频图 | GSAP scrub | START / 82% | dashoffset / 画布 | scroll |
+  | 网格视差 | GSAP scrub | hero 首屏一段 | y | scroll |
+  | Scramble | GSAP | 宿主 pt:revealed / hover | 文本 | 1.75 |
+  | FAQ | GSAP 可逆 timeline | 点击 | height、opacity | .5 / .25 |
+  | 按钮 / 卡片线 / 高亮 | CSS | hover / focus | transform、opacity | .25 / .5 |
+  | 移动菜单 | CSS（例外） | dialog open | opacity、y | .25 / .5 |
+  | 跨页 | View Transition（例外） | 同源导航 | root opacity、y | .25 / .35 |
+
+## 配色：铜 / 青两个主题色（2026-09-28 起）
+
+- 语义固定：**铜 brass = 声学 / 精度 / 机械 / 硬件；青 teal = 数据 / App / 连接 / 隐私 / 软件。** UI chrome（选区、导航 hover、语言开关、进度条、跳转链接）恒为青；导航「候补名单」徽章为铜；精度脚注链（`.fn-ref a`、`.notes`）恒为铜（注释语义，不随区块）。
+- 每色两档：**fill**（`--color-teal` #2DD4BF / `--color-brass` #D9B26F，只用于深底或黑字底色）+ **ink**（`--color-teal-ink` #0B6E63 / `--color-brass-ink` #7D5A14，只用于浅底文字，≥4.5:1）。永不把 fill 当浅底文字、永不把 ink 放深底。`--color-accent(-deep)` 保留为青的别名。
+- 作用域：`.topic-teal / .topic-brass` 设 `--topic-fill / --topic-ink`；`--topic-text` 按岛解析（深岛/导航/菜单 = fill，浅岛 = ink，主题色岛 = 黑），且在每个 topic 元素上重新声明（变量引用在声明处求值）。组件只写 `var(--topic-fill)` / `var(--topic-text)`，不写色值。
+- 优先级在**数据层**解析：条目 `topic` → 区块 `topic` → 页面缺省（:root = teal）；`ui.tc(topic, parent)` 只在与区块不同时输出 class。`Hero` 缺省铜（配暖木纹视频），`PageHero` 缺省青。所有 TestFlight 链接青，所有候补名单 / 购买链接与订阅表单铜。
+- **颜色只加强分组，从不单独承载含义**——每个上色模块都有文字标签（HARDWARE / APP …）。
+- 主题色岛上的正文一律黑字（`.sec-head p` 的 charcoal 在青上 3.71、在铜上 3.46）。
+- 焦点环双色：2px 内圈 outline + 外圈 box-shadow，随岛翻转，任何背景都 ≥3:1。
+- 硬编码扫描：`grep -rni "#2DD4BF\|#14B8A6\|#0B6E63\|#D9B26F\|#7D5A14" app/src` 只允许 `tokens.css`、BeatFigure 的兜底值、`head.js` 跳转存根（独立页面，读不到 token）。favicon / og-cover 仍为青（改色必须换版本化文件名）。
+- 已知遗留（不在本轮）：浅底上的灰色小字 `--color-ash` #8d8d8d（`.faq__num`、figcaption、法律页编号、指南署名，2.81–3.02:1）与页脚版权行 charcoal on black（2.67:1）——`--color-ash-ink` #6b6b6b 已备好，单独做。
 
 ## 字体
 
