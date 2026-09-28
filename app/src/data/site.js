@@ -9,4 +9,4 @@ export const SUBSCRIBE_API = '/api/pianotuner/subscribe';
 export const LEGAL_ZH = '融谱智能科技（深圳）有限公司';
 export const LEGAL_EN = '融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand';
 // 自托管 Umami（origin 同源反代 /u.js、/u/e）。留空 = 不注入统计脚本（服务端未就绪时保持零 404）。
-export const UMAMI_WEBSITE_ID = '';
+export const UMAMI_WEBSITE_ID = '6f94d781-ebe3-4a69-a900-c0ecbd087350';
