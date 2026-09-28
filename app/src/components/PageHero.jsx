@@ -6,14 +6,14 @@ import BlueprintGrid from './BlueprintGrid';
  * 非视频页的首屏：暗岛 + 蓝图网格 + t-display 两行阶梯 + 擦除条。
  * variant 'static' 带木纹底图（压暗 scrim），'plain' 纯黑不带图、高度更矮。
  */
-export default function PageHero({ eyebrow, l1, l2, sub, actions, variant = 'plain', display = false }) {
+export default function PageHero({ eyebrow, l1, l2, sub, actions, variant = 'plain', display = false, topic = 'teal' }) {
   const root = useRef(null);
   const grid = useRef(null);
   useTextReveal(root);
   useReveal(root);
   useGridParallax(grid);
   return (
-    <section id="top" className={`hero hero--${variant} island-dark p-custom`} data-nav-theme="dark" ref={root}>
+    <section id="top" className={`hero hero--${variant} island-dark topic-${topic} p-custom`} data-nav-theme="dark" ref={root}>
       <div className="hero__media" aria-hidden="true" />
       <BlueprintGrid innerRef={grid} />
       <div className="hero__inner">

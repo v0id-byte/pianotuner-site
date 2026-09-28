@@ -7,7 +7,7 @@ import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import RailsbackFigure from '../../components/RailsbackFigure';
 import PrecisionNote from '../../components/PrecisionNote';
-import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
+import { BracketLink, Button, Eyebrow, Fn, SectionHead, tc } from '../../components/ui';
 import { useStackDeck } from '../../lib/motion/hooks';
 import { EMAIL_REPORT } from '../../data/site';
 import { graph, breadcrumb, ORG_ID } from '../schema';
@@ -37,17 +37,17 @@ function Features() {
   const cards = [
     { num: '01 · OPTIMIZER', title: t('端侧拉伸优化引擎', 'On-device stretch optimizer'), desc: t('从实测不谐性（B 值）本机拟合专属拉伸曲线，确定、可复现。', 'Fits a bespoke stretch curve on-device from measured inharmonicity (B) — deterministic, reproducible.') },
     { num: '02 · ANALYSIS', title: t('专业级频率分析', 'Professional frequency analysis'), desc: t('基于声学原理的频率分析技术，在高频区同样稳定收敛到目标精度。', 'Acoustic-based frequency analysis that holds the target across the top octaves, and across the full range.') },
-    { num: '03 · TURBO', title: t('Turbo 涡轮性能模式', 'Turbo performance mode'), desc: t('解除电机转速限制，大幅提升调音响应速度，显著缩短 88 键全流程调音总耗时。', 'Unlocks motor speed limits for faster response, drastically reducing total 88-key tuning time.') },
+    { num: '03 · TURBO', topic: 'brass', title: t('Turbo 涡轮性能模式', 'Turbo performance mode'), desc: t('解除电机转速限制，大幅提升调音响应速度，显著缩短 88 键全流程调音总耗时。', 'Unlocks motor speed limits for faster response, drastically reducing total 88-key tuning time.') },
     { num: '04 · ARCHIVE', title: t('云端 CRM 数字化档案', 'Cloud CRM & archive'), desc: t('自动同步调音数据，为客户建立数字化档案，永久记录每台钢琴的历史状态与参数。', 'Auto-syncs tuning data to create digital customer archives, recording historical piano states.') },
     { num: '05 · REPORTS', title: t('PDF 钢琴健康报告', 'PDF health reports'), desc: t('低、中、高音区分别评分，逐键定位问题并附建议，本机生成、可打印。', 'Separate scores for bass, mid and treble, per-key problem spots and advice — generated on-device, print-ready.') },
-    { num: '06 · TEMPERAMENTS', title: t('历史律制支持', 'Historical temperaments'), desc: t('内置 5 种历史律制（平均律、Werckmeister III、Kirnberger III、Young II、Valotti），适配各种古典演奏风格。', '5 historical temperaments built in (Equal, Werckmeister III, Kirnberger III, Young II, Valotti) to match classical performance styles.') },
+    { num: '06 · TEMPERAMENTS', topic: 'brass', title: t('历史律制支持', 'Historical temperaments'), desc: t('内置 5 种历史律制（平均律、Werckmeister III、Kirnberger III、Young II、Valotti），适配各种古典演奏风格。', '5 historical temperaments built in (Equal, Werckmeister III, Kirnberger III, Young II, Valotti) to match classical performance styles.') },
   ];
   return (
-    <Section island="light" id="features">
+    <Section island="light" id="features" topic="teal">
       <SectionHead eyebrow={t('PRO FEATURES · 六大独占特性', 'PRO FEATURES')} title={t('专业版 6 大独占特性', 'Six exclusive Pro features')} sub={t('为职业调律师与追求极致音准的钢琴玩家量身定制。', 'Tailored for professional tuners and audiophile piano owners.')} />
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
-          <article className="card" key={c.num} data-stack-card>
+          <article className={`card ${tc(c.topic, 'teal')}`.trim()} key={c.num} data-stack-card>
             <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
@@ -71,7 +71,7 @@ function Compare() {
     [t('授权方式', 'Licensing'), t('硬件内置', 'Included with hardware'), t('Pro 年度订阅（¥499/年）', 'Pro annual subscription (¥499/yr)')],
   ];
   return (
-    <Section island="dark" id="comparison">
+    <Section island="dark" id="comparison" topic="teal">
       <SectionHead eyebrow={t('EDITIONS · 选择版本', 'EDITIONS')} title={t('选择适合您的版本', 'Choose your edition')} />
       <div className="tablewrap">
         <table className="cmp">
@@ -110,12 +110,12 @@ export default function Pro() {
         l2={t('赋予数字灵魂', 'for professional tuners')}
         sub={t('高精度声学、Turbo 电机、云端业务管理，一台调音器全包。', 'High-res acoustics, Turbo motor, cloud management — one tuner.')}
         actions={<>
-          <BracketLink href={href(lang, 'buy')} highlight>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} highlight className="topic-brass">{t('加入候补名单', 'Join the waitlist')}</BracketLink>
           <BracketLink href="#features">{t('六大独占特性', 'Six Pro features')}</BracketLink>
         </>}
       />
       <div className="gasket" aria-hidden="true" />
-      <Section island="light" id="railsback">
+      <Section island="light" id="railsback" topic="teal">
         <article className="product">
           <div className="product__head">
             <Eyebrow>{t('CORE TECH · 核心技术', 'CORE TECH')}</Eyebrow>
@@ -138,7 +138,7 @@ export default function Pro() {
       <Features />
       <div className="gasket" aria-hidden="true" />
       <Compare />
-      <Section island="accent" id="cta">
+      <Section island="accent" id="cta" topic="teal">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow inverse>{t('GET STARTED · 开启专业调律', 'GET STARTED')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('开启您的专业数字化调律', 'Start your professional tuning')}</h2>
@@ -151,7 +151,7 @@ export default function Pro() {
           </p>
         </div>
         <div className="cta__links" style={{ marginTop: 'var(--gap-y-md)' }}>
-          <Button href={href(lang, 'buy')} variant="dark">{t('加入候补名单', 'Join the waitlist')}</Button>
+          <Button href={href(lang, 'buy')} variant="dark" className="topic-brass">{t('加入候补名单', 'Join the waitlist')}</Button>
           <BracketLink href={href(lang, 'index')} className="blink--onaccent">{t('返回产品首页', 'Back to the product')}</BracketLink>
         </div>
       </Section>
