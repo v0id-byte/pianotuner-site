@@ -1,7 +1,7 @@
 /* ============================================================
    pianotuner.top 页面模块样式。设计系统本体在 tokens/app/motion.css（从 melspectrum 搬来）。
    不变量同样适用：内容可见性绝不依赖 JS；零渐变（hero scrim 是功能性压暗，例外）、
-   零阴影、零圆角、单一强调色、1px 虚线发丝边。
+   零阴影、零圆角、铜/青两个主题色（fill/ink 规则见 tokens.css 顶部）、1px 虚线发丝边。
    ============================================================ */
 
 /* ---------- 字体：Inter 变量字体 + Noto Sans SC 子集（只含站上用到的字） ---------- */
@@ -36,7 +36,7 @@
     linear-gradient(to bottom, rgba(20, 20, 20, 0.55) 0%, rgba(20, 20, 20, 0.12) 24%, rgba(20, 20, 20, 0.28) 56%, rgba(20, 20, 20, 0.86) 88%, rgba(20, 20, 20, 0.98) 100%);
 }
 .hero--video .hero__grid { z-index: 1; }
-.hero__eyebrow { display: inline-block; color: var(--color-accent); margin-bottom: 20px; }
+.hero__eyebrow { display: inline-block; color: var(--topic-fill); margin-bottom: 20px; }
 @media (max-width: 767px) { .hero__poster, .hero__video { object-position: 34% 40%; } }
 
 /* ---------- eyebrow 反色（accent 岛上） ---------- */
@@ -101,7 +101,7 @@
 .steps--path { position: relative; }
 .steps__line {
   position: absolute; left: 0; right: 0; top: 0; height: 1px;
-  background: var(--color-accent);
+  background: var(--topic-fill);
   /* 静止态是画满的：连线由 JS 成功建立 timeline 后才被 gsap.set 收起来 */
 }
 .steps--path .step { border-top-color: transparent; }
@@ -113,7 +113,7 @@
 .beat { margin: var(--gap-y-md) 0 0; display: grid; gap: 16px; border: 1px dashed var(--color-gunmetal); padding: 16px; }
 .beat__canvas { width: 100%; height: clamp(180px, 26vw, 300px); display: block; }
 .beat__cap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: baseline; }
-.beat__readout { color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.beat__readout { color: var(--topic-fill); font-variant-numeric: tabular-nums; }
 .beat__readout .t-ui { color: var(--color-ash); margin-left: 8px; }
 .island-dark .specs__note { color: var(--color-silver); }
 
@@ -125,7 +125,7 @@
 .rb__ylab, .rb__xlab, .rb__zlab { font-family: var(--font-mono); font-size: 12px; fill: var(--color-ash); }
 .rb__ylab { text-anchor: end; }
 .rb__xlab { text-anchor: middle; }
-.rb__area { fill: var(--color-accent); opacity: 0.16; }
+.rb__area { fill: var(--topic-fill); opacity: 0.16; }
 .rb__curve { fill: none; stroke: var(--color-black); stroke-width: 2; stroke-dasharray: 1; }
 
 /* ---------- 隐私块 ---------- */
@@ -141,13 +141,12 @@
 .cmp tbody th { color: var(--color-ash); font-weight: 400; width: 22%; }
 .cmp td { color: var(--color-silver); }
 .cmp td.cmp__hl { color: var(--color-white); font-weight: 300; font-size: 1.125rem; letter-spacing: -0.02em; }
-.cmp thead th.cmp__hl { color: var(--color-accent); }
+.cmp thead th.cmp__hl { color: var(--topic-fill); }
 
 /* ---------- 卡片补充 ---------- */
 .stack-deck--2 { grid-template-columns: 1fr; }
 @media (min-width: 900px) { .stack-deck--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.card__foot { color: var(--color-accent-deep); margin: 8px 0 0; }
-.island-dark .card__foot { color: var(--color-accent); }
+.card__foot { color: var(--topic-text); margin: 8px 0 0; }
 
 /* ---------- FAQ：原生 <details>，编号 + 虚线行 ---------- */
 .faq { margin-top: var(--gap-y-md); border-top: 1px dashed var(--color-alabaster); }
@@ -165,14 +164,14 @@
 .faq__item[data-state='open'] .faq__plus { transform: rotate(45deg); }
 .faq__a { margin: 0 0 24px; padding-left: 64px; color: var(--color-charcoal); max-width: 70ch; }
 @media (max-width: 599px) { .faq__q { grid-template-columns: 36px 1fr 20px; } .faq__a { padding-left: 52px; } }
-.faq__q:hover .faq__title { color: var(--color-accent-deep); }
+.faq__q:hover .faq__title { color: var(--topic-text); }
 
 /* ---------- Roadmap：metric 砖 ---------- */
 .roadmap { grid-template-columns: 1fr; }
 @media (min-width: 900px) { .roadmap { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .roadmap .metric h3 { margin-top: 4px; }
-.metric--active { border-top-color: var(--color-accent); }
-.metric--active .metric__label { color: var(--color-accent); }
+.metric__label { color: var(--topic-text); }
+.metric--active { border-top-color: var(--topic-fill); }
 
 /* ---------- CTA 岛：表单 + 链接 ---------- */
 .cta__grid { display: grid; gap: 32px; margin-top: var(--gap-y-md); }
@@ -205,11 +204,13 @@
   font-family: var(--font-mono); font-size: 11px; line-height: 1.7; letter-spacing: 0.01em;
   color: var(--color-silver); max-width: 78ch; scroll-margin-top: calc(var(--nav-h) + 24px);
 }
-.notes__mark { color: var(--color-accent); }
-.notes a { color: var(--color-accent); }
+/* 精度脚注链是「注释」语义，不随区块主题：恒为铜（浅底 ink、深底 fill、青/铜岛上黑） */
+.notes__mark { color: var(--color-brass); }
+.notes a { color: var(--color-brass); }
 .fn-ref { font-size: 0.7em; line-height: 0; vertical-align: super; }
-.fn-ref a { text-decoration: none; color: var(--color-accent-deep); padding: 0 2px; }
-.island-dark .fn-ref a, .hero .fn-ref a { color: var(--color-accent); }
+.fn-ref a { text-decoration: none; color: var(--color-brass-ink); padding: 0 2px; }
+.island-dark .fn-ref a, .hero .fn-ref a { color: var(--color-brass); }
+.island-accent .fn-ref a { color: var(--color-black); }
 
 /* ---------- 跑马灯：三份 clone，两份 aria-hidden ---------- */
 .marquee__copy { display: inline-flex; align-items: center; gap: 40px; }
@@ -230,13 +231,13 @@
 
 /* ---------- 团队 monogram（about）与占位方块 ---------- */
 .mono-block {
-  display: grid; place-items: center; background: var(--color-black); color: var(--color-accent);
+  display: grid; place-items: center; background: var(--color-black); color: var(--topic-fill);
   font-weight: 300; letter-spacing: 0.02em; aspect-ratio: 16 / 9; font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);
 }
 .person__top { display: flex; align-items: center; gap: 18px; }
 .person__mono {
   width: 64px; height: 64px; flex: none; display: grid; place-items: center;
-  background: var(--color-black); color: var(--color-accent); font-weight: 300; font-size: 1.5rem; letter-spacing: 0.02em;
+  background: var(--color-black); color: var(--topic-fill); font-weight: 300; font-size: 1.5rem; letter-spacing: 0.02em;
 }
 
 /* ---------- 联系页 ---------- */
@@ -259,8 +260,7 @@
 /* ---------- 通用微调 ---------- */
 .sec-head + .stack-deck, .sec-head + .steps, .sec-head + .specs { margin-top: var(--gap-y-md); }
 .t-body a { color: inherit; }
-.island-light .card__num { color: var(--color-ash); }
-.island-light .step__data { color: var(--color-accent-deep); }
+
 .notice { max-width: 64ch; display: grid; gap: 20px; }
 .notice__kv { border-top: 1px dashed var(--color-alabaster); }
 

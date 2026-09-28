@@ -1,7 +1,14 @@
 /* ============================================================
-   MelSpectrum design tokens
-   Discipline: ONE accent, zero gradients, zero shadows, zero radii
-   on interactive elements, 1px dashed hairlines for card edges.
+   MelSpectrum design tokens（pianotuner 版）
+   Discipline: TWO topic colours with fixed meanings (brass = acoustics /
+   precision / mechanics / hardware; teal = data / app / connectivity /
+   privacy / software), zero gradients, zero shadows, zero radii on
+   interactive elements, 1px dashed hairlines for card edges.
+   Every topic colour has a FILL tone (dark backgrounds, or behind black
+   text) and an INK tone (text on light backgrounds, ≥4.5:1). Never use a
+   fill as text on light, never use an ink on dark.
+   Colour reinforces grouping; it never carries meaning by itself — every
+   coloured module also has a text label.
    ============================================================ */
 :root {
   /* neutrals — deliberately not pure black / pure white */
@@ -15,9 +22,17 @@
   --color-platinum:  #ececec;
   --color-porcelain: #f5f4f2;
 
-  /* the single accent */
-  --color-accent:      #2DD4BF;
-  --color-accent-deep: #14B8A6;
+  /* topic colours —— fill（深底 / 黑字底） + ink（浅底文字，≥4.5:1）
+     on #141414: teal 9.90 · brass 9.25 ｜ on #ececec/#f5f4f2/#fafafa: teal-ink 5.19/5.58/5.87 · brass-ink 5.31/5.71/6.02 */
+  --color-teal:      #2DD4BF;
+  --color-teal-ink:  #0B6E63;
+  --color-brass:     #D9B26F;
+  --color-brass-ink: #7D5A14;
+  /* 旧名保留为别名：UI chrome（选区、导航 hover、语言开关、进度条）恒为青 */
+  --color-accent:      var(--color-teal);
+  --color-accent-deep: var(--color-teal-ink);
+  /* 浅底上的灰色小字：ash #8d8d8d 在 #ececec 只有 2.81:1 */
+  --color-ash-ink:   #6b6b6b;
 
   --button-bezier: cubic-bezier(1, 0, 0.01, 1);
 
@@ -77,9 +92,14 @@ a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: none; padding: 0; }
 ::selection { background: var(--color-accent); color: var(--color-black); }
 
+/* 双色焦点环（W3C C40）：内圈 outline + 外圈 box-shadow 反色，任何背景（含视频、图片、青/铜岛）上都有一圈 ≥3:1。
+   内外圈随所在岛翻转，让离元素最近的那圈总是高对比的那一圈。 */
+:root, .island-light, .island-accent, .nav[data-theme='light'] { --focus-inner: var(--color-black); --focus-outer: var(--color-white); }
+.island-dark, .nav:not([data-theme='light']), .menu, .lang-hint, .footer { --focus-inner: var(--color-white); --focus-outer: var(--color-black); }
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--focus-inner);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--focus-outer);
 }
 /* forced-colors（Windows 高对比度等）：系统会覆盖作者指定的颜色，因此任何
    仅靠 background-color 表达的状态都会失效。凡是「选中/激活」这类语义，
@@ -127,10 +147,23 @@ button { font: inherit; color: inherit; background: none; border: none; padding:
 .py-section { padding-block: var(--py-section); }
 .py-section-sm { padding-block: var(--py-section-sm); }
 
+/* ---------- topic scope ----------
+   优先级：页面缺省（:root = teal）→ 区块 topic → 条目 topic，由数据层解析成 class，不靠 DOM 意外继承。
+   --topic-text 必须在每个 topic 元素上重新声明：变量引用在「声明处」求值，只在岛上声明的话，
+   嵌套的 .topic-brass 会继承岛上已算好的青色。 */
+:root, .topic-teal { --topic-fill: var(--color-teal);  --topic-ink: var(--color-teal-ink); }
+.topic-brass       { --topic-fill: var(--color-brass); --topic-ink: var(--color-brass-ink); }
+:root,
+.island-light, .island-light :is(.topic-teal, .topic-brass), :is(.topic-teal, .topic-brass).island-light,
+.nav[data-theme='light'] { --topic-text: var(--topic-ink); }
+.island-dark, .island-dark :is(.topic-teal, .topic-brass), :is(.topic-teal, .topic-brass).island-dark,
+.nav:not([data-theme='light']), .menu, .hero { --topic-text: var(--topic-fill); }
+.island-accent, .island-accent :is(.topic-teal, .topic-brass), :is(.topic-teal, .topic-brass).island-accent { --topic-text: var(--color-black); }
+
 /* ---------- islands ---------- */
 .island-dark  { background: var(--color-black); color: var(--color-white); }
 .island-light { background: var(--color-platinum); color: var(--color-black); }
-.island-accent{ background: var(--color-accent); color: var(--color-black); }
+.island-accent{ background: var(--topic-fill); color: var(--color-black); }
 /* 60px gasket between a light section and a dark one */
 .gasket { position: relative; height: 60px; width: 100%; background: var(--color-black); }
 
@@ -184,11 +217,11 @@ button { font: inherit; color: inherit; background: none; border: none; padding:
 
 .eyebrow {
   display: inline-block;
-  background: var(--color-accent);
+  background: var(--topic-fill);
   color: var(--color-black);
   padding: 4px 6px;
 }
-.eyebrow--plain { background: none; color: var(--color-ash); padding: 4px 0; }
+.eyebrow--plain { background: none; color: var(--topic-text); padding: 4px 0; }
 
 .rule { border: 0; border-top: 1px dashed var(--color-gunmetal); margin: 0; }
 .island-light .rule { border-top-color: var(--color-alabaster); }

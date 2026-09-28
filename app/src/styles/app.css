@@ -49,16 +49,19 @@
 .nav__link:hover { background: var(--color-accent); color: var(--color-black); }
 
 .nav__asn {
+  /* 候补名单 = 硬件开售 → 铜（导航本身是青的 UI chrome，这一枚是例外） */
+  --topic-fill: var(--color-brass); --topic-ink: var(--color-brass-ink);
   text-decoration: none;
   padding: 6px 8px;
   border: 1px dashed var(--color-gunmetal);
-  color: var(--color-accent);
+  color: var(--color-brass);
   white-space: nowrap;
   transition: background-color 200ms var(--button-bezier), color 200ms var(--button-bezier),
               border-color 200ms var(--button-bezier);
 }
-.nav__asn:hover { background: var(--color-accent); color: var(--color-black); border-color: var(--color-accent); }
-.nav[data-theme='light'] .nav__asn { border-color: var(--color-alabaster); color: var(--color-accent-deep); }
+.nav__asn:hover { background: var(--color-brass); color: var(--color-black); border-color: var(--color-brass); }
+.nav[data-theme='light'] .nav__asn { border-color: var(--color-alabaster); color: var(--color-brass-ink); }
+.nav[data-theme='light'] .nav__asn:hover { color: var(--color-black); }
 
 .lang-toggle { display: flex; border: 1px dashed var(--color-gunmetal); }
 .nav[data-theme='light'] .lang-toggle { border-color: var(--color-alabaster); }
@@ -113,14 +116,14 @@
   transition: background-color 200ms var(--button-bezier);
 }
 
-.btn--accent { background: var(--color-accent); color: var(--color-black); }
+.btn--accent { background: var(--topic-fill); color: var(--color-black); }
 .btn--accent::before { background: var(--color-black); }
 .btn--accent:hover { color: var(--color-white); }
 .btn--accent i { background: var(--color-black); }
 .btn--accent:hover i { background: var(--color-white); }
 
 .btn--dark { background: var(--color-black); color: var(--color-white); }
-.btn--dark::before { background: var(--color-accent); }
+.btn--dark::before { background: var(--topic-fill); }
 .btn--dark:hover { color: var(--color-black); }
 .btn--dark i { background: var(--color-white); }
 .btn--dark:hover i { background: var(--color-black); }
@@ -131,10 +134,9 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--color-accent);
+  color: var(--topic-text);
   transition: color 200ms var(--button-bezier);
 }
-.island-light .blink { color: var(--color-accent-deep); }
 .blink:hover { color: var(--color-black); }
 .island-dark .blink:hover { color: var(--color-white); }
 .blink svg { width: 11px; height: 11px; transition: transform 300ms var(--button-bezier); }
@@ -215,8 +217,8 @@
   background: var(--color-black);
 }
 .island-light .card { border-color: var(--color-alabaster); background: var(--color-porcelain); }
-.card__num { color: var(--color-ash); }
-.card__metric { color: var(--color-accent); }
+.card__num { color: var(--topic-text); }
+.card__metric { color: var(--topic-text); }
 .island-light .card__metric { color: var(--color-black); }
 .card__desc { color: var(--color-silver); }
 .island-light .card__desc { color: var(--color-charcoal); }
@@ -257,7 +259,7 @@
 .steps { display: grid; gap: 20px; margin-top: var(--gap-y-md); }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .step { border-top: 1px dashed var(--color-gunmetal); padding-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-.step__data { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--color-accent); }
+.step__data { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--topic-text); }
 /* 物理单位与邮箱字面量不能参与 uppercase：μ(U+03BC) 会被转成 Μ(U+039C，
    希腊大写 Mu)，单位就错了；邮箱地址全大写也不该出现在正文里。
    注意只豁免「显示字面量的元素」——mailto 的 CTA 按钮文案（Get in touch）
@@ -273,7 +275,7 @@
 .person__mono {
   width: 64px; height: 64px; flex: none;
   display: grid; place-items: center;
-  background: var(--color-black); color: var(--color-accent);
+  background: var(--color-black); color: var(--topic-fill);
   font-weight: 300; font-size: 1.5rem; letter-spacing: 0.02em;
 }
 .person__bio { color: var(--color-charcoal); }
