@@ -44,9 +44,9 @@ export default function Scramble({ children, tag: Tag = 'span', className = '' }
           if (!e.isIntersecting) return;
           io.unobserve(e.target);
           const state = host?.dataset.reveal;
-          if (!host || !state) timer = window.setTimeout(enter, 120); // 宿主不走显现系统
-          else if (state === 'visible' || state === 'done') enter(); // 已可读（含首屏直接 done）
-          // pending：等 pt:revealed
+          // 宿主不走显现系统 → 短延时；已可读（含首屏直接 done）→ 立刻；pending → 等 pt:revealed
+          if (!host || !state) timer = window.setTimeout(enter, 120);
+          else if (state === 'visible' || state === 'done') enter();
         });
       }, { threshold: 0, rootMargin: IO_MARGIN });
       io.observe(el);

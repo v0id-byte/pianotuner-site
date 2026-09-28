@@ -151,7 +151,8 @@ function bindCascade(scope, els) {
       // 首屏已可见的不藏（避免首帧闪烁）；经 View Transition 抵达同理
       if (inFirstView(el)) { markDone(el); return; }
       const tier = tierOf(el);
-      const target = parseFloat(getComputedStyle(el).opacity) || 1; // 保留 .card--soon 的 0.6 等设计态
+      // 保留 .card--soon 的 0.6 等设计态
+      const target = parseFloat(getComputedStyle(el).opacity) || 1;
       markPending(el);
       gsap.set(el, { opacity: 0, ...tier.from });
       triggers.push(ScrollTrigger.create({ trigger: el, start: START, once: true, onEnter: () => play(el, tier, target) }));
