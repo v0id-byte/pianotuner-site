@@ -179,6 +179,55 @@ try {
       out.faqSpaceClosed = !(await evaluate(c, `document.querySelector('.faq__item').open`));
     }
     console.log(JSON.stringify(out, null, 1));
+  } else if (cmd === 'nojs') {
+    // nojs <url> <404|off> [out.png]：404 = 入口 bundle 被拦截（其余内联脚本照跑）；off = 整页禁用 JS
+    const [url, mode, out] = args;
+    await setup(c, { mobile });
+    if (mode === '404') {
+      await c.send('Fetch.enable', { patterns: [{ urlPattern: '*/assets/index-*.js' }, { urlPattern: '*/assets/lenis-*.js' }] });
+      c.listeners.push((m) => { if (m.method === 'Fetch.requestPaused') c.send('Fetch.fulfillRequest', { requestId: m.params.requestId, responseCode: 404, body: '' }); });
+    } else {
+      await c.send('Emulation.setScriptExecutionDisabled', { value: true });
+    }
+    await go(c, url, 1500);
+    if (mode === '404') {
+      await injectQA(c);
+      console.log(JSON.stringify(await evaluate(c, `(async()=>{ window.scrollTo(0, document.documentElement.scrollHeight); await new Promise(r=>setTimeout(r,800)); return { hydrated: !!window.__ptMotion, reveal: __ptQA.reveal(), vis: __ptQA.visibility(), stepsLine: document.querySelector('.steps__line') ? getComputedStyle(document.querySelector('.steps__line')).transform : null, inlineHidden: document.querySelectorAll('[style*="opacity: 0"]').length }; })()`), null, 1));
+    }
+    if (out) {
+      const { cssContentSize } = await c.send('Page.getLayoutMetrics');
+      const shot = await c.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: cssContentSize.width, height: Math.min(cssContentSize.height, 16000), scale: 1 } });
+      writeFileSync(out, Buffer.from(shot.data, 'base64'));
+      console.log('shot', out);
+    }
+  } else if (cmd === 'vt') {
+    // vt <baseUrl>：从首页跳 pro.html（再跳回首页），在新文档里记录 pagereveal / finished 时刻的布局与状态
+    const [base] = args;
+    await setup(c, { mobile });
+    await c.send('Page.addScriptToEvaluateOnNewDocument', { source: `(() => {
+      const box = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)]; };
+      const snap = () => ({ nav: box('.nav'), h1: box('main h1'), media: box('.hero__media') });
+      window.__vt = { vt: null };
+      addEventListener('pagereveal', (e) => {
+        window.__vt.vt = !!e.viewTransition; window.__vt.atReveal = snap();
+        if (e.viewTransition) e.viewTransition.finished.then(() => { window.__vt.atFinished = snap(); window.__vt.finishedAt = performance.now(); });
+      });
+    })();` });
+    const out = {};
+    await go(c, `${base}/`, 2500);
+    for (const [from, to] of [['/', '/pro.html'], ['/pro.html', '/about.html'], ['/about.html', '/']]) {
+      const loaded = c.once('Page.loadEventFired', 30000);
+      await evaluate(c, `(document.querySelector('a[href="${to}"]') || { click() { location.href = '${to}'; } }).click()`);
+      await loaded; await sleep(2500);
+      out[`${from} -> ${to}`] = await evaluate(c, `({ vt: window.__vt.vt, dataVt: document.documentElement.dataset.vt || null,
+        drift: window.__vt.atFinished ? Object.keys(window.__vt.atReveal).map(k => { const a = window.__vt.atReveal[k], b = window.__vt.atFinished[k]; return a && b ? k + ':' + Math.max(...a.map((v, i) => Math.abs(v - b[i]))) : k + ':-'; }).join(' ') : null,
+        titleIntro: document.querySelector('main h1')?.dataset.revealIntro || null,
+        ptNav: [...document.querySelectorAll('*')].filter(e => getComputedStyle(e).viewTransitionName === 'pt-nav').length })`);
+    }
+    await evaluate(c, `document.querySelector('.nav__burger') && document.querySelector('.nav__burger').click()`);
+    await sleep(400);
+    out.ptNavWithMenuOpen = await evaluate(c, `[...document.querySelectorAll('*')].filter(e => getComputedStyle(e).viewTransitionName === 'pt-nav').length`);
+    console.log(JSON.stringify(out, null, 1));
   } else if (cmd === 'nav') {
     const [base] = args;
     const out = {};

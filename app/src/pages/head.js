@@ -17,6 +17,11 @@ if((s==='en'||s==='zh')&&s!==cur){location.replace(alt+q+location.hash);return;}
 if(!s&&cur==='zh'&&!/^zh/i.test(navigator.language||''))d.dataset.langHint='en';
 }catch(e){}})();`;
 
+// 跨页过渡抵达标记（渐进增强）：pagereveal 在新文档首次渲染前触发。有 viewTransition 才写 data-vt，
+// 生命周期取自 ViewTransition.finished，不用定时器；不支持的浏览器什么都不做，显现系统照常工作。
+// hooks.js 只用它「少播一次首屏入场」，内容可见性永不依赖它。
+const VT_SCRIPT = `addEventListener('pagereveal',function(e){var v=e.viewTransition;if(!v)return;var d=document.documentElement;d.dataset.vt='arrive';v.finished.then(function(){d.dataset.vt='done'},function(){d.dataset.vt='done'})});`;
+
 export function htmlAttrs(pageId, lang, ssr) {
   return [
     `lang="${htmlLang(lang)}"`,
@@ -69,6 +74,7 @@ export function renderHead(pageId, lang) {
     `<meta name="twitter:image" content="${og}" />`,
     ld ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : '',
     `<script>${LANG_SCRIPT}</script>`,
+    `<script>${VT_SCRIPT}</script>`,
     // 自托管 Umami，同源（CSP 'self' 即可），无 cookie；data-domains 让本地 preview 不上报。
     UMAMI_WEBSITE_ID ? `<script defer src="/u.js" data-website-id="${UMAMI_WEBSITE_ID}" data-domains="www.pianotuner.top,pianotuner.top"></script>` : '',
   ];

@@ -214,3 +214,22 @@
 }
 @keyframes pt-fade { from { opacity: 0; } }
 @keyframes pt-drop { from { opacity: 0; transform: translateY(-8px); } }
+
+/* ============================================================
+   跨页过渡（MPA cross-document View Transitions）——渐进增强。
+   Chrome/Edge 126+、Safari 18.2+ 播放；不支持的浏览器照常硬导航，无功能损失。
+   整段只在 no-preference 下生效：reduced-motion 没有过渡、导航不起名。
+   旧页线性淡出，新页淡入先于 12px 上浮完成（透明度领先位移）。导航条起名单独快照：同位同尺寸不移动，
+   只做浏览器默认的交叉淡化（两页导航配色不同时也不会硬切）。
+   这里的动画只作用于过渡伪元素，不给真实内容任何 opacity:0 基态（E0 不受影响）。
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .nav-frame { view-transition-name: pt-nav; }
+  ::view-transition-old(root) { animation: pt-vt-out var(--dur-s) linear both; }
+  ::view-transition-new(root) {
+    animation: pt-fade var(--dur-s) var(--ease-out) both, pt-rise 350ms var(--ease-out) both;
+  }
+}
+@keyframes pt-vt-out { to { opacity: 0; } }
+@keyframes pt-rise { from { transform: translateY(12px); } }
