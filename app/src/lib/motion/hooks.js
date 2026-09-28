@@ -333,13 +333,31 @@ export function useHeroCue(cueRef) {
 }
 
 /**
- * FAQ 手风琴：原生 <details> 语义不变（无 JS / reduced-motion 时仍能开合），有动效时接管 summary 点击，
- * 用高度补间展开/收起 .faq__body。owner 只有这一个补间；开合改变文档高度，结束后 refreshSoon()。
+ * FAQ 手风琴：原生 <details> 语义不变（无 JS / reduced-motion 时仍能开合），有动效时接管 summary 点击。
+ * 每项一条可逆 timeline：展开 play()、收起 reverse()；开合中途再点只是换方向，不新建补间、不跳帧。
+ * 高度补间是有意的布局动画例外（内容高度未知，transform 做不到）；owner 只有这一条 timeline。
+ * data-state 立刻反映意图（+ 号即时转），details[open] 只在收起完成后才去掉，保证收起过程中内容还在。
  */
 export function useFaqAccordion(scopeRef) {
   useEffect(() => {
     const scope = scopeRef.current;
     if (!scope || prefersReduced()) return undefined;
+    const tls = new Map();
+    const settle = (body) => { gsap.set(body, { clearProps: 'height,opacity' }); refreshSoon(); };
+    const timelineFor = (item, body) => {
+      let tl = tls.get(item);
+      if (tl) return tl;
+      tl = gsap.timeline({
+        paused: true,
+        onComplete: () => settle(body),
+        onReverseComplete: () => { item.open = false; settle(body); },
+      });
+      // 用户触发的展开用 ease-out：点击后第一帧就有明显位移（inOut 前 100ms 只动 4%，像没反应）
+      tl.fromTo(body, { height: 0 }, { height: 'auto', duration: DUR.m, ease: EASE.out }, 0)
+        .fromTo(body, { opacity: 0 }, { opacity: 1, duration: DUR.s, ease: EASE.out }, 0.08);
+      tls.set(item, tl);
+      return tl;
+    };
     const onClick = (e) => {
       const summary = e.target.closest('summary');
       if (!summary || !scope.contains(summary)) return;
@@ -347,17 +365,29 @@ export function useFaqAccordion(scopeRef) {
       const body = item.querySelector('.faq__body');
       if (!body) return;
       e.preventDefault();
-      if (item.dataset.animating) return;
-      item.dataset.animating = '1';
-      const done = () => { gsap.set(body, { clearProps: 'height,opacity' }); delete item.dataset.animating; refreshSoon(); };
-      if (!item.open) {
-        item.open = true;
-        gsap.fromTo(body, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: 0.5, ease: 'power3.out', onComplete: done });
+      const tl = timelineFor(item, body);
+      // 意图以 data-state 为准；首次交互前以原生 open 为准（水合前用户可能已原生展开）
+      const opening = (item.dataset.state || (item.open ? 'open' : 'closed')) !== 'open';
+      if (opening) {
+        item.dataset.state = 'open';
+        if (!item.open) { item.open = true; tl.invalidate(); tl.progress(0); }
+        tl.timeScale(1).play();
       } else {
-        gsap.to(body, { height: 0, opacity: 0, duration: 0.35, ease: 'power2.in', onComplete: () => { item.open = false; done(); } });
+        item.dataset.state = 'closed';
+        // 从完全展开处收起：先按当前内容重量高度，避免视口宽度变化后的陈旧像素值
+        if (tl.progress() === 1 || !tl.isActive()) { tl.invalidate(); tl.progress(1); }
+        tl.timeScale(1.4).reverse();
       }
     };
     scope.addEventListener('click', onClick);
-    return () => scope.removeEventListener('click', onClick);
+    return () => {
+      scope.removeEventListener('click', onClick);
+      tls.forEach((tl, item) => {
+        tl.kill();
+        const body = item.querySelector('.faq__body');
+        if (body) gsap.set(body, { clearProps: 'height,opacity' });
+        delete item.dataset.state;
+      });
+    };
   }, [scopeRef]);
 }

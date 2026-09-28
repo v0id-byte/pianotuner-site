@@ -7,7 +7,7 @@ import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
 import { BracketLink, Fn, SectionHead } from '../../components/ui';
-import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
+import { useTextReveal, useReveal, useStackDeck, useFaqAccordion } from '../../lib/motion/hooks';
 import { EMAIL_REPORT } from '../../data/site';
 
 export const meta = {
@@ -21,7 +21,9 @@ export default function Support() {
   const { t, lang } = useT();
   const root = useRef(null);
   const deck = useRef(null);
+  const faqRef = useRef(null);
   useTextReveal(root);
+  useFaqAccordion(faqRef);
   useReveal(root);
   useStackDeck(deck);
   const steps = [
@@ -65,7 +67,7 @@ export default function Support() {
         </div>
         <div style={{ marginTop: 'var(--gap-y-lg)' }}>
           <SectionHead eyebrow={t('FAQ · 常见问题', 'FAQ')} title={t('常见问题解答', 'Frequently asked questions')} />
-          <div className="faq">
+          <div className="faq" ref={faqRef}>
             {faq.map(([q, a], i) => (
               <details className="faq__item" key={i}>
                 <summary className="faq__q">
@@ -73,7 +75,7 @@ export default function Support() {
                   <span className="t-h3 faq__title">{q}</span>
                   <span className="faq__plus" aria-hidden="true">+</span>
                 </summary>
-                <p className="faq__a t-body">{a}</p>
+                <div className="faq__body"><p className="faq__a t-body">{a}</p></div>
               </details>
             ))}
           </div>

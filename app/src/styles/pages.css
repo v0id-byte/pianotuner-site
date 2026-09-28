@@ -159,8 +159,10 @@
 .faq__q::-webkit-details-marker { display: none; }
 .faq__num { color: var(--color-ash); }
 .faq__title { font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); }
-.faq__plus { font-weight: 300; font-size: 1.5rem; line-height: 1; color: var(--color-ash); transition: transform 300ms var(--button-bezier); }
-.faq__item[open] .faq__plus { transform: rotate(45deg); }
+.faq__plus { font-weight: 300; font-size: 1.5rem; line-height: 1; color: var(--color-ash); transition: transform var(--dur-s) var(--ease-in-out); }
+/* 有 JS 时 data-state 即时反映意图（收起过程中 [open] 还在）；无 JS 回落原生 [open] */
+.faq__item[open]:not([data-state='closed']) .faq__plus,
+.faq__item[data-state='open'] .faq__plus { transform: rotate(45deg); }
 .faq__a { margin: 0 0 24px; padding-left: 64px; color: var(--color-charcoal); max-width: 70ch; }
 @media (max-width: 599px) { .faq__q { grid-template-columns: 36px 1fr 20px; } .faq__a { padding-left: 52px; } }
 .faq__q:hover .faq__title { color: var(--color-accent-deep); }

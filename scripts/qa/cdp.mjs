@@ -131,11 +131,26 @@ try {
     await injectQA(c);
     const value = await evaluate(c, `(async()=>(${expr}))()`);
     console.log(JSON.stringify({ value, errors }, null, 1));
+  } else if (cmd === 'snap') {
+    // snap <url> <out.png> <expr>：expr 返回 {clip:{x,y,width,height}, hover?:{x,y}, wait?:ms, click?:{x,y}}（视口坐标）
+    const [url, out, expr] = args;
+    await setup(c, { mobile, reduced: flags.has('--reduced') });
+    await go(c, url, 1500);
+    await injectQA(c);
+    const plan = await evaluate(c, `(async()=>(${expr}))()`);
+    if (plan.hover) { await c.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: plan.hover.x, y: plan.hover.y }); }
+    if (plan.click) { for (const t of ['mousePressed', 'mouseReleased']) await c.send('Input.dispatchMouseEvent', { type: t, x: plan.click.x, y: plan.click.y, button: 'left', clickCount: 1 }); }
+    await sleep(plan.wait ?? 900);
+    const shot = await c.send('Page.captureScreenshot', { format: 'png', clip: { ...plan.clip, scale: 1 } });
+    writeFileSync(out, Buffer.from(shot.data, 'base64'));
+    console.log('snap', out);
   } else if (cmd === 'keys') {
     const [url] = args;
     const key = async (k, code, extra = {}) => {
-      const base = { key: k, code, windowsVirtualKeyCode: extra.vk || 0, ...extra };
-      await c.send('Input.dispatchKeyEvent', { type: 'keyDown', ...base });
+      const { vk, ...rest } = extra;
+      const text = k === 'Enter' ? '\r' : k === ' ' ? ' ' : undefined;
+      const base = { key: k, code, windowsVirtualKeyCode: vk || 0, nativeVirtualKeyCode: vk || 0, ...rest };
+      await c.send('Input.dispatchKeyEvent', { type: 'keyDown', ...base, ...(text ? { text, unmodifiedText: text } : {}) });
       await c.send('Input.dispatchKeyEvent', { type: 'keyUp', ...base });
       await sleep(120);
     };

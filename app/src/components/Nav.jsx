@@ -60,18 +60,18 @@ function MobileMenu({ open, onClose, openerRef, page }) {
   return (
     <dialog className="menu" ref={ref} onClose={handleClose} aria-label={t('主菜单', 'Main menu')}>
       <div className="menu__inner">
-        <div className="menu__top">
+        <div className="menu__top" style={{ '--i': 0 }}>
           <span className="t-ui">MENU</span>
           <button type="button" className="menu__close t-ui" onClick={() => ref.current?.close()}>
             {t('关闭', 'Close')} ✕
           </button>
         </div>
-        <a href={href(lang, 'index')}>{t('首页', 'Home')}</a>
-        {LINKS.map((l) => (
-          <a key={l.id} href={href(lang, l.id)} aria-current={page === l.id ? 'page' : undefined}>{t(l.zh, l.en)}</a>
+        <a href={href(lang, 'index')} style={{ '--i': 1 }}>{t('首页', 'Home')}</a>
+        {LINKS.map((l, n) => (
+          <a key={l.id} href={href(lang, l.id)} aria-current={page === l.id ? 'page' : undefined} style={{ '--i': n + 2 }}>{t(l.zh, l.en)}</a>
         ))}
-        <a href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</a>
-        <div className="menu__foot">
+        <a href={href(lang, 'buy')} style={{ '--i': LINKS.length + 2 }}>{t('加入候补名单', 'Join the waitlist')}</a>
+        <div className="menu__foot" style={{ '--i': LINKS.length + 3 }}>
           <LangToggle page={page} />
           <Button href={TESTFLIGHT} external>{t('TestFlight 体验 App', 'Get the app on TestFlight')}</Button>
         </div>

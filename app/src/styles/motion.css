@@ -172,3 +172,48 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee__item, .marquee__item::before { transition: none !important; }
 }
+
+/* ============================================================
+   卡片悬停：顶边一条主题色细线从左画出（T3 反馈，不抢 T1 叙事）。
+   进入 --dur-m 缓出、离开 --dur-s（离场更快）。只在真有指针悬停的设备上。
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .card, .step, .metric { position: relative; }
+  .card::after, .step::after, .metric::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: -1px;
+    height: 1px;
+    background: var(--topic-fill, var(--color-accent));
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-s) var(--ease-out);
+    pointer-events: none;
+  }
+  .card::after { left: -1px; right: -1px; }
+  .card:hover::after, .step:hover::after, .metric:hover::after {
+    transform: scaleX(1);
+    transition-duration: var(--dur-m);
+  }
+  .card .card__num, .step .card__num { transition: color var(--dur-s) var(--ease-out); }
+  .card:hover .card__num, .step:hover .card__num { color: var(--topic-text, var(--color-accent-deep)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card::after, .step::after, .metric::after, .btn::before,
+  .card .card__num, .step .card__num, .faq__plus { transition: none !important; }
+}
+
+/* ============================================================
+   移动菜单入场：CSS 所有（原生 <dialog> 的 top layer，JS 不介入）——「CSS 只管 hover/focus」的成文例外。
+   关键帧只写 from：动画没跑也停在可见态。子项错峰封顶 6 级，项再多也不拖过 ~270ms。
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .menu[open] { animation: pt-fade var(--dur-s) var(--ease-out) both; }
+  .menu[open]::backdrop { animation: pt-fade var(--dur-s) var(--ease-out) both; }
+  .menu[open] .menu__inner > * {
+    animation: pt-drop var(--dur-m) var(--ease-out) both;
+    animation-delay: calc(60ms + min(var(--i, 0), 6) * 35ms);
+  }
+}
+@keyframes pt-fade { from { opacity: 0; } }
+@keyframes pt-drop { from { opacity: 0; transform: translateY(-8px); } }

@@ -101,10 +101,13 @@
   content: '';
   position: absolute;
   inset: 0;
-  width: 0;
-  transition: width 250ms var(--button-bezier);
+  /* 填充用 transform（合成层），不再补间 width（每帧重排） */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-s) var(--ease-wipe);
+  will-change: transform;
 }
-.btn:hover::before { width: 100%; }
+.btn:hover::before, .btn:focus-visible::before { transform: scaleX(1); }
 .btn i { /* the 7px square that replaces an icon */
   width: 7px; height: 7px; display: inline-block;
   transition: background-color 200ms var(--button-bezier);
