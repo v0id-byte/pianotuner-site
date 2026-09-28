@@ -1,13 +1,16 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
-import { CustomEase } from 'gsap/CustomEase';
 import { Observer } from 'gsap/Observer';
+import { EASE } from './tokens';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Observer);
+gsap.registerPlugin(ScrollTrigger, SplitText, Observer);
+// QA 探针（scripts/qa/motion-audit.js 读它）：只读引用，与 window.__lenis 同理
+if (typeof window !== 'undefined') window.__ptMotion = { gsap, ScrollTrigger };
 
-/** 站点的运动签名：violently symmetric ease-in-out，静→急→缓。 */
-export const WIPE_EASE = CustomEase.create('ptWipe', '1, 0, 0, 1');
+/** 站点的运动签名：violently symmetric ease-in-out，静→急→缓。定义在 tokens.js（兼容旧 import）。 */
+export const WIPE_EASE = EASE.wipe;
+export * from './tokens';
 
 export const prefersReduced = () =>
   typeof window !== 'undefined' &&

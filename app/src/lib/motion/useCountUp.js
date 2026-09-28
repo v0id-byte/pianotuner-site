@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { gsap, prefersReduced } from './index';
+import { EASE, START } from './tokens';
 
 /** 数字滚到最终值，只在首次进入视口跑一次。目标值是静态事实，绝不做每秒自增的假计数器。 */
 export function useCountUp(scopeRef) {
@@ -18,9 +19,9 @@ export function useCountUp(scopeRef) {
         const state = { v: 0 };
         el.textContent = `0${suffix}`;
         gsap.to(state, {
-          v: end, duration: 1.1, ease: 'power2.out', snap: { v: 1 },
+          v: end, duration: 1.1, ease: EASE.out, snap: { v: 1 },
           onUpdate: () => { el.textContent = `${Math.round(state.v)}${suffix}`; },
-          scrollTrigger: { trigger: el, start: 'top bottom', toggleActions: 'play none none none' },
+          scrollTrigger: { trigger: el, start: START, toggleActions: 'play none none none' },
         });
       });
     }, scope);

@@ -18,7 +18,8 @@ export default function Hero({ eyebrow, l1, l2, sub, primary, secondary, poster,
   useTextReveal(root);
   useReveal(root);
   useHeroCue(cue);
-  useGridParallax(grid);
+  // pin 期间视差只走约一屏，不摊到整段锁定距离上（Δy/Δscroll ≈ 0.064–0.11）
+  useGridParallax(grid, { distance: () => Math.min(1100, Math.max(640, window.innerHeight)) });
   useHeroVideoLock(root, video);
   return (
     <section id="top" className="hero hero--video island-dark p-custom" data-nav-theme="dark" ref={root}>

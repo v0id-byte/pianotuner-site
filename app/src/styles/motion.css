@@ -50,13 +50,8 @@
   html { scroll-behavior: auto; }
 }
 
-/* The Stack 被滚动推进选中的那一步 */
-.step { transition: opacity 300ms var(--button-bezier); }
-/* 必须限定在 .steps 自身上：markReady 会被多个 hook 写到不同层级（section、
-   容器、轨道），用后代选择器会让 section#tech 的标记误命中所有 .step，
-   导致 <1024px（无 pin、状态机不推进）时 02/03 永久停在 42% 不可读。 */
-.steps[data-motion-ready='true'] .step { opacity: 0.42; }
-.steps[data-motion-ready='true'] .step--active { opacity: 1; }
+/* .step 的 opacity 只归 GSAP（useStepsPath / 显现级联）所有：这里不能再有 CSS transition，
+   否则 scrub 的每一帧都被 300ms 过渡拖尾（两个 owner）。 */
 
 /* ============================================================
    不对称 hover —— spur 的签名手法，源码实测：
@@ -66,7 +61,7 @@
    非 hover 态带 transition（负责离开），hover 态 transition:none（负责进入）。
    power2.out ≈ cubic-bezier(.215,.61,.355,1)
    ============================================================ */
-:root { --ease-out2: cubic-bezier(.215, .61, .355, 1); }
+/* --ease-out2 定义在 tokens.css */
 
 .hl { position: relative; isolation: isolate; display: inline-flex; }
 .hl::before {

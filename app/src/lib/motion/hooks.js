@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { gsap, ScrollTrigger, SplitText, Observer, WIPE_EASE, prefersReduced, refreshSoon, whenFontsReady } from './index';
+import { gsap, ScrollTrigger, SplitText, Observer, prefersReduced, refreshSoon, whenFontsReady } from './index';
+import { EASE, DUR, START } from './tokens';
 
 /** 标记该 section 的动效已成功接管（QA 与 CSS 用；不承担隐藏内容的职责）。 */
 const markReady = (el) => { if (el) el.dataset.motionReady = 'true'; };
@@ -28,7 +29,7 @@ export function useTextReveal(scopeRef) {
               autoSplit: true,
               onSplit(self) {
                 const tl = gsap.timeline({
-                  scrollTrigger: { trigger: el, start: 'top bottom', toggleActions: 'play none none none' },
+                  scrollTrigger: { trigger: el, start: START, toggleActions: 'play none none none' },
                 });
                 self.lines.forEach((line, i) => {
                   const wrapper = document.createElement('div');
@@ -41,9 +42,10 @@ export function useTextReveal(scopeRef) {
                   const d = i * 0.08;
                   gsap.set(box, { xPercent: -102, opacity: 1 });
                   gsap.set(line, { opacity: 0 });
-                  tl.to(box, { xPercent: 0, duration: 0.9, ease: WIPE_EASE }, d);
-                  tl.to(box, { xPercent: 102, duration: 0.9, ease: WIPE_EASE }, d + 0.9);
-                  tl.to(line, { opacity: 1, duration: 0.9, ease: 'power2.inOut' }, d + 0.9);
+                  tl.to(box, { xPercent: 0, duration: DUR.wipe, ease: EASE.wipe }, d);
+                  tl.to(box, { xPercent: 102, duration: DUR.wipe, ease: EASE.wipe }, d + DUR.wipe);
+                  // 文字在色条离开的前半程就读得清：淡入比色条短，且用入场缓动
+                  tl.to(line, { opacity: 1, duration: DUR.m, ease: EASE.out }, d + DUR.wipe);
                 });
                 return tl;
               },
@@ -68,9 +70,9 @@ export function useTextReveal(scopeRef) {
  * 静止态即可见态：隐藏只由这里的 gsap.set 写 inline style。
  */
 const REVEAL_TIERS = [
-  { sel: '.anim-up--lead', from: { opacity: 0, y: 56 }, to: { duration: 1.0, ease: 'power2.out', delay: 0.12 } },
-  { sel: '.anim-up--metric', from: { opacity: 0, y: 18, scale: 0.94 }, to: { duration: 0.9, ease: 'power2.out', scale: 1 } },
-  { sel: '.anim-up', from: { opacity: 0, y: 10 }, to: { duration: 0.75, ease: 'power2.inOut' } },
+  { sel: '.anim-up--lead', from: { opacity: 0, y: 56 }, to: { duration: DUR.xl, ease: EASE.out, delay: 0.12 } },
+  { sel: '.anim-up--metric', from: { opacity: 0, y: 18, scale: 0.94 }, to: { duration: DUR.l, ease: EASE.out, scale: 1 } },
+  { sel: '.anim-up', from: { opacity: 0, y: 12 }, to: { duration: DUR.l, ease: EASE.out } },
 ];
 
 export function useReveal(scopeRef) {
@@ -86,7 +88,7 @@ export function useReveal(scopeRef) {
           gsap.set(el, tier.from);
           gsap.to(el, {
             opacity: 1, y: 0, ...tier.to,
-            scrollTrigger: { trigger: el, start: 'top bottom', toggleActions: 'play none none none' },
+            scrollTrigger: { trigger: el, start: START, toggleActions: 'play none none none' },
           });
         });
       }
@@ -108,8 +110,8 @@ export function useStackDeck(containerRef) {
       if (!cards.length) return;
       gsap.set(cards, { opacity: 0, y: 14 });
       gsap.to(cards, {
-        opacity: 1, y: 0, duration: 0.75, ease: 'power2.inOut', stagger: 0.09,
-        scrollTrigger: { trigger: container, start: 'top bottom', toggleActions: 'play none none none' },
+        opacity: 1, y: 0, duration: DUR.l, ease: EASE.out, stagger: 0.07,
+        scrollTrigger: { trigger: container, start: START, toggleActions: 'play none none none' },
       });
       markReady(container);
     }, container);
@@ -119,7 +121,8 @@ export function useStackDeck(containerRef) {
 
 /**
  * 三步区：不 pin（CLAUDE.md 2026-09-01：pin 住会紧挨着 hero pin 再「卡」一次）。
- * 连线与三步随区块自己的行程 scrub：顶边从视口底部进场开始画，顶边贴到导航时画完。
+ * 连线与三步随 .steps 自己的行程 scrub：顶边到视口 88% 开始画，到 40% 画完。
+ * scrub:true + ease:'none'——输入平滑归 Lenis，这里只做 scroll→进度的线性映射。
  * 手机不建：垂直堆叠时直接可读。
  */
 export function useStepsPath(sectionRef) {
@@ -133,11 +136,12 @@ export function useStepsPath(sectionRef) {
       if (!steps.length) return undefined;
       gsap.set(steps, { opacity: 0.28 });
       if (line) gsap.set(line, { scaleX: 0, transformOrigin: 'left center' });
+      const track = sec.querySelector('.steps') || sec;
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top top+=64', scrub: 0.5, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: track, start: START, end: 'top 40%', scrub: true, invalidateOnRefresh: true },
       });
-      if (line) tl.to(line, { scaleX: 1, ease: 'none', duration: 3 }, 0);
-      steps.forEach((s, i) => tl.to(s, { opacity: 1, duration: 0.8, ease: 'power2.out' }, i * 0.85));
+      if (line) tl.to(line, { scaleX: 1, ease: EASE.scrub, duration: 3 }, 0);
+      steps.forEach((s, i) => tl.to(s, { opacity: 1, duration: 0.8, ease: EASE.scrub }, i * 0.85));
       markReady(sec);
       return () => { clearReady(sec); tl.scrollTrigger?.kill(); tl.kill(); };
     });
@@ -156,9 +160,9 @@ export function useDrawPath(figRef) {
       if (!curve) return;
       gsap.set(curve, { strokeDashoffset: 1 });
       if (area) gsap.set(area, { opacity: 0 });
-      const tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 84%', end: 'bottom 55%', scrub: 0.5 } });
-      tl.to(curve, { strokeDashoffset: 0, ease: 'none', duration: 1 }, 0);
-      if (area) tl.to(area, { opacity: 1, ease: 'none', duration: 1 }, 0.15);
+      const tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: START, end: 'bottom 55%', scrub: true } });
+      tl.to(curve, { strokeDashoffset: 0, ease: EASE.scrub, duration: 1 }, 0);
+      if (area) tl.to(area, { opacity: 1, ease: EASE.scrub, duration: 1 }, 0.15);
     }, fig);
     return () => ctx.revert();
   }, [figRef]);
@@ -206,14 +210,19 @@ export function useMarquee(trackRef) {
   }, [trackRef]);
 }
 
-/** Hero 蓝图网格：随滚动缓慢上移并极缓呼吸——像待机中的仪器。 */
-export function useGridParallax(gridRef) {
+/**
+ * Hero 蓝图网格：随滚动缓慢上移并极缓呼吸——像待机中的仪器。
+ * distance（可选，函数）：视频 hero 被 pin 住时 'bottom top' 会把 -70px 摊到整段锁定距离上（肉眼不可见），
+ * 所以由 Hero 传入一屏左右的固定行程，保证各视口的视差速度（Δy/Δscroll）一致。
+ */
+export function useGridParallax(gridRef, { distance } = {}) {
   useEffect(() => {
     const el = gridRef.current;
     if (!el || prefersReduced()) return undefined;
     const mm = gsap.matchMedia();
     mm.add('(min-width: 1024px)', () => {
-      gsap.to(el, { y: -70, ease: 'power2.in', scrollTrigger: { trigger: el.parentElement, start: 'top top', end: 'bottom top', scrub: 0 } });
+      const end = distance ? () => `+=${distance()}` : 'bottom top';
+      gsap.to(el, { y: -70, ease: EASE.scrub, scrollTrigger: { trigger: el.parentElement, start: 'top top', end, scrub: true, invalidateOnRefresh: true } });
       gsap.to(el, { opacity: 0.72, duration: 8, ease: 'sine.inOut', repeat: -1, yoyo: true });
     });
     return () => mm.revert();

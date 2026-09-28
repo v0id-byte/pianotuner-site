@@ -21,6 +21,17 @@
 
   --button-bezier: cubic-bezier(1, 0, 0.01, 1);
 
+  /* motion tokens —— 与 lib/motion/tokens.js 的 EASE / DUR 是同一组数，改一处必须同步另一处 */
+  --ease-out:    cubic-bezier(.22, 1, .36, 1);   /* 入场 */
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);   /* 屏上跨屏移动 */
+  --ease-wipe:   cubic-bezier(1, 0, 0, 1);       /* 签名擦除条 */
+  --ease-out2:   cubic-bezier(.215, .61, .355, 1); /* 不对称 hover 的「离开」（≈ power2.out） */
+  --dur-xs: 150ms;
+  --dur-s:  250ms;
+  --dur-m:  500ms;
+  --dur-l:  800ms;
+  --dur-xl: 1100ms;
+
   /* type */
   --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont,
                'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
