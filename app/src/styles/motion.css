@@ -22,13 +22,12 @@
   inset: 0;
   z-index: 20;
   pointer-events: none;
-  background: var(--topic-fill);
+  background: var(--accent-fill);
   /* 静止态用 opacity 表达，绝不能用 transform：GSAP 会把 CSS 里已有的
      translateX(-102%) 解析成 x 基线（px），与我们设的 xPercent 叠加后
      互相抵消，色条会停在 0 位永久盖住标题。 */
   opacity: 0;
 }
-.island-accent .line-box { background: var(--color-black); }
 
 .split-line { position: relative; z-index: 10; width: fit-content; }
 
@@ -68,7 +67,7 @@
   content: '';
   position: absolute;
   inset: -6px -10px;
-  background: var(--topic-fill);
+  background: var(--accent-fill);
   opacity: 0;
   z-index: -1;
   transition: opacity 500ms var(--ease-out2);   /* 离开：500ms 缓出 */
@@ -86,7 +85,7 @@
   transform: translateX(10px);
   transition: none;
 }
-/* 主题色（青 / 铜）底上必须是黑字 */
+/* 强调色底上必须是黑字 */
 .hl:hover, .hl:focus-visible,
 .hl:hover > *, .hl:focus-visible > * { color: var(--color-black) !important; }
 
@@ -121,7 +120,7 @@
   position: absolute;
   left: 0; bottom: -2px;
   height: 2px; width: 20%;
-  background: var(--topic-fill);
+  background: var(--accent-fill);
   transition: transform 500ms var(--button-bezier);
 }
 .blink--underline:hover::after { transform: translateX(400%); }
@@ -132,7 +131,7 @@
   content: '';
   position: absolute;
   inset: 0 -10px;
-  background: var(--topic-fill);
+  background: var(--accent-fill);
   opacity: 0;
   z-index: -1;
   transition: opacity 500ms var(--ease-out2);
@@ -159,7 +158,7 @@
   content: '';
   position: absolute;
   inset: 2px -4px 6px;
-  background: var(--topic-fill);
+  background: var(--accent-fill);
   opacity: 0;
   z-index: -1;
   transition: opacity 500ms var(--ease-out2);
@@ -184,7 +183,7 @@
     position: absolute;
     left: 0; right: 0; top: -1px;
     height: 1px;
-    background: var(--topic-fill);
+    background: var(--accent-fill);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform var(--dur-s) var(--ease-out);

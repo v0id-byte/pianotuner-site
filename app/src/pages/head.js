@@ -46,7 +46,7 @@ export function renderHead(pageId, lang) {
     `<meta name="description" content="${esc(m.desc)}" />`,
     m.keywords ? `<meta name="keywords" content="${esc(m.keywords)}" />` : '',
     `<meta name="robots" content="${robots}" />`,
-    `<meta name="theme-color" content="#141414" />`,
+    `<meta name="theme-color" content="#16140f" />`,
     `<link rel="canonical" href="${self}" />`,
     `<link rel="alternate" hreflang="zh-CN" href="${zhUrl}" />`,
     `<link rel="alternate" hreflang="en" href="${enUrl}" />`,
@@ -95,7 +95,7 @@ export function renderRedirectStub(fromId, toId, lang) {
 <meta name="robots" content="noindex, follow" />
 <link rel="canonical" href="${abs}" />
 <title>${zh ? '页面已合并 → 加入候补名单' : 'Page merged → Join the waitlist'}</title>
-<style>body{margin:0;background:#141414;color:#fafafa;font:16px/1.5 Inter,-apple-system,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;display:grid;place-items:center;min-height:100vh}a{color:#2DD4BF}</style>
+<style>body{margin:0;background:#16140f;color:#fbfaf7;font:16px/1.5 Inter,-apple-system,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;display:grid;place-items:center;min-height:100vh}a{color:#2DD4BF}</style>
 </head>
 <body>
 <p>${zh ? '此页面已并入' : 'This page has moved to'} <a href="${to}">${abs}</a></p>

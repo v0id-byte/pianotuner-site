@@ -93,17 +93,15 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
   | 移动菜单 | CSS（例外） | dialog open | opacity、y | .25 / .5 |
   | 跨页 | View Transition（例外） | 同源导航 | root opacity、y | .25 / .35 |
 
-## 配色：铜 / 青两个主题色（2026-09-28 起）
+## 配色：暖中性 + 单一克制的青色（2026-09-28 定稿）
 
-- 语义固定：**铜 brass = 声学 / 精度 / 机械 / 硬件；青 teal = 数据 / App / 连接 / 隐私 / 软件。** UI chrome（选区、导航 hover、语言开关、进度条、跳转链接）恒为青；导航「候补名单」徽章为铜；精度脚注链（`.fn-ref a`、`.notes`）恒为铜（注释语义，不随区块）。
-- 每色两档：**fill**（`--color-teal` #2DD4BF / `--color-brass` #D9B26F，只用于深底或黑字底色）+ **ink**（`--color-teal-ink` #0B6E63 / `--color-brass-ink` #7D5A14，只用于浅底文字，≥4.5:1）。永不把 fill 当浅底文字、永不把 ink 放深底。`--color-accent(-deep)` 保留为青的别名。
-- 作用域：`.topic-teal / .topic-brass` 设 `--topic-fill / --topic-ink`；`--topic-text` 按岛解析（深岛/导航/菜单 = fill，浅岛 = ink，主题色岛 = 黑），且在每个 topic 元素上重新声明（变量引用在声明处求值）。组件只写 `var(--topic-fill)` / `var(--topic-text)`，不写色值。
-- 优先级在**数据层**解析：条目 `topic` → 区块 `topic` → 页面缺省（:root = teal）；`ui.tc(topic, parent)` 只在与区块不同时输出 class。`Hero` 缺省铜（配暖木纹视频），`PageHero` 缺省青。所有 TestFlight 链接青，所有候补名单 / 购买链接与订阅表单铜。
-- **颜色只加强分组，从不单独承载含义**——每个上色模块都有文字标签（HARDWARE / APP …）。
-- 主题色岛上的正文一律黑字（`.sec-head p` 的 charcoal 在青上 3.71、在铜上 3.46）。
+- **克制是规则本身。** 实测（无头 Chrome 按可见面积）：apple.com 强调色 ≈0.1% 页面面积、linear ≈0.25%、teenage.engineering / Leica 0%；本站改前首页 6.7%、pro 14%（彩色眉标块 + 整屏青色岛），改后 0.3–0.9%。强调色只做**信号**：CTA 按钮、链接、擦除条、hover 高亮、小号数据标签、焦点相关。**不做大面积平涂**：眉标是等宽小字（浅岛 accent ink、深岛 ash），`.island-accent` 已改为浅瓷白底（类名保留）。
+- 一度试过「铜/青双主题色」（铜 `#D9B26F`），用户判定「土」：中明度中饱和的平涂卡其既没有信号色的纯度，也没有真金属的高光阴影。**暖意来自中性色与产品图，不来自第二个强调色**（Leica 做法）。已回滚（`git revert 2710fe0`），别再加回来。
+- 暖中性：black `#16140f`、white `#fbfaf7`、gunmetal `#43403a`、charcoal `#5b5853`、ash `#8e8a83`、silver `#b5b1a9`、alabaster `#dcd6cc`、platinum `#eeebe5`、porcelain `#f7f5f1`；nav / hero scrim / menu backdrop 的 rgba 同步为 `22,20,15`，`theme-color` 为 `#16140f`。
+- 强调色两档：**fill** `--color-teal` #2DD4BF（深底 9.89，或背后是黑字）/ **ink** `--color-teal-ink` #0B6E63（浅底文字 5.15–5.87）。组件只写 `var(--accent-fill)` / `var(--accent-text)`（按岛自动取 fill 或 ink），不写色值；`--color-accent(-deep)` 是别名。
+- 浅岛作用域里 `--color-ash` 重映射为 `--color-ash-ink` #6b6861（4.67:1）；页脚版权行用 ash（5.36:1）。全站纯色岛全文字对比度扫描 0 失败——`scripts/qa/motion-audit.js` 的 `contrast()` 默认扫所有直接含文字的元素。
 - 焦点环双色：2px 内圈 outline + 外圈 box-shadow，随岛翻转，任何背景都 ≥3:1。
-- 硬编码扫描：`grep -rni "#2DD4BF\|#14B8A6\|#0B6E63\|#D9B26F\|#7D5A14" app/src` 只允许 `tokens.css`、BeatFigure 的兜底值、`head.js` 跳转存根（独立页面，读不到 token）。favicon / og-cover 仍为青（改色必须换版本化文件名）。
-- 已知遗留（不在本轮）：浅底上的灰色小字 `--color-ash` #8d8d8d（`.faq__num`、figcaption、法律页编号、指南署名，2.81–3.02:1）与页脚版权行 charcoal on black（2.67:1）——`--color-ash-ink` #6b6b6b 已备好，单独做。
+- 硬编码扫描：`grep -rni "#2DD4BF\|#0B6E63\|#141414\|#fafafa" app/src` 只允许 `tokens.css`、BeatFigure 的兜底值、`head.js` 跳转存根。favicon / og-cover 仍为青。
 
 ## 字体
 

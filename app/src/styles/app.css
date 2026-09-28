@@ -24,7 +24,7 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   /* backdrop-filter is enhancement only: the base colour must stay readable */
-  background: rgba(20, 20, 20, 0.9);
+  background: rgba(22, 20, 15, 0.9);
   color: var(--color-white);
   transition:
     color 300ms var(--button-bezier),
@@ -32,7 +32,7 @@
     border-color 300ms var(--button-bezier);
 }
 .nav[data-theme='light'] {
-  background: rgba(250, 250, 250, 0.9);
+  background: rgba(251, 250, 247, 0.9);
   color: var(--color-black);
 }
 .nav__brand { display: inline-flex; align-items: center; font-weight: 300; font-size: 1.125rem; letter-spacing: -0.02em; text-decoration: none; }
@@ -49,18 +49,16 @@
 .nav__link:hover { background: var(--color-accent); color: var(--color-black); }
 
 .nav__asn {
-  /* 候补名单 = 硬件开售 → 铜（导航本身是青的 UI chrome，这一枚是例外） */
-  --topic-fill: var(--color-brass); --topic-ink: var(--color-brass-ink);
   text-decoration: none;
   padding: 6px 8px;
   border: 1px dashed var(--color-gunmetal);
-  color: var(--color-brass);
+  color: var(--accent-fill);
   white-space: nowrap;
   transition: background-color 200ms var(--button-bezier), color 200ms var(--button-bezier),
               border-color 200ms var(--button-bezier);
 }
-.nav__asn:hover { background: var(--color-brass); color: var(--color-black); border-color: var(--color-brass); }
-.nav[data-theme='light'] .nav__asn { border-color: var(--color-alabaster); color: var(--color-brass-ink); }
+.nav__asn:hover { background: var(--accent-fill); color: var(--color-black); border-color: var(--accent-fill); }
+.nav[data-theme='light'] .nav__asn { border-color: var(--color-alabaster); color: var(--accent-ink); }
 .nav[data-theme='light'] .nav__asn:hover { color: var(--color-black); }
 
 .lang-toggle { display: flex; border: 1px dashed var(--color-gunmetal); }
@@ -116,14 +114,14 @@
   transition: background-color 200ms var(--button-bezier);
 }
 
-.btn--accent { background: var(--topic-fill); color: var(--color-black); }
+.btn--accent { background: var(--accent-fill); color: var(--color-black); }
 .btn--accent::before { background: var(--color-black); }
 .btn--accent:hover { color: var(--color-white); }
 .btn--accent i { background: var(--color-black); }
 .btn--accent:hover i { background: var(--color-white); }
 
 .btn--dark { background: var(--color-black); color: var(--color-white); }
-.btn--dark::before { background: var(--topic-fill); }
+.btn--dark::before { background: var(--accent-fill); }
 .btn--dark:hover { color: var(--color-black); }
 .btn--dark i { background: var(--color-white); }
 .btn--dark:hover i { background: var(--color-black); }
@@ -134,7 +132,7 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--topic-text);
+  color: var(--accent-text);
   transition: color 200ms var(--button-bezier);
 }
 .blink:hover { color: var(--color-black); }
@@ -170,10 +168,10 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(20, 20, 20, 0.62) 0%,
-    rgba(20, 20, 20, 0.30) 34%,
-    rgba(20, 20, 20, 0.55) 68%,
-    rgba(20, 20, 20, 0.94) 100%
+    rgba(22, 20, 15, 0.62) 0%,
+    rgba(22, 20, 15, 0.30) 34%,
+    rgba(22, 20, 15, 0.55) 68%,
+    rgba(22, 20, 15, 0.94) 100%
   );
 }
 .hero__inner { position: relative; z-index: 2; width: 100%; }
@@ -217,8 +215,8 @@
   background: var(--color-black);
 }
 .island-light .card { border-color: var(--color-alabaster); background: var(--color-porcelain); }
-.card__num { color: var(--topic-text); }
-.card__metric { color: var(--topic-text); }
+.card__num { color: var(--accent-text); }
+.card__metric { color: var(--accent-text); }
 .island-light .card__metric { color: var(--color-black); }
 .card__desc { color: var(--color-silver); }
 .island-light .card__desc { color: var(--color-charcoal); }
@@ -259,7 +257,7 @@
 .steps { display: grid; gap: 20px; margin-top: var(--gap-y-md); }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .step { border-top: 1px dashed var(--color-gunmetal); padding-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-.step__data { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--topic-text); }
+.step__data { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--accent-text); }
 /* 物理单位与邮箱字面量不能参与 uppercase：μ(U+03BC) 会被转成 Μ(U+039C，
    希腊大写 Mu)，单位就错了；邮箱地址全大写也不该出现在正文里。
    注意只豁免「显示字面量的元素」——mailto 的 CTA 按钮文案（Get in touch）
@@ -275,7 +273,7 @@
 .person__mono {
   width: 64px; height: 64px; flex: none;
   display: grid; place-items: center;
-  background: var(--color-black); color: var(--topic-fill);
+  background: var(--color-black); color: var(--accent-fill);
   font-weight: 300; font-size: 1.5rem; letter-spacing: 0.02em;
 }
 .person__bio { color: var(--color-charcoal); }
@@ -293,7 +291,7 @@
   border-bottom: 1px solid currentColor;
 }
 .cta__rows { display: grid; gap: 0; margin-top: var(--gap-y-md); }
-.cta__row { display: grid; gap: 6px; padding: 18px 0; border-top: 1px dashed rgba(20,20,20,.35); }
+.cta__row { display: grid; gap: 6px; padding: 18px 0; border-top: 1px dashed rgba(22,20,15,.35); }
 @media (min-width: 768px) { .cta__row { grid-template-columns: 1fr 2fr; gap: 24px; align-items: baseline; } }
 
 /* ---------------- footer ---------------- */
@@ -311,7 +309,7 @@
   overflow-wrap: anywhere;
 }
 .footer__col a:hover { color: var(--color-accent); }
-.footer__legal { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--color-charcoal); }
+.footer__legal { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--color-ash); } /* charcoal on black was 2.6:1 */
 
 /* ---------------- mobile menu (native <dialog>) ---------------- */
 .menu {
@@ -325,7 +323,7 @@
   background: var(--color-black);
   color: var(--color-white);
 }
-.menu::backdrop { background: rgba(20, 20, 20, 0.6); }
+.menu::backdrop { background: rgba(22, 20, 15, 0.6); }
 .menu__inner { padding: 24px; display: flex; flex-direction: column; gap: 8px; height: 100%; }
 .menu__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
 .menu__close { cursor: pointer; padding: 8px; }

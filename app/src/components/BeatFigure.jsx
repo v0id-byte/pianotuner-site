@@ -21,7 +21,7 @@ export default function BeatFigure() {
     let W = 0, H = 0;
     const cs = getComputedStyle(document.documentElement);
     const ACCENT = cs.getPropertyValue('--color-accent').trim() || '#2DD4BF';
-    const WHITE = '#fafafa';
+    const WHITE = cs.getPropertyValue('--color-white').trim() || '#fbfaf7';
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const r = canvas.getBoundingClientRect();
