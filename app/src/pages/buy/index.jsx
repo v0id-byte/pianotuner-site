@@ -23,14 +23,13 @@ export default function Buy() {
   return (
     <Shell page="buy" navTheme="dark">
       <PageHero
-        topic="brass"
         eyebrow={t('SALES PAUSED · 暂停销售', 'SALES PAUSED')}
         l1={t('加入候补名单', 'Join the waitlist')}
         l2={t('开售第一时间通知你', 'Hear first when sales open')}
         sub={t('Piano Tuner V2.1 正在研发中。新一轮早鸟预售计划于 2026 年第四季度开启，首批发货预计 2027 年第一至第二季度。价格将随预售开启一同公布，候补名单用户会第一时间收到通知。', 'Piano Tuner V2.1 is in development. The next early-bird round is planned for Q4 2026, with first shipments expected Q1–Q2 2027. Pricing will be announced when the pre-sale opens — waitlist members are notified first.')}
         actions={<div id="waitlist" style={{ width: '100%', maxWidth: 520 }}><SubscribeForm source="buy-page" dark /></div>}
       />
-      <Section island="accent" topic="brass">
+      <Section island="accent">
         <div className="cta__grid">
           <div className="notice">
             <span className="t-ui" style={{ background: 'var(--color-black)', color: 'var(--color-white)', padding: '4px 6px', width: 'max-content' }}>{t('NOTIFY ME · 开售通知', 'NOTIFY ME')}</span>
@@ -39,19 +38,19 @@ export default function Buy() {
             </p>
           </div>
           <div className="cta__links">
-            <Button href={TESTFLIGHT} external variant="dark" className="topic-teal" data-umami-event="cta-testflight" data-umami-event-at="buy">{t('下载 App 抢先体验', 'Download the app')}</Button>
+            <Button href={TESTFLIGHT} external variant="dark" data-umami-event="cta-testflight" data-umami-event-at="buy">{t('下载 App 抢先体验', 'Download the app')}</Button>
             <BracketLink href={href(lang, 'index')} className="blink--onaccent">{t('了解产品', 'Explore the product')}</BracketLink>
             <BracketLink href={href(lang, 'pro')} className="blink--onaccent">{t('了解专业版', 'Explore Pro')}</BracketLink>
             <BracketLink href={href(lang, 'contact')} className="blink--onaccent">{t('联系我们', 'Contact us')}</BracketLink>
           </div>
         </div>
       </Section>
-      <Section island="light" topic="brass" pad="py-section-sm">
+      <Section island="light" pad="py-section-sm">
         <dl className="specs" style={{ maxWidth: '64ch' }}>
           <div className="spec"><dt className="spec__k t-ui">{t('当前状态', 'STATUS')}</dt><dd className="spec__v">{t('候补名单（销售暂停）', 'Waitlist (sales paused)')}</dd></div>
           <div className="spec"><dt className="spec__k t-ui">{t('下一轮预售', 'NEXT ROUND')}</dt><dd className="spec__v">{t('2026 年第四季度', 'Q4 2026')}</dd></div>
           <div className="spec"><dt className="spec__k t-ui">{t('首批发货', 'FIRST SHIPMENTS')}</dt><dd className="spec__v">{t('2027 年第一至第二季度', 'Q1–Q2 2027')}</dd></div>
-          <div className="spec topic-teal"><dt className="spec__k t-ui">{t('App', 'APP')}</dt><dd className="spec__v">{t('iOS · TestFlight 已开放', 'iOS · open on TestFlight')}</dd></div>
+          <div className="spec"><dt className="spec__k t-ui">{t('App', 'APP')}</dt><dd className="spec__v">{t('iOS · TestFlight 已开放', 'iOS · open on TestFlight')}</dd></div>
         </dl>
       </Section>
     </Shell>

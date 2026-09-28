@@ -6,7 +6,7 @@ import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
-import { Arrow, BracketLink, Eyebrow, Fn, SectionHead, tc } from '../../components/ui';
+import { Arrow, BracketLink, Eyebrow, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal } from '../../lib/motion/hooks';
 
 export const meta = {
@@ -39,10 +39,10 @@ export default function Demo() {
     { k: t('版本', 'VERSION'), v: t('V1.0 原型演示', 'V1.0 prototype') },
   ];
   const upgrades = [
-    { num: '01 · ALGORITHMS', topic: 'teal', title: t('Pro 专业算法', 'Pro algorithms'), desc: <>{t('调音精度 ±2 音分', 'Tuning accuracy ±2 cents')}<Fn />{t('。', '.')}</> },
+    { num: '01 · ALGORITHMS', title: t('Pro 专业算法', 'Pro algorithms'), desc: <>{t('调音精度 ±2 音分', 'Tuning accuracy ±2 cents')}<Fn />{t('。', '.')}</> },
     { num: '02 · OVERTWIST', title: t('回扳保护', 'Overtwist protection'), desc: t('智能感知弦轴摩擦力，自动防止过度拧紧。', 'Intelligently detects string friction to prevent over-tightening.') },
     { num: '03 · STRINGGUARD', title: t('StringGuard 张力保护系统', 'StringGuard tension protection'), desc: t('实时弦张监测，多重保护，降低断弦风险。', 'Real-time tension monitoring with multiple safeguards against string breaks.') },
-    { num: '04 · OTA', topic: 'teal', title: t('无线升级', 'Wireless updates'), desc: t('固件蓝牙更新，像手机一样不断进化。', 'Firmware updates over Bluetooth — it evolves like a phone.') },
+    { num: '04 · OTA', title: t('无线升级', 'Wireless updates'), desc: t('固件蓝牙更新，像手机一样不断进化。', 'Firmware updates over Bluetooth — it evolves like a phone.') },
   ];
   return (
     <Shell page="demo" navTheme="dark">
@@ -51,10 +51,9 @@ export default function Demo() {
         l1={t('Piano Tuner', 'Piano Tuner')}
         l2={t('实测演示', 'live demo')}
         display
-        topic="brass"
         sub={t('V1.0 调音器原型，从听音到拧弦，一镜到底。', 'The V1.0 tuner prototype — from listening to turning, in one take.')}
       />
-      <section className="island-dark topic-brass p-custom py-section" data-nav-theme="dark" ref={root} style={{ paddingTop: 0 }}>
+      <section className="island-dark p-custom py-section" data-nav-theme="dark" ref={root} style={{ paddingTop: 0 }}>
         <div className="video-frame">
           {/* demo1.mp4 只存在于 origin（ORIGIN_ONLY），本地预览时 404 属预期 */}
           <video ref={video} controls preload="metadata" playsInline poster="/og-cover.jpg" onPlay={() => setStarted(true)}>
@@ -72,11 +71,11 @@ export default function Demo() {
           {chips.map((c) => <div className="spec" key={c.k}><dt className="spec__k t-ui">{c.k}</dt><dd className="spec__v">{c.v}</dd></div>)}
         </dl>
       </section>
-      <Section island="light" topic="brass">
+      <Section island="light">
         <SectionHead eyebrow={t('V2.0 · 核心升级', 'V2.0 · KEY UPGRADES')} title={t('V2.0 核心升级亮点', 'V2.0 key upgrades')} />
         <div className="steps" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
           {upgrades.map((u) => (
-            <article className={`step anim-up ${tc(u.topic, 'brass')}`.trim()} key={u.num}>
+            <article className="step anim-up" key={u.num}>
               <Scramble className="card__num t-ui">{u.num}</Scramble>
               <h3 className="t-h3">{u.title}</h3>
               <p className="card__desc t-body-sm">{u.desc}</p>

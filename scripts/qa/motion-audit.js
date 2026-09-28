@@ -130,16 +130,11 @@
       return { count: bad.length, bad: bad.slice(0, 20) };
     },
 
-    contrast(opts) {  // eslint-disable-line no-unused-vars
+    contrast() {
       const sel = '.blink, .step__data, .card__foot, .card__num, .card__metric, .fn-ref a, .nav__asn, .metric__label, .faq__title, .eyebrow, .eyebrow--plain, .hero__eyebrow, .notes__mark, .notes a, .beat__readout, .cmp__hl, .spec__k, .spec__sub, .card__desc, .faq__num';
       const rows = [];
-      // 默认扫所有「直接含文字」的可见元素；传 { topicOnly: true } 只看主题色元素
-      const all = [...document.querySelectorAll('body *')].filter((el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim()));
-      const targets = arguments[0]?.topicOnly ? [...document.querySelectorAll(sel)] : all;
-      targets.forEach((el) => {
+      document.querySelectorAll(sel).forEach((el) => {
         if (!el.getClientRects().length) return;
-        if (el.closest('script, style, [aria-hidden="true"], .progress, .skip-link, dialog:not([open]), details:not([open]) .faq__body, .hero__media')) return;
-        if (+getComputedStyle(el).opacity === 0) return;
         const fg = parse(getComputedStyle(el).color);
         const bg = solidBg(el);
         if (!fg || !bg) return;

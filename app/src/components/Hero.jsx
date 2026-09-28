@@ -9,7 +9,7 @@ import { BracketLink } from './ui';
  * 视频首屏（滚动锁定）：poster 是永远存在的底层，视频不带 src 出厂，只在桌面分支注入。
  * 排版层照 melspectrum：压底、t-display 两行阶梯、擦除条、5/6 分栏、SCROLL 提示、蓝图网格。
  */
-export default function Hero({ eyebrow, l1, l2, sub, primary, secondary, poster, mp4, proof, topic = 'brass' }) {
+export default function Hero({ eyebrow, l1, l2, sub, primary, secondary, poster, mp4, proof }) {
   const { t } = useT();
   const root = useRef(null);
   const video = useRef(null);
@@ -22,7 +22,7 @@ export default function Hero({ eyebrow, l1, l2, sub, primary, secondary, poster,
   useGridParallax(grid, { distance: () => Math.min(1100, Math.max(640, window.innerHeight)) });
   useHeroVideoLock(root, video);
   return (
-    <section id="top" className={`hero hero--video island-dark topic-${topic} p-custom`} data-nav-theme="dark" ref={root}>
+    <section id="top" className="hero hero--video island-dark p-custom" data-nav-theme="dark" ref={root}>
       <div className="hero__media" aria-hidden="true">
         <img className="hero__poster" src={poster} alt="" width="1280" height="720" fetchPriority="high" decoding="async" />
         {mp4 ? <video className="hero__video" ref={video} muted playsInline preload="none" tabIndex={-1} data-src-mp4={mp4} /> : null}

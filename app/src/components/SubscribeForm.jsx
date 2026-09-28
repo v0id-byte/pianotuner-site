@@ -45,7 +45,7 @@ export default function SubscribeForm({ source, dark = false }) {
   const done = status === 'ok';
   const id = `sub-${source}`;
   return (
-    <form className={`subscribe topic-brass${dark ? ' subscribe--dark' : ''}`} onSubmit={onSubmit} noValidate>
+    <form className={`subscribe${dark ? ' subscribe--dark' : ''}`} onSubmit={onSubmit} noValidate>
       <label className="t-ui subscribe__label" htmlFor={id}>{t('邮箱', 'EMAIL')}</label>
       <div className="subscribe__row">
         <input id={id} className="subscribe__input" type="email" name="email" required disabled={done}

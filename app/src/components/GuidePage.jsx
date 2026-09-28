@@ -18,8 +18,8 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
   const related = GUIDES.filter((g) => g.id !== page);
   return (
     <Shell page={page} navTheme="dark">
-      <PageHero eyebrow={t('GUIDE · 调律指南', 'TUNING GUIDE')} l1={title} sub={sub} topic="brass" />
-      <section className="island-light topic-brass p-custom py-section" data-nav-theme="light" ref={root}>
+      <PageHero eyebrow={t('GUIDE · 调律指南', 'TUNING GUIDE')} l1={title} sub={sub} />
+      <section className="island-light p-custom py-section" data-nav-theme="light" ref={root}>
         <p className="t-body-sm" style={{ color: 'var(--color-ash)', margin: 0 }}>
           {t('MelSpectrum · Piano Tuner 团队 · 2026 年 9 月', 'MelSpectrum · Piano Tuner team · September 2026')}
         </p>
@@ -44,7 +44,7 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
           </ol>
         </div>
       </section>
-      <Section island="accent" topic="brass" pad="py-section-sm">
+      <Section island="accent" pad="py-section-sm">
         <div className="cta__grid">
           <div>
             <Eyebrow inverse>{t('PIANO TUNER · 为调律师打造', 'PIANO TUNER · BUILT FOR TUNERS')}</Eyebrow>
@@ -57,7 +57,7 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
           <SubscribeForm source={`guide-${page}`} />
         </div>
       </Section>
-      <Section island="light" topic="brass" pad="py-section-sm">
+      <Section island="light" pad="py-section-sm">
         <Eyebrow>{t('MORE GUIDES · 更多指南', 'MORE GUIDES')}</Eyebrow>
         <div className="cta__links" style={{ marginTop: 16 }}>
           {related.map((g) => <BracketLink key={g.id} href={href(lang, g.id)}>{t(g.zh, g.en)}</BracketLink>)}

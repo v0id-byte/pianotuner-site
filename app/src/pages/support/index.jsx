@@ -6,7 +6,7 @@ import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
-import { BracketLink, Fn, SectionHead, tc } from '../../components/ui';
+import { BracketLink, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck, useFaqAccordion } from '../../lib/motion/hooks';
 import { EMAIL_REPORT } from '../../data/site';
 
@@ -27,9 +27,9 @@ export default function Support() {
   useReveal(root);
   useStackDeck(deck);
   const steps = [
-    { num: '01 · ASSEMBLY', topic: 'brass', title: t('硬件组装', 'Assembly'), desc: t('将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。', 'Attach the tuning socket and screw in the ergonomic side handle.') },
+    { num: '01 · ASSEMBLY', title: t('硬件组装', 'Assembly'), desc: t('将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。', 'Attach the tuning socket and screw in the ergonomic side handle.') },
     { num: '02 · CONNECT', title: t('下载并连接 App', 'Connect the app'), desc: t('扫描产品包装内的二维码下载官方 App。开启手机蓝牙，并在 App 内选择您的设备进行配对。', 'Scan the QR code to download the app. Enable Bluetooth and pair your device.') },
-    { num: '03 · TUNE', topic: 'brass', title: t('开始首次调音', 'Start tuning'), desc: t('将设备套在钢琴的弦轴上，确保卡合稳固。根据 App 提示开始自动调律。重要：请务必双手握持，以对抗强大的反向扭矩。', 'Place the device on a tuning pin. Follow the app instructions. Important: always use both hands to counteract the high torque.') },
+    { num: '03 · TUNE', title: t('开始首次调音', 'Start tuning'), desc: t('将设备套在钢琴的弦轴上，确保卡合稳固。根据 App 提示开始自动调律。重要：请务必双手握持，以对抗强大的反向扭矩。', 'Place the device on a tuning pin. Follow the app instructions. Important: always use both hands to counteract the high torque.') },
   ];
   const faq = [
     [t('高扭矩输出安全吗？我该如何正确握持？', 'Is the high torque output safe? How should I hold it?'), t('本设备具备工业级高扭矩输出。为了您的安全和调音精度，务必使用包装内附带的人体工程学侧手柄。请用主手握住带有防滑蒙皮的机身，另一只手紧握侧手柄，以双手形成的合力稳定对抗反向扭矩。', 'The device delivers industrial-grade torque. For your safety and tuning accuracy, always use the included ergonomic side handle. Hold the grip-coated body with your main hand and the side handle with the other, using both hands together to steadily counteract the reaction force.')],
@@ -54,11 +54,11 @@ export default function Support() {
         sub={t('使用指南、常见问题与技术支持。', 'Guides, FAQs, and technical support.')}
         actions={<BracketLink href={`mailto:${EMAIL_REPORT}`} highlight>{t('写邮件给支持团队', 'Email support')}</BracketLink>}
       />
-      <section className="island-light topic-teal p-custom py-section" data-nav-theme="light" ref={root}>
+      <section className="island-light p-custom py-section" data-nav-theme="light" ref={root}>
         <SectionHead eyebrow={t('QUICK START · 快速上手', 'QUICK START')} title={t('快速上手指南', 'Quick-start guide')} />
         <div className="steps">
           {steps.map((s) => (
-            <article className={`step anim-up ${tc(s.topic, 'teal')}`.trim()} key={s.num}>
+            <article className="step anim-up" key={s.num}>
               <Scramble className="card__num t-ui">{s.num}</Scramble>
               <h3 className="t-h3">{s.title}</h3>
               <p className="card__desc t-body-sm">{s.desc}</p>
@@ -82,7 +82,7 @@ export default function Support() {
         </div>
       </section>
       <div className="gasket" aria-hidden="true" />
-      <Section island="dark" topic="teal">
+      <Section island="dark">
         <SectionHead eyebrow={t('VIDEO · 视频教程库', 'VIDEO TUTORIALS')} title={t('视频教程库', 'Video tutorials')} sub={t('制作中，敬请期待。', 'In production — stay tuned.')} />
         <div className="stack-deck" ref={deck}>
           {videos.map((v, i) => (

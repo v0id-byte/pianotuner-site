@@ -5,7 +5,7 @@ import Shell from '../../components/Shell';
 import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
-import { BracketLink, Button, Eyebrow, SectionHead, tc } from '../../components/ui';
+import { BracketLink, Button, Eyebrow, SectionHead } from '../../components/ui';
 import { useStackDeck } from '../../lib/motion/hooks';
 import { EMAIL_PRIMARY, MELSPECTRUM } from '../../data/site';
 import { graph, organization, breadcrumb } from '../schema';
@@ -26,15 +26,15 @@ function Trinity() {
   useStackDeck(deck);
   const cards = [
     { num: '01 · HARDWARE', title: t('智能硬件核心', 'Smart hardware core'), desc: t('精密 FOC 电机，精准扭矩控制，蓝牙直连。', 'A precision FOC motor with accurate torque control and direct Bluetooth.') },
-    { num: '02 · APP', topic: 'teal', title: t('iOS 智能操控', 'iOS smart control'), desc: t('SwiftUI 原生开发，借 iOS 原生硬件加速做硬件级音频分析，实时波形显示。', 'Built natively in SwiftUI, with hardware-accelerated audio analysis on iOS and real-time waveform display.') },
-    { num: '03 · CLOUD', topic: 'teal', title: t('档案、报告与固件', 'Profiles, reports & firmware'), desc: t('拉伸曲线在 iPhone 端侧生成；云端只存档案、报告、按钢琴缓存的 B 值与固件。', 'The stretch curve is computed on-device; the cloud only keeps profiles, reports, per-piano B-values, and firmware.') },
+    { num: '02 · APP', title: t('iOS 智能操控', 'iOS smart control'), desc: t('SwiftUI 原生开发，借 iOS 原生硬件加速做硬件级音频分析，实时波形显示。', 'Built natively in SwiftUI, with hardware-accelerated audio analysis on iOS and real-time waveform display.') },
+    { num: '03 · CLOUD', title: t('档案、报告与固件', 'Profiles, reports & firmware'), desc: t('拉伸曲线在 iPhone 端侧生成；云端只存档案、报告、按钢琴缓存的 B 值与固件。', 'The stretch curve is computed on-device; the cloud only keeps profiles, reports, per-piano B-values, and firmware.') },
   ];
   return (
-    <Section island="light" id="product" topic="brass">
+    <Section island="light" id="product">
       <SectionHead eyebrow={t('ARCHITECTURE · 产品架构', 'ARCHITECTURE')} title={t('硬件 + 软件 + 云端', 'Hardware + software + cloud')} sub={t('三位一体构建专业级自动调律系统。', 'A professional-grade auto-tuning system in one.')} />
       <div className="stack-deck" ref={deck}>
         {cards.map((c) => (
-          <article className={`card ${tc(c.topic, 'brass')}`.trim()} key={c.num} data-stack-card>
+          <article className="card" key={c.num} data-stack-card>
             <Scramble className="card__num t-ui">{c.num}</Scramble>
             <h3 className="t-h3">{c.title}</h3>
             <p className="card__desc t-body-sm">{c.desc}</p>
@@ -54,7 +54,7 @@ function Numbers() {
     { v: '2026', suffix: '', label: t('创立年份', 'FOUNDED'), obs: t('融谱智能科技（深圳）有限公司', 'MelSpectrum') },
   ];
   return (
-    <Section island="dark" id="numbers" topic="brass" countUp>
+    <Section island="dark" id="numbers" countUp>
       <SectionHead eyebrow={t('SPECIFICATIONS · 核心参数', 'SPECIFICATIONS')} title={t('数字说明一切', 'Numbers tell the story')} />
       <div className="net__metrics">
         {items.map((it) => (
@@ -77,7 +77,7 @@ function Team() {
     { mono: '张', role: t('CO-FOUNDER · CTO', 'CO-FOUNDER · CTO'), name: t('张奚瑞 · Zhang Xirui', 'Zhang Xirui'), bio: t('调律算法与控制策略。', 'Tuning algorithms & control strategy.') },
   ];
   return (
-    <Section island="light" id="team" topic="brass">
+    <Section island="light" id="team">
       <SectionHead eyebrow={t('THE PEOPLE · 核心团队', 'THE PEOPLE')} title={t('创始团队', 'Founding team')} />
       <div className="team-grid">
         {people.map((p) => (
@@ -104,7 +104,6 @@ export default function About() {
       <PageHero
         variant="static"
         display
-        topic="brass"
         eyebrow={t('MELSPECTRUM · 融谱智能科技（深圳）有限公司', '融谱智能科技（深圳）有限公司 · MELSPECTRUM')}
         l1={t('让每台钢琴', 'Every piano,')}
         l2={t('听见完美', 'perfectly tuned')}
@@ -118,7 +117,7 @@ export default function About() {
       <Trinity />
       <div className="gasket" aria-hidden="true" />
       <Numbers />
-      <Section island="accent" topic="brass">
+      <Section island="accent">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow inverse>{t('VISION · 愿景', 'VISION')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('「让每一台钢琴都能获得专业级的调律维护」', '"Every piano deserves professional-grade tuning"')}</h2>
@@ -127,7 +126,7 @@ export default function About() {
       </Section>
       <Team />
       <div className="gasket" aria-hidden="true" />
-      <Section island="dark" topic="brass">
+      <Section island="dark">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow>{t('CONTACT · 联系我们', 'CONTACT')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('开启您的智能调律之旅', 'Start your smart-tuning journey')}</h2>

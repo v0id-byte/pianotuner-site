@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useT } from '../i18n';
 import { useMarquee } from '../lib/motion/hooks';
 
-/** 技术关键词条带。不含任何精度数字（跑马灯承载不了角标与脚注）。items: [label, topic?][] */
+/** 技术关键词条带。不含任何精度数字（跑马灯承载不了角标与脚注）。 */
 export default function Marquee({ items }) {
   const { t } = useT();
   const track = useRef(null);
@@ -13,9 +13,9 @@ export default function Marquee({ items }) {
       <div className="marquee__track" ref={track}>
         {copies.map((c) => (
           <span key={c} className="marquee__copy" aria-hidden={c === 0 ? undefined : 'true'}>
-            {items.map(([label, topic], i) => (
-              <span className={`marquee__item${topic ? ` topic-${topic}` : ''}`} key={`${c}-${i}`}>
-                {label}
+            {items.map((it, i) => (
+              <span className="marquee__item" key={`${c}-${i}`}>
+                {it}
                 <span className="marquee__sep" aria-hidden="true"> — </span>
               </span>
             ))}

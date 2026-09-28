@@ -87,7 +87,7 @@ export default function Contact() {
         l1={t('有问题或合作意向？', 'Questions or partnerships?')}
         l2={t('欢迎来信。', "We'd love to hear from you.")}
       />
-      <section className="island-light topic-teal p-custom py-section" data-nav-theme="light" ref={root}>
+      <section className="island-light p-custom py-section" data-nav-theme="light" ref={root}>
         <div className="contact-primary">
           <span className="t-ui" style={{ color: 'var(--color-ash)' }}>{t('首选联系方式 · 邮件', 'PREFERRED · EMAIL')}</span>
           <a className="cta__mail literal" href={`mailto:${EMAIL_PRIMARY}`} data-umami-event="contact-email">{EMAIL_PRIMARY}</a>
@@ -127,9 +127,9 @@ export default function Contact() {
         </div>
       </section>
       <div className="gasket" aria-hidden="true" />
-      <Section island="dark" topic="teal">
+      <Section island="dark">
         <div className="product">
-          <div className="product__body topic-brass">
+          <div className="product__body">
             <Eyebrow>{t('WAITLIST · 候补名单', 'WAITLIST')}</Eyebrow>
             <h2 className="t-h2">{t('加入候补名单', 'Join the waitlist')}</h2>
             <p className="t-body" style={{ color: 'var(--color-silver)', maxWidth: '48ch' }}>{t('留下邮箱，新一轮早鸟预售开启时第一时间通知你。', "Leave your email and we'll notify you the moment the next early-bird round opens.")}</p>

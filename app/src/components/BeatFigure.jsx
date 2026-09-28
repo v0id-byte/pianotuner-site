@@ -19,8 +19,8 @@ export default function BeatFigure() {
     const F1 = 220;
     const state = { detune: prefersReduced() ? 0 : 6.0 };
     let W = 0, H = 0;
-    // 取所在区块的主题填充色（铜 / 青），不是 :root 的全局青
-    const ACCENT = getComputedStyle(figure).getPropertyValue('--topic-fill').trim() || '#2DD4BF';
+    const cs = getComputedStyle(document.documentElement);
+    const ACCENT = cs.getPropertyValue('--color-accent').trim() || '#2DD4BF';
     const WHITE = '#fafafa';
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);

@@ -9,7 +9,7 @@ import { href } from '../i18n/urls';
 export default function PrecisionNote({ ip = true }) {
   const { t, lang } = useT();
   return (
-    <section className="island-dark topic-brass p-custom py-section-sm notes" data-nav-theme="dark">
+    <section className="island-dark p-custom py-section-sm notes" data-nav-theme="dark">
       <p id="precision-note" className="notes__item">
         <span className="t-ui notes__mark">*</span>
         <span>

@@ -1,11 +1,5 @@
 import { useT } from '../i18n';
 
-/**
- * 主题色 class：条目 topic 与所在区块不同才输出（优先级：条目 → 区块 → 页面缺省 teal，在数据层解析，不靠 DOM 意外继承）。
- * 铜 brass = 声学 / 精度 / 机械 / 硬件；青 teal = 数据 / App / 连接 / 隐私 / 软件。颜色只加强分组，文字标签永远在。
- */
-export const tc = (topic, parent) => (topic && topic !== parent ? `topic-${topic}` : '');
-
 export function Arrow() {
   return (
     <svg viewBox="0 0 11 10" fill="none" stroke="currentColor" strokeWidth="1" aria-hidden="true">

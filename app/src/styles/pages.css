@@ -41,8 +41,6 @@
 
 /* ---------- eyebrow 反色（accent 岛上） ---------- */
 .eyebrow--inverse { background: var(--color-black); color: var(--color-white); }
-/* 主题色岛（青 3.71 / 铜 3.46）上的正文不能沿用 .sec-head p 的 charcoal，一律黑字（≥9:1） */
-.island-accent .sec-head p { color: var(--color-black); }
 .island-accent .blink--onaccent { color: var(--color-black); }
 .island-accent .blink--onaccent:hover { color: var(--color-white); }
 
