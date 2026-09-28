@@ -141,7 +141,7 @@ try {
     if (plan.hover) { await c.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: plan.hover.x, y: plan.hover.y }); }
     if (plan.click) { for (const t of ['mousePressed', 'mouseReleased']) await c.send('Input.dispatchMouseEvent', { type: t, x: plan.click.x, y: plan.click.y, button: 'left', clickCount: 1 }); }
     await sleep(plan.wait ?? 900);
-    const shot = await c.send('Page.captureScreenshot', { format: 'png', clip: { ...plan.clip, scale: 1 } });
+    const shot = await c.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { ...plan.clip, scale: 1 } });
     writeFileSync(out, Buffer.from(shot.data, 'base64'));
     console.log('snap', out);
   } else if (cmd === 'keys') {

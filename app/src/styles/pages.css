@@ -168,6 +168,19 @@
 @media (max-width: 599px) { .faq__q { grid-template-columns: 36px 1fr 20px; } .faq__a { padding-left: 52px; } }
 .faq__q:hover .faq__title { color: var(--topic-text); }
 
+/* ---------- 指标砖：about › Numbers 与 Roadmap 共用（此前缺 display:grid，堆成一列、active 顶边看不见） ---------- */
+.net__metrics {
+  display: grid; gap: var(--grid-gap); margin-top: var(--gap-y-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 900px) { .net__metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.metric {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  border-top: 1px dashed var(--color-gunmetal); padding-top: 24px;
+}
+.island-light .metric { border-top-color: var(--color-alabaster); }
+.metric__obs { color: var(--color-ash); }
+
 /* ---------- Roadmap：metric 砖 ---------- */
 .roadmap { grid-template-columns: 1fr; }
 @media (min-width: 900px) { .roadmap { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
