@@ -1,6 +1,7 @@
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import PageHero from '../../components/PageHero';
 import SubscribeForm from '../../components/SubscribeForm';
 import { BracketLink, Button } from '../../components/ui';
@@ -28,7 +29,7 @@ export default function Buy() {
         sub={t('Piano Tuner V2.1 正在研发中。新一轮早鸟预售计划于 2026 年第四季度开启，首批发货预计 2027 年第一至第二季度。价格将随预售开启一同公布，候补名单用户会第一时间收到通知。', 'Piano Tuner V2.1 is in development. The next early-bird round is planned for Q4 2026, with first shipments expected Q1–Q2 2027. Pricing will be announced when the pre-sale opens — waitlist members are notified first.')}
         actions={<div id="waitlist" style={{ width: '100%', maxWidth: 520 }}><SubscribeForm source="buy-page" dark /></div>}
       />
-      <section className="island-accent p-custom py-section" data-nav-theme="light">
+      <Section island="accent">
         <div className="cta__grid">
           <div className="notice">
             <span className="t-ui" style={{ background: 'var(--color-black)', color: 'var(--color-white)', padding: '4px 6px', width: 'max-content' }}>{t('NOTIFY ME · 开售通知', 'NOTIFY ME')}</span>
@@ -43,15 +44,15 @@ export default function Buy() {
             <BracketLink href={href(lang, 'contact')} className="blink--onaccent">{t('联系我们', 'Contact us')}</BracketLink>
           </div>
         </div>
-      </section>
-      <section className="island-light p-custom py-section-sm" data-nav-theme="light">
+      </Section>
+      <Section island="light" pad="py-section-sm">
         <dl className="specs" style={{ maxWidth: '64ch' }}>
           <div className="spec"><dt className="spec__k t-ui">{t('当前状态', 'STATUS')}</dt><dd className="spec__v">{t('候补名单（销售暂停）', 'Waitlist (sales paused)')}</dd></div>
           <div className="spec"><dt className="spec__k t-ui">{t('下一轮预售', 'NEXT ROUND')}</dt><dd className="spec__v">{t('2026 年第四季度', 'Q4 2026')}</dd></div>
           <div className="spec"><dt className="spec__k t-ui">{t('首批发货', 'FIRST SHIPMENTS')}</dt><dd className="spec__v">{t('2027 年第一至第二季度', 'Q1–Q2 2027')}</dd></div>
           <div className="spec"><dt className="spec__k t-ui">{t('App', 'APP')}</dt><dd className="spec__v">{t('iOS · TestFlight 已开放', 'iOS · open on TestFlight')}</dd></div>
         </dl>
-      </section>
+      </Section>
     </Shell>
   );
 }

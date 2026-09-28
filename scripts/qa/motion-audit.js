@@ -108,7 +108,7 @@
       document.querySelectorAll(sel).forEach((el) => {
         if (el.closest('dialog:not([open]), details:not([open]) .faq__body, [aria-hidden="true"], .progress, .lang-hint')) return;
         const cs = getComputedStyle(el);
-        const target = el.classList.contains('card--soon') ? 0.6 : el.classList.contains('subscribe__note') ? 0.75 : 1;
+        const target = el.closest('.card--soon') ? 0.6 : el.classList.contains('subscribe__note') ? 0.75 : 1;
         let op = 1;
         for (let n = el; n && n.nodeType === 1; n = n.parentElement) op *= +getComputedStyle(n).opacity;
         if (cs.visibility === 'hidden' || op < target - 0.02) bad.push({ el: `${el.tagName}.${el.className}`.slice(0, 60), opacity: +op.toFixed(2) });

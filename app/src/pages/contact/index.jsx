@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useT } from '../../i18n';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import SubscribeForm from '../../components/SubscribeForm';
@@ -116,7 +117,7 @@ export default function Contact() {
           <SectionHead eyebrow={t('ENTERPRISE · 企业级合作', 'ENTERPRISE')} title={t('企业级合作', 'Enterprise partnership')} sub={t('面向琴行、钢琴厂与专业调律师。', 'For piano stores, manufacturers, and professional tuners.')} />
           <div className="steps">
             {b2b.map((s) => (
-              <article className="step" key={s.num}>
+              <article className="step anim-up" key={s.num}>
                 <Scramble className="card__num t-ui">{s.num}</Scramble>
                 <h3 className="t-h3">{s.title}</h3>
                 <p className="card__desc t-body-sm">{s.desc}</p>
@@ -126,7 +127,7 @@ export default function Contact() {
         </div>
       </section>
       <div className="gasket" aria-hidden="true" />
-      <section className="island-dark p-custom py-section" data-nav-theme="dark">
+      <Section island="dark">
         <div className="product">
           <div className="product__body">
             <Eyebrow>{t('WAITLIST · 候补名单', 'WAITLIST')}</Eyebrow>
@@ -141,7 +142,7 @@ export default function Contact() {
             <MessageForm />
           </div>
         </div>
-      </section>
+      </Section>
     </Shell>
   );
 }

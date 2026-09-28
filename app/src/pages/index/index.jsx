@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Hero from '../../components/Hero';
 import Marquee from '../../components/Marquee';
 import BeatFigure from '../../components/BeatFigure';
@@ -44,17 +45,6 @@ export const meta = {
     organization(),
   ),
 };
-
-function Section({ id, island, children, className = '', navTheme }) {
-  const root = useRef(null);
-  useTextReveal(root);
-  useReveal(root);
-  return (
-    <section id={id} className={`island-${island} p-custom py-section ${className}`.trim()} data-nav-theme={navTheme || (island === 'dark' ? 'dark' : 'light')} ref={root}>
-      {children}
-    </section>
-  );
-}
 
 function Gasket() { return <div className="gasket" aria-hidden="true" />; }
 
@@ -143,6 +133,8 @@ function Steps() {
   const { t } = useT();
   const sec = useRef(null);
   useStepsPath(sec);
+  useTextReveal(sec);
+  useReveal(sec);
   const steps = [
     { num: '01 · INSTALL', title: t('安装与连接', 'Install & connect'), desc: t('套在弦轴上，BLE 稳定连接，OTA 随时更新算法。', 'Attach to the pin, connect over BLE, update algorithms anytime via OTA.'), data: ['BLE', 'OTA'] },
     { num: '02 · CURVE', title: t('本地生成曲线', 'On-device curve'), desc: <>{t('iPhone 本机生成专属 Railsback 曲线，带来 ±2 音分', 'Your iPhone generates a bespoke Railsback curve with a ±2-cent')}<Fn />{t('的心理声学拉伸。', ' psychoacoustic stretch.')}</>, data: ['RAILSBACK', t('端侧 · ON-DEVICE', 'ON-DEVICE')] },
@@ -190,7 +182,7 @@ function Engine() {
       <BeatFigure />
       <div className="steps steps--six">
         {items.map((it) => (
-          <article className="step" key={it.num}>
+          <article className="step anim-up" key={it.num}>
             <Scramble className="card__num t-ui">{it.num}</Scramble>
             <h3 className="t-h3">{it.title}</h3>
             <p className="card__desc t-body-sm">{it.desc}</p>
@@ -249,7 +241,7 @@ function Features() {
       <SectionHead eyebrow={t('FEATURES · 核心优势', 'FEATURES')} title={t('让专业调音更易获得', 'Making pro tuning more accessible')} />
       <div className="steps steps--six">
         {items.map((it) => (
-          <article className="step" key={it.num}>
+          <article className="step anim-up" key={it.num}>
             <Scramble className="card__num t-ui">{it.num}</Scramble>
             <h3 className="t-h3">{it.title}</h3>
             <p className="card__desc t-body-sm">{it.desc}</p>
@@ -361,7 +353,7 @@ function Architecture() {
           <SectionHead eyebrow={t('ARCHITECTURE · 底层架构', 'ARCHITECTURE')} title={t('底层架构重塑，让硬件具备灵魂。', 'Rebuilding the core. Hardware with a soul.')} />
           <div className="steps">
             {items.map((s) => (
-              <article className="step" key={s.num}>
+              <article className="step anim-up" key={s.num}>
                 <Scramble className="card__num t-ui">{s.num}</Scramble>
                 <h3 className="t-h3">{s.title}</h3>
                 <p className="card__desc t-body-sm">{s.desc}</p>

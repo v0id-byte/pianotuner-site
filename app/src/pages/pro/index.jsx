@@ -2,12 +2,13 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import RailsbackFigure from '../../components/RailsbackFigure';
 import PrecisionNote from '../../components/PrecisionNote';
 import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
-import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
+import { useStackDeck } from '../../lib/motion/hooks';
 import { EMAIL_REPORT } from '../../data/site';
 import { graph, breadcrumb, ORG_ID } from '../schema';
 
@@ -28,17 +29,6 @@ export const meta = {
     breadcrumb(lang, 'pro', lang === 'en' ? 'Pro' : '专业版'),
   ),
 };
-
-function Section({ id, island, children, className = '' }) {
-  const root = useRef(null);
-  useTextReveal(root);
-  useReveal(root);
-  return (
-    <section id={id} className={`island-${island} p-custom py-section ${className}`.trim()} data-nav-theme={island === 'dark' ? 'dark' : 'light'} ref={root}>
-      {children}
-    </section>
-  );
-}
 
 function Features() {
   const { t } = useT();
@@ -148,7 +138,7 @@ export default function Pro() {
       <Features />
       <div className="gasket" aria-hidden="true" />
       <Compare />
-      <section id="cta" className="island-accent p-custom py-section" data-nav-theme="light">
+      <Section island="accent" id="cta">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow inverse>{t('GET STARTED · 开启专业调律', 'GET STARTED')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('开启您的专业数字化调律', 'Start your professional tuning')}</h2>
@@ -164,7 +154,7 @@ export default function Pro() {
           <Button href={href(lang, 'buy')} variant="dark">{t('加入候补名单', 'Join the waitlist')}</Button>
           <BracketLink href={href(lang, 'index')} className="blink--onaccent">{t('返回产品首页', 'Back to the product')}</BracketLink>
         </div>
-      </section>
+      </Section>
       <div className="gasket" aria-hidden="true" />
       <PrecisionNote />
     </Shell>

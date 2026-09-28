@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import { BracketLink, Button, Eyebrow, SectionHead } from '../../components/ui';
-import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
-import { useCountUp } from '../../lib/motion/useCountUp';
+import { useStackDeck } from '../../lib/motion/hooks';
 import { EMAIL_PRIMARY, MELSPECTRUM } from '../../data/site';
 import { graph, organization, breadcrumb } from '../schema';
 
@@ -19,18 +19,6 @@ export const meta = {
     breadcrumb(lang, 'about', lang === 'en' ? 'About' : '关于我们'),
   ),
 };
-
-function Section({ id, island, children }) {
-  const root = useRef(null);
-  useTextReveal(root);
-  useReveal(root);
-  useCountUp(root);
-  return (
-    <section id={id} className={`island-${island} p-custom py-section`} data-nav-theme={island === 'dark' ? 'dark' : 'light'} ref={root}>
-      {children}
-    </section>
-  );
-}
 
 function Trinity() {
   const { t } = useT();
@@ -66,7 +54,7 @@ function Numbers() {
     { v: '2026', suffix: '', label: t('创立年份', 'FOUNDED'), obs: t('融谱智能科技（深圳）有限公司', 'MelSpectrum') },
   ];
   return (
-    <Section island="dark" id="numbers">
+    <Section island="dark" id="numbers" countUp>
       <SectionHead eyebrow={t('SPECIFICATIONS · 核心参数', 'SPECIFICATIONS')} title={t('数字说明一切', 'Numbers tell the story')} />
       <div className="net__metrics">
         {items.map((it) => (
@@ -129,16 +117,16 @@ export default function About() {
       <Trinity />
       <div className="gasket" aria-hidden="true" />
       <Numbers />
-      <section className="island-accent p-custom py-section" data-nav-theme="light">
+      <Section island="accent">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow inverse>{t('VISION · 愿景', 'VISION')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('「让每一台钢琴都能获得专业级的调律维护」', '"Every piano deserves professional-grade tuning"')}</h2>
           <p className="t-body" style={{ gridColumn: '1 / -1', maxWidth: '56ch' }}>{t('把专业级调律带进每一台钢琴，每位拥有者都值得一件音准的乐器。', 'Professional-grade tuning for every piano — every owner deserves an instrument in tune.')}</p>
         </div>
-      </section>
+      </Section>
       <Team />
       <div className="gasket" aria-hidden="true" />
-      <section className="island-dark p-custom py-section" data-nav-theme="dark">
+      <Section island="dark">
         <div className="sec-head grid-custom">
           <div className="sec-head__eyebrow"><Eyebrow>{t('CONTACT · 联系我们', 'CONTACT')}</Eyebrow></div>
           <h2 className="t-h2" style={{ gridColumn: '1 / -1' }}>{t('开启您的智能调律之旅', 'Start your smart-tuning journey')}</h2>
@@ -153,7 +141,7 @@ export default function About() {
             <BracketLink href={MELSPECTRUM} external>{t('公司官网 melspectrum.com', 'Company site melspectrum.com')}</BracketLink>
           </div>
         </div>
-      </section>
+      </Section>
     </Shell>
   );
 }

@@ -2,11 +2,12 @@ import { useRef } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
 import { BracketLink, Fn, SectionHead } from '../../components/ui';
-import { useTextReveal, useReveal } from '../../lib/motion/hooks';
+import { useTextReveal, useReveal, useStackDeck } from '../../lib/motion/hooks';
 import { EMAIL_REPORT } from '../../data/site';
 
 export const meta = {
@@ -19,8 +20,10 @@ export const meta = {
 export default function Support() {
   const { t, lang } = useT();
   const root = useRef(null);
+  const deck = useRef(null);
   useTextReveal(root);
   useReveal(root);
+  useStackDeck(deck);
   const steps = [
     { num: '01 · ASSEMBLY', title: t('硬件组装', 'Assembly'), desc: t('将调音套筒安装至设备前端输出轴，并将人体工程学侧手柄旋入机身中部的安装接口。', 'Attach the tuning socket and screw in the ergonomic side handle.') },
     { num: '02 · CONNECT', title: t('下载并连接 App', 'Connect the app'), desc: t('扫描产品包装内的二维码下载官方 App。开启手机蓝牙，并在 App 内选择您的设备进行配对。', 'Scan the QR code to download the app. Enable Bluetooth and pair your device.') },
@@ -53,7 +56,7 @@ export default function Support() {
         <SectionHead eyebrow={t('QUICK START · 快速上手', 'QUICK START')} title={t('快速上手指南', 'Quick-start guide')} />
         <div className="steps">
           {steps.map((s) => (
-            <article className="step" key={s.num}>
+            <article className="step anim-up" key={s.num}>
               <Scramble className="card__num t-ui">{s.num}</Scramble>
               <h3 className="t-h3">{s.title}</h3>
               <p className="card__desc t-body-sm">{s.desc}</p>
@@ -77,11 +80,11 @@ export default function Support() {
         </div>
       </section>
       <div className="gasket" aria-hidden="true" />
-      <section className="island-dark p-custom py-section" data-nav-theme="dark">
+      <Section island="dark">
         <SectionHead eyebrow={t('VIDEO · 视频教程库', 'VIDEO TUTORIALS')} title={t('视频教程库', 'Video tutorials')} sub={t('制作中，敬请期待。', 'In production — stay tuned.')} />
-        <div className="stack-deck">
+        <div className="stack-deck" ref={deck}>
           {videos.map((v, i) => (
-            <article className="card card--soon" key={v}>
+            <article className="card card--soon" key={v} data-stack-card>
               <Scramble className="card__num t-ui">{String(i + 1).padStart(2, '0')} · {t('即将上线', 'COMING SOON')}</Scramble>
               <div className="mono-block" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
               <h3 className="t-h3">{v}</h3>
@@ -92,7 +95,7 @@ export default function Support() {
           <BracketLink href={href(lang, 'index', 'faq')}>{t('产品页常见问题', 'Product FAQ')}</BracketLink>
           <BracketLink href={href(lang, 'contact')}>{t('联系我们', 'Contact us')}</BracketLink>
         </div>
-      </section>
+      </Section>
       <PrecisionNote ip={false} />
     </Shell>
   );

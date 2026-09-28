@@ -3,6 +3,7 @@ import { useT } from '../i18n';
 import { href } from '../i18n/urls';
 import Shell from './Shell';
 import PageHero from './PageHero';
+import Section from './Section';
 import SubscribeForm from './SubscribeForm';
 import { BracketLink, Eyebrow } from './ui';
 import { useTextReveal, useReveal } from '../lib/motion/hooks';
@@ -43,7 +44,7 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
           </ol>
         </div>
       </section>
-      <section className="island-accent p-custom py-section-sm" data-nav-theme="light">
+      <Section island="accent" pad="py-section-sm">
         <div className="cta__grid">
           <div>
             <Eyebrow inverse>{t('PIANO TUNER · 为调律师打造', 'PIANO TUNER · BUILT FOR TUNERS')}</Eyebrow>
@@ -55,13 +56,13 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
           </div>
           <SubscribeForm source={`guide-${page}`} />
         </div>
-      </section>
-      <section className="island-light p-custom py-section-sm" data-nav-theme="light">
+      </Section>
+      <Section island="light" pad="py-section-sm">
         <Eyebrow>{t('MORE GUIDES · 更多指南', 'MORE GUIDES')}</Eyebrow>
         <div className="cta__links" style={{ marginTop: 16 }}>
           {related.map((g) => <BracketLink key={g.id} href={href(lang, g.id)}>{t(g.zh, g.en)}</BracketLink>)}
         </div>
-      </section>
+      </Section>
     </Shell>
   );
 }

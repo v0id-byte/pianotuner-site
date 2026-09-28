@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useT } from '../../i18n';
 import { href } from '../../i18n/urls';
 import Shell from '../../components/Shell';
+import Section from '../../components/Section';
 import Scramble from '../../components/Scramble';
 import PageHero from '../../components/PageHero';
 import PrecisionNote from '../../components/PrecisionNote';
@@ -70,11 +71,11 @@ export default function Demo() {
           {chips.map((c) => <div className="spec" key={c.k}><dt className="spec__k t-ui">{c.k}</dt><dd className="spec__v">{c.v}</dd></div>)}
         </dl>
       </section>
-      <section className="island-light p-custom py-section" data-nav-theme="light">
+      <Section island="light">
         <SectionHead eyebrow={t('V2.0 · 核心升级', 'V2.0 · KEY UPGRADES')} title={t('V2.0 核心升级亮点', 'V2.0 key upgrades')} />
         <div className="steps" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
           {upgrades.map((u) => (
-            <article className="step" key={u.num}>
+            <article className="step anim-up" key={u.num}>
               <Scramble className="card__num t-ui">{u.num}</Scramble>
               <h3 className="t-h3">{u.title}</h3>
               <p className="card__desc t-body-sm">{u.desc}</p>
@@ -85,7 +86,7 @@ export default function Demo() {
           <BracketLink href={href(lang, 'index')}>{t('了解产品', 'Explore the product')}</BracketLink>
           <BracketLink href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
         </div>
-      </section>
+      </Section>
       <div className="gasket" aria-hidden="true" />
       <PrecisionNote />
     </Shell>
