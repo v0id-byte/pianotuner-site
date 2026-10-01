@@ -38,6 +38,8 @@
 .nav__brand { display: inline-flex; align-items: center; font-weight: 300; font-size: 1.125rem; letter-spacing: -0.02em; text-decoration: none; }
 .nav__mark { flex: none; margin-right: 10px; }
 .nav__brand span { color: var(--color-ash); margin-left: 8px; font-size: 0.875rem; }
+/* 6 个导航链接（含「指南」）在 1024–1199px 放不下品牌副标题：桌面导航刚出现的这一段先让出它 */
+@media (min-width: 1024px) and (max-width: 1199px) { .nav__brand span:not(.nav__name) { display: none; } }
 .nav__spacer { flex: 1; }
 .nav__links { display: none; gap: 4px; align-items: center; }
 @media (min-width: 1024px) { .nav__links { display: flex; } }

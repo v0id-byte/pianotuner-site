@@ -11,9 +11,11 @@ import { EMAIL_PRIMARY, EMAIL_BUSINESS } from '../../data/site';
 import { graph, breadcrumb, organization } from '../schema';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-10-01',
   navTheme: 'dark',
-  zh: { title: '联系我们 | Piano Tuner', desc: 'Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。' },
-  en: { title: 'Contact Us | Piano Tuner', desc: 'Contact Piano Tuner: general inquiries and support, WeChat, business partnerships (piano stores, manufacturers, tuners). We reply within 1–2 business days.' },
+  zh: { title: '联系我们：技术支持与商务合作 | Piano Tuner', desc: 'Piano Tuner 联系方式：常规咨询与技术支持、微信客服、商务合作（琴行 / 钢琴厂 / 调律师）。我们将在 1–2 个工作日内回复。' },
+  en: { title: 'Contact Us: Support and Partnerships | Piano Tuner', desc: 'Contact Piano Tuner: general inquiries and support, WeChat, business partnerships (piano stores, manufacturers, tuners). We reply within 1–2 business days.' },
   jsonLd: (lang, { self }) => graph(
     { '@type': 'ContactPage', url: self, name: lang === 'en' ? 'Contact Piano Tuner' : '联系 Piano Tuner', mainEntity: organization() },
     breadcrumb(lang, 'contact', lang === 'en' ? 'Contact' : '联系我们'),

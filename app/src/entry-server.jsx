@@ -18,3 +18,4 @@ export function render(pageId, lang) {
 }
 
 export { renderRedirectStub, PAGES_BY_ID };
+export { pageDates } from './pages/dates.js';

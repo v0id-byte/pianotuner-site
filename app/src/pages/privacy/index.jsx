@@ -3,6 +3,8 @@ import LegalPage from '../../components/LegalPage';
 import { EMAIL_SUPPORT, UMAMI_WEBSITE_ID } from '../../data/site';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-09-28',
   navTheme: 'dark',
   zh: { title: '隐私政策 | Piano Tuner', desc: 'Piano Tuner 隐私政策 — 麦克风仅用于本地音高检测，蓝牙仅用于连接调音硬件，遥测与算法改进数据均为可选授权。' },
   en: { title: 'Privacy Policy | Piano Tuner', desc: 'Piano Tuner privacy policy: microphone used only for on-device pitch detection, Bluetooth only to connect the hardware, telemetry strictly opt-in.' },

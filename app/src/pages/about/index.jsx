@@ -11,9 +11,11 @@ import { EMAIL_PRIMARY, MELSPECTRUM } from '../../data/site';
 import { graph, organization, breadcrumb } from '../schema';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-10-01',
   navTheme: 'dark',
-  zh: { title: '关于我们 | Piano Tuner', desc: '融谱智能科技（深圳）有限公司，品牌 MelSpectrum。为专业调律师打造的自动调音器：硬件 · 软件 · 端侧 AI，三位一体。' },
-  en: { title: 'About Us | Piano Tuner', desc: '融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand. An automatic piano tuner built for pros: hardware, software and on-device AI in one.' },
+  zh: { title: '关于我们：钢琴调音机器人背后的团队 | Piano Tuner', desc: '融谱智能科技（深圳）有限公司，品牌 MelSpectrum。为专业调律师打造的自动调音器：硬件 · 软件 · 端侧 AI，三位一体。' },
+  en: { title: 'About Us: The Team Behind the Piano Tuning Robot | Piano Tuner', desc: '融谱智能科技（深圳）有限公司, operating under the MelSpectrum brand. An automatic piano tuner built for pros: hardware, software and on-device AI in one.' },
   jsonLd: (lang) => graph(
     { ...organization(), foundingDate: '2026', brand: { '@type': 'Brand', name: 'Piano Tuner' } },
     breadcrumb(lang, 'about', lang === 'en' ? 'About' : '关于我们'),
@@ -109,7 +111,7 @@ export default function About() {
         l2={t('听见完美', 'perfectly tuned')}
         sub={t('为专业调律师打造的自动调音器。硬件 · 软件 · 端侧 AI，三位一体。', 'An automatic tuner, built for pros. Hardware · Software · On-device AI — in one.')}
         actions={<>
-          <BracketLink href={href(lang, 'buy')} highlight>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} highlight data-umami-event="cta-waitlist" data-umami-event-at="about">{t('加入候补名单', 'Join the waitlist')}</BracketLink>
           <BracketLink href="#product">{t('了解更多', 'Learn more')}</BracketLink>
         </>}
       />
@@ -137,7 +139,7 @@ export default function About() {
             <a className="cta__mail anim-up--lead literal" href={`mailto:${EMAIL_PRIMARY}`}>{EMAIL_PRIMARY}</a>
           </div>
           <div className="cta__links" style={{ marginTop: 32 }}>
-            <Button href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</Button>
+            <Button href={href(lang, 'buy')} data-umami-event="cta-waitlist" data-umami-event-at="about">{t('加入候补名单', 'Join the waitlist')}</Button>
             <BracketLink href={MELSPECTRUM} external>{t('公司官网 melspectrum.com', 'Company site melspectrum.com')}</BracketLink>
           </div>
         </div>

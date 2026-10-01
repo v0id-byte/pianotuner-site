@@ -7,6 +7,8 @@ const PTG_CARE = 'https://www.ptg.org/ptgmain/piano/care/servicing';
 
 export const meta = {
   navTheme: 'dark',
+  published: '2026-09-27',
+  updated: '2026-09-27',
   zh: {
     title: '钢琴多久调一次？厂商建议、跑音原因与保养安排 | Piano Tuner',
     desc: '钢琴多久调一次？汇总钢琴技师协会（PTG）收录的厂商保养建议：多数建议每年至少调两次，新琴第一年更频繁。附温湿度影响与调音安排建议。',
@@ -15,12 +17,12 @@ export const meta = {
     title: 'How Often Should a Piano Be Tuned? | Piano Tuner',
     desc: 'How often to tune a piano: manufacturer recommendations collected by the Piano Technicians Guild (PTG), why pianos drift out of tune, and how to schedule tunings.',
   },
-  jsonLd: (lang) => article(lang, 'piano-tuning-frequency', {
+  jsonLd: (lang, { dates }) => article(lang, 'piano-tuning-frequency', {
     headline: lang === 'en' ? 'How often should a piano be tuned?' : '钢琴多久调一次？',
     description: lang === 'en'
       ? 'Manufacturer tuning recommendations collected by the Piano Technicians Guild, why pianos drift, and how to schedule tunings.'
       : '钢琴技师协会（PTG）收录的厂商调音建议、钢琴跑音的原因，以及如何安排调音。',
-    published: '2026-09-27',
+    dates,
   }),
 };
 

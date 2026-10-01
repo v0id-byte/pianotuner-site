@@ -11,6 +11,8 @@ import { useTextReveal, useReveal, useStackDeck, useFaqAccordion } from '../../l
 import { EMAIL_REPORT } from '../../data/site';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-09-05',
   navTheme: 'dark',
   zh: { title: 'Piano Tuner | 帮助与支持中心', desc: 'Piano Tuner 帮助与支持：快速上手指南、常见问题、固件更新、供电、适配机型与技术支持。' },
   en: { title: 'Piano Tuner | Support Center', desc: 'Piano Tuner support: quick-start guide, FAQs, firmware updates, power, compatibility and technical support.' },

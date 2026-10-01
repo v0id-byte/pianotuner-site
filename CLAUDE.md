@@ -1,6 +1,6 @@
 # pianotuner.top — 站点约定（2026-09-05 起：Vite + React SSG）
 
-9 个真实页 × 2 语言，构建期预渲染成静态 HTML（中文 `/x.html`，英文 `/en/x.html`），浏览器再 hydrate 接管动效。
+13 个真实页（9 个产品/公司页 + 指南 Hub + 3 篇指南）× 2 语言，外加 404 错误页 × 2，构建期预渲染成静态 HTML（中文 `/x.html`，英文 `/en/x.html`），浏览器再 hydrate 接管动效。
 设计系统整套搬自 melspectrum.com（`app/src/styles/{tokens,app,motion}.css`），但 **melspectrum 不是黄金实现**：
 它自己的矛盾（`useSteps` pin+scrub 0.3、`refreshSoon` 无 `sort()`、跑马灯裸 `LAB-TESTED ±2 ¢`、`publish` 用 `readdirSync` 全拷）一律不继承。
 搬它的视觉系统和成熟 motion primitive；保留 pianotuner 实测形成的产品 invariant（视频滚动锁定、三步不 pin、精度脚注）。
@@ -14,7 +14,7 @@ app/            源码（Vite root）：index.html 模板、public/（原样拷�
 source-assets/  原始素材（NotoSansSC.ttf 等）——永不投产，verify 见到 .ttf 即失败
 scripts/        构建工具链：subset-fonts / prerender / verify-build / publish-build / deploy / text-diff / vite-plugin-mpa-dev
 build-stage/    vite + 预渲染产物（gitignore）；.build-manifest.json 只存在这里（STAGE_ONLY）
-仓库根          GENERATED 部署树 = 24 个 html + en/ assets/ images/ fonts/ robots.txt sitemap.xml favicon.svg og-cover.jpg
+仓库根          GENERATED 部署树 = 34 个 html（26 页 + 6 存根 + 2 个 404）+ en/ assets/ images/ fonts/ robots.txt sitemap.xml favicon.svg og-cover.jpg
 REPO_ONLY       CLAUDE.md THIRD-PARTY.md CLAIMS-VERSION package.json vite.config.js …（发布/部署脚本结构上碰不到）
 ORIGIN_ONLY     只在 origin 的东西（demo1.mp4、admin/、payment_codes/、firmware/…）：部署只做 symlink 接入 + 前后 sha256 不变断言
 ```
@@ -32,7 +32,7 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
 ```
 
 - `vite.config.js`：`root:'app'`、**`base:'/'`（否则 `/en/*` 找不到 `/assets`）**、**`appType:'mpa'`（preview 与 nginx `try_files` 一样 404）**、`manifest:false`。
-- 一个模板、一个 bundle、18 个预渲染页：`scripts/prerender.mjs` 先把 `build-stage/index.html` 读进内存（它既是模板又是输出），每页渲染两次比对（非确定性即失败），**SSR 环境不加 jsdom**——render 期读 `window` 直接在构建期抛错，这就是测试。
+- 一个模板、一个 bundle、26 个预渲染页 + 2 个 404：`scripts/prerender.mjs` 先把 `build-stage/index.html` 读进内存（它既是模板又是输出），每页渲染两次比对（非确定性即失败），**SSR 环境不加 jsdom**——render 期读 `window` 直接在构建期抛错，这就是测试。
 - `entry-server.jsx` 不包 `MotionProvider`；GSAP 会进 SSR module graph（hooks 顶层 registerPlugin，已验证 Node 导入安全），Lenis 在 effect 里动态 import 不进。
 - `entry-client.jsx` 按 `<html data-ssr>` 决定 `hydrateRoot` / `createRoot`，不猜 DOM。
 - `.claude/launch.json` 里 `pt-preview` / `pt-dev` 直接指向 node@24 二进制（`npx` 会解析到坏掉的 v25）。
@@ -40,10 +40,19 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
 ## i18n 与 URL
 
 - 语言是构建期常量：`<LangProvider lang>` 只提供 `{lang, t}`，`t(zh, en)` API 与 melspectrum 一致。每页只渲染一种语言，运行时永不切换（`key={lang}` 重挂载 hack 不存在）。
-- `app/src/i18n/urls.js` 是唯一知道 `/en/` 的地方：`href(lang, page, hash)` / `counterpart` / `canonical`。**站内链接一律绝对且经 `href()`**，verify 规则强制。首页 canonical 是 `/` 与 `/en/`，不是 `index.html`；主机固定 `www.`（apex 与 www 都 200 无 301）。
+- `app/src/i18n/urls.js` 是唯一知道 `/en/` 的地方：`href(lang, page, hash)` / `counterpart` / `canonical`。**站内链接一律绝对且经 `href()`**，verify 规则强制。首页 canonical 是 `/` 与 `/en/`，不是 `index.html`；主机固定 `www.`。apex → www 的 301 要在 Cloudflare Redirect Rule 做（2026-10-01：现有 API token 没有 Rulesets 权限，规则需在面板建或给 token 补权限）。
 - 语言开关是真 `<a hreflang>`，点击写 `localStorage.pt_lang`。**自动跳转只认显式存储偏好**（head 内联脚本，`?nolang` 逃生），`navigator.language` 只触发一条可关闭的提示条（`LangHint`，只在 effect 里渲染，不进 SSR）。
 - `.t-ui` 大写/字距规则挂 `:root[data-lang]`（en 大写 + .08em，zh 不大写 + .04em）——语义统一，不做 CSS 属性统一。`μ`、邮箱等字面量加 `.literal` 豁免。
 - `useNavTheme(line, initialTheme)`：`'bottom'` 哨兵在 effect 内解析，`initialTheme` 来自页面 meta，SSR 首帧导航配色就对。
+
+## SEO 契约（2026-10-01，计划见 vault `00-公司/官网/SEO-策略.md`）
+
+- **日期三字段**（`app/src/pages/dates.js`）：`published` 首次发布 → Article `datePublished`；`updated` 正文/实质内容最后修改 → Article `dateModified`；`lastmod` 对搜索引擎有意义的最后变化（正文、结构化数据、重要链接）→ sitemap `<lastmod>`。缺省 `lastmod ← updated ← published`。改颜色/动效/间距/纯部署三个都不动；只改 schema 或加重要内链只动 `lastmod`；**改 Nav/Footer 等全站链接时改 `SITE_LINKS_CHANGED`**（所有页 lastmod 的下限）。sitemap 绝不用构建日期，也不出 `priority`/`changefreq`（Google 忽略）。prerender 拦 `published<=updated<=lastmod<=今天`、Article 日期 ≠ meta；verify 拦 sitemap 集合/顺序、lastmod 格式、`datePublished<=dateModified<=lastmod`。源码不变两次 clean build 的 sitemap 必须逐字节相同。
+- **canonical origin 不变量**：HTML 与 sitemap 里任何指向本站的绝对 URL 必须以 `https://www.pianotuner.top/` 开头（不许 http、不许 apex），全部从 `paths.mjs` 的 `SITE.origin` 派生，verify 硬校验。
+- **指南**：清单与分组在 `app/src/data/guides.js`（`GUIDE_CATEGORIES` + 每篇 `category`/`desc*`），Hub 是 `guides.html`（WebPage + 两级面包屑，不套 Article）；指南页面包屑三级（首页 → 调律指南 → 本文）。新指南：`PAGES` + `registry.js` + `guides.js` + meta 写 `published`/`updated`、`jsonLd: (lang, { dates }) => article(…, { dates })`。选题由 GSC 数据决定，内容合同只放 vault（禁写清单本身会泄露发明点位置，不进公开 repo）。
+- **404**：`ERROR_PAGES = ['404']`，`meta.errorPage` → noindex，不出 canonical/hreflang/og:url/JSON-LD/data-alt-url，不进 sitemap；语言开关在 404 上指向首页。verify 把它当第三类产物单独校验。
+- **埋点**（`app/src/lib/analytics.js` 顶部是权威清单）：T1 `waitlist-signup`/`cta-testflight`/`contact-email`，T2 `cta-waitlist`/`cta-pro`/`demo-complete`，T3 `demo-play`/`scroll-50`/`scroll-90`/`guide-product-click`。**同一用户动作只能一种发射方式**：静态链接/按钮用 `data-umami-event(-<key>)`，程序事件用 `track()`，同一元素禁止两种都用。属性值只用 `AT` / `TARGET` 枚举。完播率、CTA 转化用 Umami Funnel 算，不用事件次数相除。浏览器面板隐藏时 scroll 事件不派发，测 `useScrollDepth` 要手动 `dispatchEvent(new Event('scroll'))` 或用无头 Chrome。
+- 导航 6 个链接在 1024–1199px 放不下品牌副标题，这一段隐藏副标题（`app.css`）；再加导航项先量 1024px 下 `.nav` 的 `scrollWidth`。
 
 ## 视频滚动锁定（本站签名，`app/src/lib/motion/useHeroVideoLock.js`）
 
@@ -121,9 +130,9 @@ npm run dev       # 客户端渲染的 MPA dev（scripts/vite-plugin-mpa-dev.mjs
 
 origin = `root@192.255.139.83`，docroot `/var/www/html-pianotuner` **现在是 symlink → `/var/www/releases/pianotuner-<ts>/`**，旧目录是 `releases/pianotuner-legacy`。树莓派 `rpi@mc.void1211.com:1211:/var/www/html/` 是不承接流量的陈旧镜像，别往那里发。
 
-流程：预检（工作树干净、verify:root、ssh）→ tar 备份到 `/root/backups/` 并 `tar -tzf` 验证 → df 预检 → 上传整个 DEPLOY 到新 release（先 hashed 资产后 HTML）→ release 内逐文件 sha256 == 本地 → legacy 里所有不在 DEPLOY、也不在 410 名单里的顶层项 symlink 接入 → `nginx -t` → `mv -T` 原子切换 symlink → ORIGIN_ONLY 指纹前后一致 → 保留最近 3 个 release → 在线验收（18 URL 200 且 body == origin（只允许 email-protection / email-decode / Insights 差异）、6 存根跳转、sitemap/robots、`/api/pianotuner/subscribe` 可达、hero 视频两段 Range 206 字节一致、旧存档页 410）→ 打印 git 命令。任一步失败：release 目录清理，docroot 不动；切换后验收失败给出一行回退命令。
+流程：预检（工作树干净、verify:root、ssh）→ tar 备份到 `/root/backups/` 并 `tar -tzf` 验证 → df 预检 → 上传整个 DEPLOY 到新 release（先 hashed 资产后 HTML）→ release 内逐文件 sha256 == 本地 → legacy 里所有不在 DEPLOY、也不在 410 名单里的顶层项 symlink 接入 → `nginx -t` → `mv -T` 原子切换 symlink → ORIGIN_ONLY 指纹前后一致 → 保留最近 3 个 release → 在线验收（26 URL 200 且 body == origin（只允许 email-protection / email-decode / Insights 差异）、6 存根跳转、sitemap/robots、`/api/pianotuner/subscribe` 可达、hero 视频两段 Range 206 字节一致、旧存档页 410、SEO 404：`/__seo-404-check-<ts>.html` 与 `/en/…` 必须真 404 且 body 是对应语言错误页）→ 打印 git 命令。任一步失败：release 目录清理，docroot 不动；切换后验收失败给出一行回退命令。
 
-**origin nginx 的 `limit_req zone=api_limit`（1r/s, burst 5）只在 `location /api/` 里**（2026-09-05 之前误放在 server 级，全站限速：部署脚本的在线验收从回环连发请求被限成 503，冷缓存首屏也会被限）。cloudflared 从 `[::1]:1212` 进来，`conf.d/cloudflare-ips.conf` 已把 `::1`/`127.0.0.1` 列为可信代理，access.log 里是访客真实 IP。旧存档页由 nginx `location = … { return 410; }` 处理，本体在 `/root/backups/legacy-pages/`。 `robots.txt`/`sitemap.xml` 在 origin 是 `expires -1`（Cloudflare 每次回源校验，改版后不用 purge）；Cloudflare 的 managed robots.txt 会在我们的文件前面拼一段 AI 爬虫声明，边缘响应≠本地属预期。**deploy.mjs 的失败路径**：记住切换前目标、失败先切回再删 release（2026-09-05 第二次部署曾因先删后不切回造成 4 分钟 404）。
+**origin nginx 的 `limit_req zone=api_limit`（1r/s, burst 5）只在 `location /api/` 里**（2026-09-05 之前误放在 server 级，全站限速：部署脚本的在线验收从回环连发请求被限成 503，冷缓存首屏也会被限）。cloudflared 从 `[::1]:1212` 进来，`conf.d/cloudflare-ips.conf` 已把 `::1`/`127.0.0.1` 列为可信代理，access.log 里是访客真实 IP。旧存档页由 nginx `location = … { return 410; }` 处理，本体在 `/root/backups/legacy-pages/`。**404 body**：server 级 `error_page 404 $pt_404_page;`，`conf.d/pianotuner-404.conf` 的 `map $uri` 按 `/en/` 前缀选 `/en/404.html` 或 `/404.html`（2026-10-01），状态码仍是 404；`deny`/`return 404` 的 location 也会用它，`/api/` 未开 `proxy_intercept_errors` 不受影响。 `robots.txt`/`sitemap.xml` 在 origin 是 `expires -1`（Cloudflare 每次回源校验，改版后不用 purge）；Cloudflare 的 managed robots.txt 会在我们的文件前面拼一段 AI 爬虫声明，边缘响应≠本地属预期。**deploy.mjs 的失败路径**：记住切换前目标、失败先切回再删 release（2026-09-05 第二次部署曾因先删后不切回造成 4 分钟 404）。
 
 **全链无 rsync、只走显式清单。** origin nginx 对 `*.json` 一律 404，所以运行时不得 fetch 任何 .json（Railsback 数据烘成 `data/railsback.js`）。CSP `script-src 'self' 'unsafe-inline'`、`font-src 'self'`，Vite 产物兼容，依赖升级后复查。
 

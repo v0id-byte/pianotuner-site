@@ -13,9 +13,12 @@ import Scramble from '../../components/Scramble';
 import { BracketLink, Button, Eyebrow, Fn, SectionHead } from '../../components/ui';
 import { useTextReveal, useReveal, useStackDeck, useStepsPath, useFaqAccordion } from '../../lib/motion/hooks';
 import { TESTFLIGHT } from '../../data/site';
+import { useScrollDepth } from '../../lib/analytics';
 import { graph, organization, ORG_ID } from '../schema';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-09-27',
   navTheme: 'dark',
   ogType: 'product',
   zh: {
@@ -103,8 +106,8 @@ function Product() {
             {t('把一位调律师的耳朵，装进口袋。实时 Railsback 曲线拟合，让每一根琴弦回到它该在的位置。', "A professional tuner's ear, in your pocket. Real-time Railsback curve fitting brings every string back to where it belongs.")}
           </p>
           <div className="product__actions">
-            <BracketLink href={TESTFLIGHT} external>{t('在 TestFlight 体验 App', 'Try the app on TestFlight')}</BracketLink>
-            <BracketLink href={href(lang, 'pro')}>{t('了解专业版', 'Explore Pro')}</BracketLink>
+            <BracketLink href={TESTFLIGHT} external data-umami-event="cta-testflight" data-umami-event-at="index">{t('在 TestFlight 体验 App', 'Try the app on TestFlight')}</BracketLink>
+            <BracketLink href={href(lang, 'pro')} data-umami-event="cta-pro" data-umami-event-at="index">{t('了解专业版', 'Explore Pro')}</BracketLink>
           </div>
           <figure className="product__img">
             <img src="/images/product-v20m-still-v1.webp" alt={t('Piano Tuner v20m 执行器渲染图，胡桃木桌面上的拉丝铝机身', 'Piano Tuner v20m actuator render, brushed aluminium body on a walnut surface')} width="1600" height="900" loading="lazy" decoding="async" />
@@ -200,7 +203,7 @@ function Software() {
       <article className="product product--media-right">
         <div className="product__head">
           <Eyebrow>{t('SOFTWARE · 软件定义硬件', 'SOFTWARE DEFINED HARDWARE')}</Eyebrow>
-          <a className="blink t-ui" href={TESTFLIGHT} target="_blank" rel="noopener noreferrer">TESTFLIGHT ↗</a>
+          <a className="blink t-ui" href={TESTFLIGHT} target="_blank" rel="noopener noreferrer" data-umami-event="cta-testflight" data-umami-event-at="index">TESTFLIGHT ↗</a>
         </div>
         <div className="product__body">
           <h2 className="t-h2 reveal-text">{t('极客级调律终端，掌控每一颗泛音。', 'Geek-level console. Master every partial.')}</h2>
@@ -212,7 +215,7 @@ function Software() {
             <div className="spec"><dt className="spec__k t-ui">{t('可视化 Railsback 拟合 / FIT', 'RAILSBACK FIT')}</dt><dd className="spec__v"><span className="spec__sub t-body-sm">{t('端侧优化引擎实时渲染你这台钢琴的专属拉伸曲线，调音告别「玄学」。', "An on-device optimizer renders your piano's own stretch curve in real time — no more guesswork.")}</span></dd></div>
           </dl>
           <div className="product__actions">
-            <Button href={TESTFLIGHT} external variant="dark">{t('在 TestFlight 下载 iOS App', 'Get the iOS app on TestFlight')}</Button>
+            <Button href={TESTFLIGHT} external variant="dark" data-umami-event="cta-testflight" data-umami-event-at="index">{t('在 TestFlight 下载 iOS App', 'Get the iOS app on TestFlight')}</Button>
           </div>
         </div>
         <div className="product__side">
@@ -321,8 +324,8 @@ function Railsback() {
             <div className="spec"><dt className="spec__k t-ui">{t('音域', 'RANGE')}</dt><dd className="spec__v">{t('88 键全音域极致拉伸', 'Full 88-key stretch')}</dd></div>
           </dl>
           <div className="product__actions">
-            <BracketLink href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
-            <BracketLink href={href(lang, 'pro')}>{t('了解专业版', 'Explore Pro')}</BracketLink>
+            <BracketLink href={href(lang, 'buy')} data-umami-event="cta-waitlist" data-umami-event-at="index">{t('加入候补名单', 'Join the waitlist')}</BracketLink>
+            <BracketLink href={href(lang, 'pro')} data-umami-event="cta-pro" data-umami-event-at="index">{t('了解专业版', 'Explore Pro')}</BracketLink>
           </div>
         </div>
         <div className="product__side">
@@ -533,9 +536,9 @@ function Cta() {
       <div className="cta__grid">
         <SubscribeForm source="index-bottom" />
         <div className="cta__links">
-          <Button href={TESTFLIGHT} external variant="dark">{t('下载 App 抢先体验', 'Download the app')}</Button>
-          <BracketLink href={href(lang, 'buy')} className="blink--onaccent">{t('候补名单说明', 'About the waitlist')}</BracketLink>
-          <BracketLink href={href(lang, 'pro')} className="blink--onaccent">{t('了解专业版', 'Explore Pro')}</BracketLink>
+          <Button href={TESTFLIGHT} external variant="dark" data-umami-event="cta-testflight" data-umami-event-at="index">{t('下载 App 抢先体验', 'Download the app')}</Button>
+          <BracketLink href={href(lang, 'buy')} className="blink--onaccent" data-umami-event="cta-waitlist" data-umami-event-at="index">{t('候补名单说明', 'About the waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'pro')} className="blink--onaccent" data-umami-event="cta-pro" data-umami-event-at="index">{t('了解专业版', 'Explore Pro')}</BracketLink>
         </div>
       </div>
     </section>
@@ -546,6 +549,7 @@ function Cta() {
 
 export default function Home() {
   const { t, lang } = useT();
+  useScrollDepth();
   const MARQUEE = ['RAILSBACK CURVE', 'STRINGGUARD', '88 KEYS', 'BLE OTA', 'ON-DEVICE', 'IOS TESTFLIGHT', 'FOC CLOSED-LOOP', 'MELSPECTRUM'];
   return (
     <Shell page="index" navTheme="dark">

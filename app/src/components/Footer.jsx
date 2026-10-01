@@ -14,8 +14,8 @@ export default function Footer({ page }) {
           <a href={href(lang, 'index')}>{t('首页', 'Home')}</a>
           <a href={href(lang, 'pro')}>{t('专业版', 'Pro')}</a>
           <a href={href(lang, 'demo')}>{t('实测演示', 'Demo')}</a>
-          <a href={href(lang, 'buy')}>{t('加入候补名单', 'Join the waitlist')}</a>
-          <a href={TESTFLIGHT} target="_blank" rel="noopener noreferrer">TESTFLIGHT ↗</a>
+          <a href={href(lang, 'buy')} data-umami-event="cta-waitlist" data-umami-event-at="footer">{t('加入候补名单', 'Join the waitlist')}</a>
+          <a href={TESTFLIGHT} target="_blank" rel="noopener noreferrer" data-umami-event="cta-testflight" data-umami-event-at="footer">TESTFLIGHT ↗</a>
         </div>
         <div className="footer__col">
           <h3 className="t-ui">{t('支持', 'SUPPORT')}</h3>
@@ -26,6 +26,7 @@ export default function Footer({ page }) {
         <div className="footer__col">
           <h3 className="t-ui">{t('调律指南', 'GUIDES')}</h3>
           {GUIDES.map((g) => <a key={g.id} href={href(lang, g.id)}>{t(g.zh, g.en)}</a>)}
+          <a href={href(lang, 'guides')}>{t('全部指南 →', 'All guides →')}</a>
         </div>
         <div className="footer__col">
           <h3 className="t-ui">{t('公司', 'COMPANY')}</h3>

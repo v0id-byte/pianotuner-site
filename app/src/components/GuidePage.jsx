@@ -8,6 +8,7 @@ import SubscribeForm from './SubscribeForm';
 import { BracketLink, Eyebrow } from './ui';
 import { useTextReveal, useReveal } from '../lib/motion/hooks';
 import { GUIDES } from '../data/guides';
+import { useScrollDepth, useGuideProductClicks } from '../lib/analytics';
 
 /** 调律指南版式：复用法律页的编号段落 + 参考文献 + 候补名单 + 相关指南。 */
 export default function GuidePage({ page, title, sub, intro, sections, refs }) {
@@ -15,6 +16,8 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
   const root = useRef(null);
   useTextReveal(root);
   useReveal(root);
+  useScrollDepth();
+  useGuideProductClicks(page);
   const related = GUIDES.filter((g) => g.id !== page);
   return (
     <Shell page={page} navTheme="dark">
@@ -61,6 +64,7 @@ export default function GuidePage({ page, title, sub, intro, sections, refs }) {
         <Eyebrow>{t('MORE GUIDES · 更多指南', 'MORE GUIDES')}</Eyebrow>
         <div className="cta__links" style={{ marginTop: 16 }}>
           {related.map((g) => <BracketLink key={g.id} href={href(lang, g.id)}>{t(g.zh, g.en)}</BracketLink>)}
+          <BracketLink href={href(lang, 'guides')}>{t('全部调律指南', 'All tuning guides')}</BracketLink>
         </div>
       </Section>
     </Shell>

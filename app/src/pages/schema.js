@@ -17,30 +17,35 @@ export const organization = () => ({
   contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: EMAIL_PRIMARY, availableLanguage: ['zh-CN', 'en'] },
 });
 
-/** 首页 → 当前页 两级面包屑。 */
-export const breadcrumb = (lang, pageId, name) => ({
+/** 首页 →（trail 中的上级页）→ 当前页。trail: [{ id, name }]。 */
+export const breadcrumb = (lang, pageId, name, trail = []) => ({
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: lang === 'en' ? 'Home' : '首页', item: canonical(lang, 'index') },
-    { '@type': 'ListItem', position: 2, name, item: canonical(lang, pageId) },
-  ],
+    { id: 'index', name: lang === 'en' ? 'Home' : '首页' },
+    ...trail,
+    { id: pageId, name },
+  ].map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.name, item: canonical(lang, p.id) })),
 });
+
+/** 指南 Hub 作为指南文章的上级面包屑。 */
+export const guidesCrumb = (lang) => ({ id: 'guides', name: lang === 'en' ? 'Tuning guides' : '调律指南' });
 
 export const graph = (...nodes) => ({ '@context': 'https://schema.org', '@graph': nodes });
 
-/** 指南页：Article + 面包屑。作者/出版方都是公司（不虚构个人作者）。 */
-export const article = (lang, pageId, { headline, description, published, modified }) => graph(
+/** 指南页：Article + 三级面包屑（首页 → 调律指南 → 本文）。作者/出版方都是公司（不虚构个人作者）。
+ *  日期只来自 pageDates()：datePublished = published，dateModified = updated（prerender 校验）。 */
+export const article = (lang, pageId, { headline, description, dates }) => graph(
   {
     '@type': 'Article',
     headline,
     description,
     inLanguage: lang === 'en' ? 'en' : 'zh-CN',
-    datePublished: published,
-    dateModified: modified || published,
+    datePublished: dates.published,
+    dateModified: dates.updated,
     image: SITE.origin + '/og-cover.jpg',
     mainEntityOfPage: canonical(lang, pageId),
     author: { '@type': 'Organization', '@id': ORG_ID, name: LEGAL_ZH, url: SITE.origin + '/' },
     publisher: organization(),
   },
-  breadcrumb(lang, pageId, headline),
+  breadcrumb(lang, pageId, headline, [guidesCrumb(lang)]),
 );

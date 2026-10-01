@@ -4,6 +4,7 @@ import { PAGES_BY_ID } from './registry.js';
 import { canonical, href, htmlLang, counterpart } from '../i18n/urls.js';
 import { SITE } from '../../../scripts/paths.mjs';
 import { UMAMI_WEBSITE_ID } from '../data/site.js';
+import { pageDates } from './dates.js';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
@@ -23,13 +24,15 @@ if(!s&&cur==='zh'&&!/^zh/i.test(navigator.language||''))d.dataset.langHint='en';
 const VT_SCRIPT = `addEventListener('pagereveal',function(e){var v=e.viewTransition;if(!v)return;var d=document.documentElement;d.dataset.vt='arrive';v.finished.then(function(){d.dataset.vt='done'},function(){d.dataset.vt='done'})});`;
 
 export function htmlAttrs(pageId, lang, ssr) {
+  // 错误页没有对应语言版本可跳：不写 data-alt-url，语言偏好脚本遇到它直接返回。
+  const errorPage = PAGES_BY_ID[pageId].meta.errorPage;
   return [
     `lang="${htmlLang(lang)}"`,
     `data-lang="${lang}"`,
     `data-page="${pageId}"`,
-    `data-alt-url="${counterpart(lang, pageId)}"`,
+    errorPage ? '' : `data-alt-url="${counterpart(lang, pageId)}"`,
     `data-ssr="${ssr ? '1' : '0'}"`,
-  ].join(' ');
+  ].filter(Boolean).join(' ');
 }
 
 export function renderHead(pageId, lang) {
@@ -39,18 +42,20 @@ export function renderHead(pageId, lang) {
   const zhUrl = canonical('zh', pageId);
   const enUrl = canonical('en', pageId);
   const og = SITE.origin + (meta.ogImage || '/og-cover.jpg');
-  const robots = meta.robots || 'index, follow, max-image-preview:large';
-  const ld = meta.jsonLd ? meta.jsonLd(lang, { self, origin: SITE.origin }) : null;
+  // 错误页（nginx error_page 的 body）：noindex，不出 canonical / hreflang / og:url / JSON-LD。
+  const indexable = !meta.errorPage;
+  const robots = indexable ? (meta.robots || 'index, follow, max-image-preview:large') : 'noindex, follow';
+  const ld = indexable && meta.jsonLd ? meta.jsonLd(lang, { self, origin: SITE.origin, dates: pageDates(pageId, meta) }) : null;
   const lines = [
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(m.desc)}" />`,
     m.keywords ? `<meta name="keywords" content="${esc(m.keywords)}" />` : '',
     `<meta name="robots" content="${robots}" />`,
     `<meta name="theme-color" content="#16140f" />`,
-    `<link rel="canonical" href="${self}" />`,
-    `<link rel="alternate" hreflang="zh-CN" href="${zhUrl}" />`,
-    `<link rel="alternate" hreflang="en" href="${enUrl}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${zhUrl}" />`,
+    indexable ? `<link rel="canonical" href="${self}" />` : '',
+    indexable ? `<link rel="alternate" hreflang="zh-CN" href="${zhUrl}" />` : '',
+    indexable ? `<link rel="alternate" hreflang="en" href="${enUrl}" />` : '',
+    indexable ? `<link rel="alternate" hreflang="x-default" href="${zhUrl}" />` : '',
     `<link rel="icon" type="image/svg+xml" href="/favicon-brand-202609.svg" />`,
     `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-202609.png" />`,
     `<link rel="preload" href="/fonts/Inter-var.woff2" as="font" type="font/woff2" crossorigin />`,
@@ -60,7 +65,7 @@ export function renderHead(pageId, lang) {
     `<meta property="og:site_name" content="Piano Tuner · MelSpectrum" />`,
     `<meta property="og:title" content="${esc(m.title)}" />`,
     `<meta property="og:description" content="${esc(m.ogDesc || m.desc)}" />`,
-    `<meta property="og:url" content="${self}" />`,
+    indexable ? `<meta property="og:url" content="${self}" />` : '',
     `<meta property="og:image" content="${og}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,

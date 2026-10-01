@@ -5,6 +5,8 @@ import { article } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
+  published: '2026-09-27',
+  updated: '2026-09-27',
   zh: {
     title: '电子调音（ETD）与耳调：调律师该怎么看 | Piano Tuner',
     desc: '电子调音设备（ETD）和耳调是对立的吗？PTG 注册钢琴技师考试的要求、ETD 能做和不能做的事，以及调音机器人在其中的位置。',
@@ -13,12 +15,12 @@ export const meta = {
     title: 'Electronic Tuning Devices vs. Aural Tuning | Piano Tuner',
     desc: 'Are electronic tuning devices (ETDs) and aural tuning at odds? What the PTG RPT exam requires, what ETDs do and do not do, and where a tuning robot fits.',
   },
-  jsonLd: (lang) => article(lang, 'etd-vs-aural-tuning', {
+  jsonLd: (lang, { dates }) => article(lang, 'etd-vs-aural-tuning', {
     headline: lang === 'en' ? 'Electronic tuning devices vs. aural tuning' : '电子调音与耳调',
     description: lang === 'en'
       ? 'What electronic tuning devices do, what the PTG RPT exam requires of aural skill, and where a tuning robot fits.'
       : '电子调音设备能做什么、PTG 考试对耳调能力的要求，以及调音机器人在其中的位置。',
-    published: '2026-09-27',
+    dates,
   }),
 };
 

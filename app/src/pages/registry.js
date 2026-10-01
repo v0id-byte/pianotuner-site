@@ -11,6 +11,8 @@ import Terms, { meta as termsMeta } from './terms/index.jsx';
 import GuideFreq, { meta as guideFreqMeta } from './guides/piano-tuning-frequency.jsx';
 import GuideStretch, { meta as guideStretchMeta } from './guides/stretch-tuning-railsback.jsx';
 import GuideEtd, { meta as guideEtdMeta } from './guides/etd-vs-aural-tuning.jsx';
+import GuidesHub, { meta as guidesHubMeta } from './guides/hub.jsx';
+import NotFound, { meta as notFoundMeta } from './error/404.jsx';
 
 export const PAGES_BY_ID = {
   index: { Page: Home, meta: homeMeta },
@@ -22,7 +24,9 @@ export const PAGES_BY_ID = {
   buy: { Page: Buy, meta: buyMeta },
   privacy: { Page: Privacy, meta: privacyMeta },
   terms: { Page: Terms, meta: termsMeta },
+  guides: { Page: GuidesHub, meta: guidesHubMeta },
   'piano-tuning-frequency': { Page: GuideFreq, meta: guideFreqMeta },
   'stretch-tuning-railsback': { Page: GuideStretch, meta: guideStretchMeta },
   'etd-vs-aural-tuning': { Page: GuideEtd, meta: guideEtdMeta },
+  404: { Page: NotFound, meta: notFoundMeta },
 };

@@ -2,6 +2,7 @@
 //
 //   PAGES       real pages, rendered in both language trees
 //   REDIRECTS   legacy URLs kept alive as same-language meta-refresh stubs
+//   ERROR_PAGES nginx error_page bodies (noindex, no canonical/hreflang/JSON-LD, never in the sitemap)
 //   GENERATED   owned by the build; the ONLY things publish-build may write into the repo root
 //               and the ONLY things deploy may copy to the origin (explicit allowlist, never rsync)
 //   STAGE_ONLY  exist in build-stage/ only, never promoted, never deployed
@@ -12,9 +13,10 @@
 export const PAGES = [
   'index', 'about', 'pro', 'demo', 'contact', 'support', 'buy', 'privacy', 'terms',
   // 调律指南（与 app/src/data/guides.js 一致）
-  'piano-tuning-frequency', 'stretch-tuning-railsback', 'etd-vs-aural-tuning',
+  'guides', 'piano-tuning-frequency', 'stretch-tuning-railsback', 'etd-vs-aural-tuning',
 ];
 export const REDIRECTS = { buy_pro: 'buy', buy_railsback: 'buy', beta_preorder: 'buy' };
+export const ERROR_PAGES = ['404'];
 export const LANGS = ['zh', 'en'];
 
 export const SITE = {
@@ -22,7 +24,7 @@ export const SITE = {
   brand: 'Piano Tuner',
 };
 
-const htmlNames = [...PAGES, ...Object.keys(REDIRECTS)].map((p) => `${p}.html`);
+const htmlNames = [...PAGES, ...Object.keys(REDIRECTS), ...ERROR_PAGES].map((p) => `${p}.html`);
 export const GENERATED = [
   ...htmlNames,
   'en',

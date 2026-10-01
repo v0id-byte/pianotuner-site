@@ -3,6 +3,8 @@ import LegalPage from '../../components/LegalPage';
 import { EMAIL_SUPPORT } from '../../data/site';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-09-05',
   navTheme: 'dark',
   zh: { title: '服务条款 | Piano Tuner', desc: 'Piano Tuner 服务条款 — 应用使用许可、硬件使用与安全须知、一年质保、软件「按现状」提供、知识产权、责任限制及适用法律。' },
   en: { title: 'Terms of Service | Piano Tuner', desc: 'Piano Tuner terms of service: app license, hardware use and safety, one-year warranty, software "as is", intellectual property, liability, governing law.' },

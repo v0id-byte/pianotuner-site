@@ -7,6 +7,7 @@ import { TESTFLIGHT } from '../data/site';
 const LINKS = [
   { id: 'pro', zh: '专业版', en: 'Pro' },
   { id: 'demo', zh: '实测演示', en: 'Demo' },
+  { id: 'guides', zh: '指南', en: 'Guides' },
   { id: 'support', zh: '帮助', en: 'Support' },
   { id: 'about', zh: '关于', en: 'About' },
   { id: 'contact', zh: '联系', en: 'Contact' },
@@ -15,8 +16,10 @@ const LINKS = [
 const remember = (l) => { try { localStorage.setItem('pt_lang', l); } catch { /* ignore */ } };
 
 /** 语言开关：两个真 <a>（中键/新标签/复制链接都对），点击记住偏好。 */
-export function LangToggle({ page }) {
+export function LangToggle({ page: current }) {
   const { lang } = useT();
+  // 404 页没有可索引的对应语言版本：切语言回到对应语言的首页。
+  const page = current === '404' ? 'index' : current;
   const zhActive = lang !== 'en';
   return (
     <div className="lang-toggle t-ui">
@@ -70,10 +73,10 @@ function MobileMenu({ open, onClose, openerRef, page }) {
         {LINKS.map((l, n) => (
           <a key={l.id} href={href(lang, l.id)} aria-current={page === l.id ? 'page' : undefined} style={{ '--i': n + 2 }}>{t(l.zh, l.en)}</a>
         ))}
-        <a href={href(lang, 'buy')} style={{ '--i': LINKS.length + 2 }}>{t('加入候补名单', 'Join the waitlist')}</a>
+        <a href={href(lang, 'buy')} style={{ '--i': LINKS.length + 2 }} data-umami-event="cta-waitlist" data-umami-event-at="nav">{t('加入候补名单', 'Join the waitlist')}</a>
         <div className="menu__foot" style={{ '--i': LINKS.length + 3 }}>
           <LangToggle page={page} />
-          <Button href={TESTFLIGHT} external>{t('TestFlight 体验 App', 'Get the app on TestFlight')}</Button>
+          <Button href={TESTFLIGHT} external data-umami-event="cta-testflight" data-umami-event-at="nav">{t('TestFlight 体验 App', 'Get the app on TestFlight')}</Button>
         </div>
       </div>
     </dialog>
@@ -101,12 +104,12 @@ export default function Nav({ theme = 'dark', page }) {
               </a>
             ))}
           </div>
-          <a className="nav__asn t-ui" href={href(lang, 'buy')} title={t('加入候补名单', 'Join the waitlist')}>
+          <a className="nav__asn t-ui" href={href(lang, 'buy')} data-umami-event="cta-waitlist" data-umami-event-at="nav" title={t('加入候补名单', 'Join the waitlist')}>
             {t('候补名单', 'WAITLIST')}
           </a>
           <LangToggle page={page} />
           <div className="nav__links">
-            <Button href={TESTFLIGHT} external>{t('TestFlight 体验', 'TestFlight')}</Button>
+            <Button href={TESTFLIGHT} external data-umami-event="cta-testflight" data-umami-event-at="nav">{t('TestFlight 体验', 'TestFlight')}</Button>
           </div>
           <button
             type="button"

@@ -90,6 +90,14 @@ async function verifyLive(releaseSha) {
       if (!buf.equals(local)) fails.push(`视频 Range ${range} 字节与本地不一致`);
     }
   }
+  // SEO 404：不存在的 URL 必须返回真 404，且 body 是对应语言的错误页（不能软 404 / 200，也不能是 nginx 默认页）
+  for (const [prefix, lang] of [['/', 'zh'], ['/en/', 'en']]) {
+    const u = `${prefix}__seo-404-check-${ts}.html`;
+    const r = await fetch(`${SITE.origin}${u}`);
+    const body = await r.text();
+    if (r.status !== 404) fails.push(`${u} → ${r.status}（应为 404）`);
+    else if (!body.includes('data-page="404"') || !body.includes(`data-lang="${lang}"`)) fails.push(`${u} → 404 但 body 不是 ${lang} 错误页（nginx error_page 没配好？）`);
+  }
   for (const u of GONE.map((g) => '/' + encodeURIComponent(g))) {
     const r = await fetch(`${SITE.origin}${u}`);
     if (r.status !== 410 && r.status !== 404) fails.push(`${u} → ${r.status}（应为 410）`);

@@ -3,7 +3,7 @@
 // 必须经 server.transformIndexHtml，否则会绕过 React 插件的 Fast Refresh preamble。
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { PAGES, REDIRECTS } from './paths.mjs';
+import { PAGES, REDIRECTS, ERROR_PAGES } from './paths.mjs';
 
 export function mpaDev() {
   return {
@@ -18,14 +18,14 @@ export function mpaDev() {
           if (lang === 'en') p = p.slice(3) || '/';
           let page;
           if (p === '/' || p === '/index.html') page = 'index';
-          else if (/^\/[a-z_]+\.html$/.test(p)) page = p.slice(1, -5);
+          else if (/^\/[a-z0-9_-]+\.html$/.test(p)) page = p.slice(1, -5);
           else return next();
           if (REDIRECTS[page]) {
             res.statusCode = 302;
             res.setHeader('Location', (lang === 'en' ? '/en/' : '/') + `${REDIRECTS[page]}.html`);
             return res.end();
           }
-          if (!PAGES.includes(page)) return next();
+          if (!PAGES.includes(page) && !ERROR_PAGES.includes(page)) return next();
 
           const { renderHead, htmlAttrs } = await server.ssrLoadModule('/src/pages/head.js');
           const template = readFileSync(join(server.config.root, 'index.html'), 'utf8');

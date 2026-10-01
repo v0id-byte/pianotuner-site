@@ -5,6 +5,8 @@ import { article } from '../schema';
 
 export const meta = {
   navTheme: 'dark',
+  published: '2026-09-27',
+  updated: '2026-09-27',
   zh: {
     title: '拉伸调律与 Railsback 曲线：钢琴为什么不按纯十二平均律调 | Piano Tuner',
     desc: '什么是 Railsback 曲线与拉伸调律？琴弦非谐性让泛音高于整数倍，调好的钢琴高音偏高、低音偏低。附 Railsback（1938）、Fletcher（1964）、Giordano（2015）等文献出处。',
@@ -13,12 +15,12 @@ export const meta = {
     title: 'Stretch Tuning and the Railsback Curve Explained | Piano Tuner',
     desc: 'What is the Railsback curve? String inharmonicity pushes partials sharp, so well-tuned pianos run sharp in the treble and flat in the bass. With sources: Railsback (1938), Fletcher (1964), Giordano (2015).',
   },
-  jsonLd: (lang) => article(lang, 'stretch-tuning-railsback', {
+  jsonLd: (lang, { dates }) => article(lang, 'stretch-tuning-railsback', {
     headline: lang === 'en' ? 'Stretch tuning and the Railsback curve' : '拉伸调律与 Railsback 曲线',
     description: lang === 'en'
       ? 'Why well-tuned pianos deviate from pure equal temperament: string inharmonicity, the Railsback curve, and what the research says.'
       : '为什么调好的钢琴会偏离纯十二平均律：琴弦非谐性、Railsback 曲线，以及相关研究。',
-    published: '2026-09-27',
+    dates,
   }),
 };
 

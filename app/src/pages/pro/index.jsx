@@ -13,6 +13,8 @@ import { EMAIL_REPORT } from '../../data/site';
 import { graph, breadcrumb, ORG_ID } from '../schema';
 
 export const meta = {
+  published: '2026-09-05',
+  updated: '2026-09-27',
   navTheme: 'dark',
   ogType: 'product',
   zh: { title: 'Piano Tuner 专业版 | 旗舰级数字化调律解决方案', desc: 'Piano Tuner 专业版：端侧拉伸优化、专业频率分析、多琴档案与 PDF 钢琴健康报告，为职业调律师与音乐机构打造。Pro 年度订阅。' },
@@ -110,7 +112,7 @@ export default function Pro() {
         l2={t('赋予数字灵魂', 'for professional tuners')}
         sub={t('高精度声学、Turbo 电机、云端业务管理，一台调音器全包。', 'High-res acoustics, Turbo motor, cloud management — one tuner.')}
         actions={<>
-          <BracketLink href={href(lang, 'buy')} highlight>{t('加入候补名单', 'Join the waitlist')}</BracketLink>
+          <BracketLink href={href(lang, 'buy')} highlight data-umami-event="cta-waitlist" data-umami-event-at="pro">{t('加入候补名单', 'Join the waitlist')}</BracketLink>
           <BracketLink href="#features">{t('六大独占特性', 'Six Pro features')}</BracketLink>
         </>}
       />
@@ -151,7 +153,7 @@ export default function Pro() {
           </p>
         </div>
         <div className="cta__links" style={{ marginTop: 'var(--gap-y-md)' }}>
-          <Button href={href(lang, 'buy')} variant="dark">{t('加入候补名单', 'Join the waitlist')}</Button>
+          <Button href={href(lang, 'buy')} variant="dark" data-umami-event="cta-waitlist" data-umami-event-at="pro">{t('加入候补名单', 'Join the waitlist')}</Button>
           <BracketLink href={href(lang, 'index')} className="blink--onaccent">{t('返回产品首页', 'Back to the product')}</BracketLink>
         </div>
       </Section>

@@ -9,7 +9,7 @@ import { join, relative, extname, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { PAGES, REDIRECTS, LANGS, GENERATED, STAGE_ONLY, ORIGIN_ONLY, MANIFEST, SITE, STAGE_DIR, assertNode24 } from './paths.mjs';
+import { PAGES, REDIRECTS, ERROR_PAGES, LANGS, GENERATED, STAGE_ONLY, ORIGIN_ONLY, MANIFEST, SITE, STAGE_DIR, assertNode24 } from './paths.mjs';
 
 const SKIP_DIRS = new Set(['node_modules', '.git', '.claude', 'app', 'source-assets', 'scripts', 'build-stage', '.ssr-stage', '.publish-backup']);
 
@@ -63,13 +63,20 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
   const fail = [];
   const note = (s) => fail.push(s);
 
-  // 1. 24 个 HTML 恰好存在；<html> 属性与目录一致
+  // 1. HTML 恰好存在（PAGES / REDIRECTS / ERROR_PAGES × 2 语言）；<html> 属性与目录一致
   const expected = [];
   for (const lang of LANGS) {
     const sub = lang === 'en' ? 'en' : '';
     for (const id of PAGES) expected.push({ lang, id, rel: join(sub, `${id}.html`), stub: false });
     for (const id of Object.keys(REDIRECTS)) expected.push({ lang, id, rel: join(sub, `${id}.html`), stub: true });
+    for (const id of ERROR_PAGES) expected.push({ lang, id, rel: join(sub, `${id}.html`), stub: false, error: true });
   }
+  // 1b. canonical origin 不变量：任何指向本站的绝对 URL（canonical / hreflang / og:url / JSON-LD / sitemap）
+  // 都必须以 SITE.origin + '/' 开头——不许 http、不许 apex。
+  const OWN_URL = /\bhttps?:\/\/(?:www\.)?pianotuner\.top\b[^"'\s<>)]*/gi;
+  const checkOrigin = (rel, text) => {
+    for (const m of text.matchAll(OWN_URL)) if (!m[0].startsWith(SITE.origin + '/')) note(`${rel}: 本站 URL 不是 ${SITE.origin}/ 开头：${m[0]}`);
+  };
   const htmlFiles = walk(dir).filter((f) => extname(f) === '.html').map((f) => relative(dir, f));
   const expectedSet = new Set(expected.map((e) => e.rel));
   for (const h of htmlFiles) if (!expectedSet.has(h)) note(`多出来的 HTML: ${h}`);
@@ -82,6 +89,14 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
     if (attr(htmlTag, 'lang') !== wantLang) note(`${e.rel}: <html lang> 应为 ${wantLang}`);
     if (attr(htmlTag, 'data-lang') !== e.lang) note(`${e.rel}: data-lang 应为 ${e.lang}`);
     if (!/<title>[^<]+<\/title>/.test(html)) note(`${e.rel}: 没有 <title>`);
+    checkOrigin(e.rel, html);
+    if (e.error) {
+      // 错误页：noindex，且不得出 canonical / hreflang / og:url / JSON-LD（它不是可索引页面）
+      if (attr(htmlTag, 'data-page') !== e.id) note(`${e.rel}: data-page 应为 ${e.id}`);
+      if (!/name="robots" content="noindex, follow"/.test(html)) note(`${e.rel}: 错误页缺 noindex,follow`);
+      if (/rel="canonical"|hreflang=|property="og:url"|application\/ld\+json|data-alt-url=/.test(html)) note(`${e.rel}: 错误页不得含 canonical / hreflang / og:url / JSON-LD / data-alt-url`);
+      // 不 continue：下面的悬空引用 / 相对链接 / 红线检查照样适用
+    }
     if (e.stub) {
       const to = (e.lang === 'en' ? '/en/' : '/') + `${REDIRECTS[e.id]}.html`;
       if (!html.includes(`content="0;url=${to}"`)) note(`${e.rel}: 存根应跳到 ${to}`);
@@ -89,17 +104,19 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
       if (!html.includes(`<link rel="canonical" href="${SITE.origin}${to}"`)) note(`${e.rel}: 存根 canonical 应指向 ${to}`);
       continue;
     }
-    if (attr(htmlTag, 'data-page') !== e.id) note(`${e.rel}: data-page 应为 ${e.id}`);
     if (attr(htmlTag, 'data-ssr') !== '1') note(`${e.rel}: 预渲染页 data-ssr 应为 1`);
-    const path = (l) => (l === 'en' ? '/en/' : '/') + (e.id === 'index' ? '' : `${e.id}.html`);
-    const alt = attr(htmlTag, 'data-alt-url');
-    if (alt !== path(e.lang === 'en' ? 'zh' : 'en')) note(`${e.rel}: data-alt-url 应为 ${path(e.lang === 'en' ? 'zh' : 'en')}，实际 ${alt}`);
-    // 2. canonical = self；hreflang 三条闭合
-    const self = SITE.origin + path(e.lang);
-    if (!html.includes(`<link rel="canonical" href="${self}"`)) note(`${e.rel}: canonical 应为 ${self}`);
-    if (!html.includes(`hreflang="zh-CN" href="${SITE.origin + path('zh')}"`)) note(`${e.rel}: hreflang zh-CN 不闭合`);
-    if (!html.includes(`hreflang="en" href="${SITE.origin + path('en')}"`)) note(`${e.rel}: hreflang en 不闭合`);
-    if (!html.includes(`hreflang="x-default" href="${SITE.origin + path('zh')}"`)) note(`${e.rel}: x-default 应指向中文`);
+    if (!e.error) {
+      if (attr(htmlTag, 'data-page') !== e.id) note(`${e.rel}: data-page 应为 ${e.id}`);
+      const path = (l) => (l === 'en' ? '/en/' : '/') + (e.id === 'index' ? '' : `${e.id}.html`);
+      const alt = attr(htmlTag, 'data-alt-url');
+      if (alt !== path(e.lang === 'en' ? 'zh' : 'en')) note(`${e.rel}: data-alt-url 应为 ${path(e.lang === 'en' ? 'zh' : 'en')}，实际 ${alt}`);
+      // 2. canonical = self；hreflang 三条闭合
+      const self = SITE.origin + path(e.lang);
+      if (!html.includes(`<link rel="canonical" href="${self}"`)) note(`${e.rel}: canonical 应为 ${self}`);
+      if (!html.includes(`hreflang="zh-CN" href="${SITE.origin + path('zh')}"`)) note(`${e.rel}: hreflang zh-CN 不闭合`);
+      if (!html.includes(`hreflang="en" href="${SITE.origin + path('en')}"`)) note(`${e.rel}: hreflang en 不闭合`);
+      if (!html.includes(`hreflang="x-default" href="${SITE.origin + path('zh')}"`)) note(`${e.rel}: x-default 应指向中文`);
+    }
     // 3. 本地引用按 stage 根解析；ORIGIN_ONLY 视为已知外部
     for (const m of html.matchAll(/(?:src|href)="(\/[^"#?]+)"/g)) {
       const ref = m[1].replace(/^\//, '');
@@ -150,6 +167,38 @@ export function verifyBuild(dir, { writeManifest = true, prevManifest = null } =
     // 8. 运行时不引用 .json（nginx deny）
     if (/fetch\([^)]*\.json/.test(html) || /(src|href)="[^"]+\.json"/.test(html)) note(`${e.rel}: 引用了 .json（origin nginx 对 *.json 返回 404）`);
   }
+
+  // 8b. sitemap：URL 集合与顺序 == PAGES × LANGS；每条 lastmod 合法且不晚于今天；不出 priority / changefreq；
+  // Article 的 datePublished <= dateModified <= 该 URL 的 sitemap lastmod。
+  const smPath = p('sitemap.xml');
+  if (existsSync(smPath)) {
+    const sm = readFileSync(smPath, 'utf8');
+    checkOrigin('sitemap.xml', sm);
+    if (/<priority>|<changefreq>/.test(sm)) note('sitemap.xml: 不得输出 <priority> / <changefreq>（Google 忽略，维护成本白付）');
+    const today = new Date().toLocaleDateString('sv-SE');
+    const got = [...sm.matchAll(/<url>\s*<loc>([^<]+)<\/loc>[\s\S]*?<\/url>/g)].map((m) => ({ loc: m[1], lastmod: (m[0].match(/<lastmod>([^<]*)<\/lastmod>/) || [])[1] }));
+    const want = LANGS.flatMap((l) => PAGES.map((id) => SITE.origin + (l === 'en' ? '/en/' : '/') + (id === 'index' ? '' : `${id}.html`)));
+    if (got.map((g) => g.loc).join('\n') !== want.join('\n')) note('sitemap.xml: URL 集合或顺序 ≠ PAGES × LANGS');
+    const lastmodOf = Object.fromEntries(got.map((g) => [g.loc, g.lastmod]));
+    for (const g of got) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(g.lastmod || '')) note(`sitemap.xml: ${g.loc} lastmod 缺失或格式不对：${g.lastmod}`);
+      else if (g.lastmod > today) note(`sitemap.xml: ${g.loc} lastmod ${g.lastmod} 晚于今天`);
+    }
+    for (const e of expected.filter((x) => !x.stub && !x.error)) {
+      const f = p(e.rel);
+      if (!existsSync(f)) continue;
+      const loc = SITE.origin + (e.lang === 'en' ? '/en/' : '/') + (e.id === 'index' ? '' : `${e.id}.html`);
+      for (const m of readFileSync(f, 'utf8').matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+        let ld; try { ld = JSON.parse(m[1]); } catch { continue; }
+        for (const node of ld['@graph'] || [ld]) {
+          if (node['@type'] !== 'Article') continue;
+          if (!(node.datePublished <= node.dateModified && node.dateModified <= lastmodOf[loc])) {
+            note(`${e.rel}: 须满足 datePublished(${node.datePublished}) <= dateModified(${node.dateModified}) <= sitemap lastmod(${lastmodOf[loc]})`);
+          }
+        }
+      }
+    }
+  } else note('缺少 sitemap.xml');
 
   // 9. stage 顶层集合 == GENERATED ∪ STAGE_ONLY（多一个少一个都失败）—— 只对 stage 做
   if (!isRoot) {
